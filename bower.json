@@ -1,0 +1,24 @@
+{
+  "name": "ngAnimations.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Hendrixer/ngAnimations.js",
+  "authors": [
+    "Hendrixer"
+  ],
+  "description": "A conversion of animate.css into angular ngAnimate javaScript.",
+  "main": "animations.js",
+  "keywords": [
+    "angular",
+    "ngAnimate",
+    "animate",
+    "animations"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
