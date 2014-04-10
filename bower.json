@@ -19,6 +19,12 @@
     "node_modules",
     "bower_components",
     "test",
+    "bower.json",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular-animate": "~1.2.16",
+    "angular": "~1.2.16",
+    "angular-bootstrap": "~0.10.0"
+  }
 }
