@@ -1,6 +1,6 @@
-var animate = angular.module('animate',
+var animate = angular.module('animations',
   [
-    'animate.fade'
+    'animations.fades'
   ]
 
 );

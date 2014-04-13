@@ -25,8 +25,7 @@
   "dependencies": {
     "angular-animate": "~1.2.16",
     "angular": "~1.2.16",
-    "angular-bootstrap": "~0.10.0",
     "gsap": "~1.11.6",
-    "jquery": "~2.1.0"
+    "bootstrap-css-only": "*"
   }
 }

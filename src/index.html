@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html ng-app='app'>
   <head>
+    <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-css-only/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title></title>
   </head>
   <body>
-    <div ng-controller='MainController' ng-init='cards=[1,2,3,4,5]'>
-      <input type="text" ng-model='search' />
-      <div ng-repeat='card in cards | filter:search' class="fade">
-        <div style="background-color: lightgrey; margin-top: 5px">
-          {{ card }}
+    <div ng-controller='MainController'>
+      <div id="wrapper">
+        <div id="sidebar-wrapper">
+          <input class="sidebar-filter" type="text" ng-model="search" placeholder="ng-repeat"/>
+          <ul class="sidebar-nav" ng-repeat='animation in demo.animations'>
+            <li ng-click='demo.addCards(animation)'>{{ animation }}</li>
+          </ul>
+        </div>
+        <div class="container">
+          <main>
+            <header class='main-header'>
+              <h1>ng-animations.js</h1>
+              <i>Animation library for Angular</i>
+            </header>
+            <div class="cards row">
+              <div class="{{ demo.mainAnimation }} col-xs-8 col-md-4" ng-repeat='card in demo.cards | filter:search'>
+                <card ng-click='demo.removeCard($index)'title='{{ card.header }}'>
+                  <div class='card-content'>
+                    <small>Animation: {{ card.type }}</small>
+                  </div>
+                </card>
+              </div>
+            </div>
+          </main>
         </div>
       </div>
     </div>
