@@ -1,5 +1,5 @@
-var app = angular.module('app', ['animations'])
+var app = angular.module('app', ['ngAnimate', 'animations.fade']);
 
-.controller('MainController', ['$scope', function($scope){
+app.controller('MainController', ['$scope', function($scope){
 
 }]);
