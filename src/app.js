@@ -1,6 +1,6 @@
 var app = angular.module('app', ['ngAnimate', 'animations']);
 
-app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
+app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout){
   var demo = $scope.demo = {};
   demo.cards = [];
   demo.data = [
@@ -17,11 +17,12 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
   demo.mainAnimation = null;
   demo.animations = [
     'fade-normal',
-    'fade-down'
+    'fade-down',
+    'fade-down-big'
   ];
 
   demo.addCards = function(animation){
-    if(demo.cards.length){
+    if(demo.cards && demo.cards.length){
       demo.cards = [];
     }
     demo.mainAnimation = animation;

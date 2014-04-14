@@ -1,10 +1,9 @@
 .card {
   background: white;
-  width: 100%;
-  margin: 5px;
+  width: 30%;
+  margin: 10px 10px;
   box-shadow:-1px 1px 3px 1px lightgrey;
   padding: 2%;
-  margin-bottom: 1%;
   border-radius: 3px;
   cursor: pointer;
   -webkit-box-sizing: border-box;
@@ -12,8 +11,26 @@
           box-sizing: border-box;
 }
 
+.controls {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
 #wrapper {
   padding-left: 250px;
+}
+
+li a {
+  color: black;
+}
+
+li a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+li.active {
+  background-color: blue;
 }
 
 #sidebar-wrapper {
@@ -30,7 +47,6 @@
 
 .sidebar-filter {
   margin-bottom: 10px;
-
 }
 
 .sidebar-nav {

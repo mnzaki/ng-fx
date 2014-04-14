@@ -3,7 +3,12 @@ var gulp    = require('gulp'),
     notify  = require('gulp-notify');
 
 var paths = {
-  animations: ['./src/animations/*.js', './src/animate.js', './src/app.js']
+  animations: [
+  './src/animationClass.js',
+  './src/animations/*.js',
+  './src/animate.js',
+  './src/app.js'
+  ]
 };
 
 

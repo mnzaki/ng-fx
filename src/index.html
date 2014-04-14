@@ -10,8 +10,10 @@
       <div id="wrapper">
         <div id="sidebar-wrapper">
           <input class="sidebar-filter" type="text" ng-model="search" placeholder="ng-repeat"/>
-          <ul class="sidebar-nav" ng-repeat='animation in demo.animations'>
-            <li ng-click='demo.addCards(animation)'>{{ animation }}</li>
+          <ul class="sidebar-nav" >
+            <li ng-repeat='animation in demo.animations' ng-class="{'active': animation === demo.mainAnimation}">
+              <a href ng-click='demo.addCards(animation)'>{{ animation }}</a>
+            </li>
           </ul>
         </div>
         <div class="container">
@@ -20,14 +22,15 @@
               <h1>ng-animations.js</h1>
               <i>Animation library for Angular</i>
             </header>
+            <div class="controls">
+              <a href ng-click='demo.clean()' class="btn btn-primary clean">Clean</a>
+            </div>
             <div class="cards row">
-              <div class="{{ demo.mainAnimation }} col-xs-8 col-md-4" ng-repeat='card in demo.cards | filter:search'>
-                <card ng-click='demo.removeCard($index)'title='{{ card.header }}'>
-                  <div class='card-content'>
-                    <small>Animation: {{ card.type }}</small>
-                  </div>
-                </card>
-              </div>
+              <card class='col-xs-8 col-md-1 {{ demo.mainAnimation }}' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
+                <div class='card-content'>
+                  <small>Animation: {{ card.type }}</small>
+                </div>
+              </card>
             </div>
           </main>
         </div>

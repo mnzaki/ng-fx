@@ -1,120 +1,128 @@
-var fades = angular.module('animations.fades', []);
+angular.module('animations.create', [])
 
-
-fades.animation('.fade-normal', function(){
-  var fadeOut,
-      fadeIn,
-      fadeMove;
+.factory('Animation', function(){
   return {
-    enter: function(element, done){
-      TweenMax.set(element, {opacity: 0});
-      fadeIn = TweenMax.to(element, 0.5, {opacity: 1, onComplete: done});
-      return function(canceled){
-        if(canceled){
-          console.log('enter canceled');
+    create: function(effect){
+      var inEffect        = effect.enter,
+          outEffect       = effect.leave,
+          outEffectLeave  = effect.inverse || effect.leave,
+          duration        = effect.duration,
+          enter,
+          leave,
+          move;
 
-          fadeIn.kill();
+      this.enter = function(element, done){
+        inEffect.onComplete = done;
+        TweenMax.set(element, outEffect);
+        enter = TweenMax.to(element, duration, inEffect);
+        return function (canceled){
+          if(canceled){
+            console.log('enter canceled', enter);
+
+          }
+        };
+      };
+
+      this.leave = function(element, done){
+        outEffect.onComplete = done;
+        TweenMax.set(element, inEffect);
+        leave = TweenMax.to(element, duration, outEffectLeave);
+        return function (canceled){
+          if(canceled){
+            console.log('leave canceled');
+          }
+        };
+      };
+
+      this.move = function(element, done){
+        inEffect.onComplete = done;
+        TweenMax.set(element, outEffect);
+        move = TweenMax.to(element. duration, inEffect);
+        return function (canceled){
+          if(canceled){
+            console.log('moved canceled');
+            move.kill();
+          }
+        };
+      };
+
+      this.beforeAddClass = function(element, className, done){
+        outEffect.onComplete = done;
+        if(className === 'ng-hide'){
+          TweenMax.to(element, duration, outEffectLeave);
+        } else {
+          done();
         }
       };
-    },
 
-    leave: function(element, done){
-      TweenMax.set(element, {opacity: 1});
-      fadeOut = TweenMax.to(element, 0.3, {opacity: 0, onComplete: done});
-      return function(canceled){
-        if(canceled){
-          // FIXME causes extra element to be appended to page if you cancel the leave animation
-          // may be an issue with angular
-
+      this.removeClass = function(element, className, done){
+        inEffect.onComplete = done;
+        if(className === 'ng-hide'){
+          TweenMax.set(element, outEffect);
+          TweenMax.to(element, duration, inEffect);
+        } else {
+          done();
         }
       };
-    },
-
-    move: function(element, done){
-      TweenMax.set(element, {opacity: 0.3});
-      fadeMove = TweenMax.to(element, 0.3, {opacity: 1, onComplete: done});
-      return function(canceled){
-        if(canceled){
-          console.log('move canceled');
-          fadeMove.kill();
-        }
-      };
-    },
-    beforeAddClass: function(element, className, done){
-      if(className === 'ng-hide'){
-        console.log('it does');
-        TweenMax.to(element, 0.3, {opacity: 0, onComplete: done});
-      } else {
-        done();
-      }
-    },
-
-    removeClass: function(element, className, done){
-      if(className === 'ng-hide'){
-        TweenMax.set(element, {opacity: 0});
-        TweenMax.to(element, 0.3, {opacity: 1});
-      } else {
-        done();
-      }
     }
   };
 });
+var fades = angular.module('animations.fades', ['animations.create']);
 
 
-fades.animation('.fade-down', function(){
-  var fadeDownEnter,
-      fadeDownLeave,
-      fadeDownMove;
-  return {
-    enter: function(element, done){
-      TweenMax.set(element, {opacity: 0, transform: 'translateY(-20px)'});
-      fadeDownEnter = TweenMax.to(element, 0.3, {opacity: 1, transform: 'translateY(0)', onComplete: done});
-      return function(canceled){
-        if(canceled){
-          console.log('here in enter');
-          fadeDownEnter.kill();
-        }
-      };
-    },
-
-    leave: function(element, done){
-      TweenMax.set(element, {opacity: 1, transform: 'translateY(0)'});
-      fadeDownLeave = TweenMax.to(element, 0.3, {opacity: 0, transform: 'translateY(20px)', onComplete: done});
-      return function(canceled){
-        if(canceled){
-
-        }
-      };
-    },
-
-    move: function(element, done){
-      TweenMax.set(element, {opacity: 0.3});
-      fadeDownMove = TweenMax.to(element, 0.2, {opacity: 1});
-      return function(canceled){
-        if(canceled){
-          fadeDownMove.kill();
-        }
-      };
-    },
-
-    beforeAddClass: function(element, className, done){
-      if(className === 'ng-hide'){
-        TweenMax.to(element, 0.3, {opacity: 0, transform: 'translateY(20px)', onComplete: done});
-      } else {
-        done();
-      }
-    },
-
-    removeClass: function(element, className, done){
-      if(className === 'ng-hide'){
-        TweenMax.set(element, {opacity: 0, transform: 'translateY(-20px)'});
-        TweenMax.to(element, 0.3, {opacity: 1, transform: 'translateY(0)', onComplete: done});
-      } else {
-        done()
-      }
-    }
+fades.animation('.fade-normal', function (Animation){
+  var effect = {
+    enter: {opacity: 1},
+    leave: {opacity: 0},
+    duration: 0.5
   };
-})
+
+  return new Animation.create(effect);
+});
+
+
+fades.animation('.fade-down', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateY(0)'},
+    leave: {opacity: 0, transform: 'translateY(-20px)'},
+    duration: 0.3,
+    inverse: {opacity: 0, transform: 'translateY(20px)'}
+  };
+
+  return new Animation.create(effect);
+});
+
+fades.animation('.fade-down-big', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateY(0)'},
+    leave: {opacity: 0, transform: 'translateY(-2000px)'},
+    inverse: {opacity: 0, transform: 'translateY(2000px)'},
+    duration: 0.5
+  };
+
+  return new Animation.create(effect);
+  // return {
+  //   enter: function(element, done){
+  //     TweenMax.set(element, {opacity: 0, transform: 'translateY(-2000px)'});
+  //     fdbEnter = TweenMax.to(element, 0.5, {opacity: 1, transform: 'translateY(0)', onComplete: done});
+  //     return function (canceled){
+  //       if(canceled){
+  //         fdbEnter.kill();
+  //       }
+  //     };
+  //   },
+
+  //   leave: function(element, done){
+  //     TweenMax.set(element, {opacity: 1, transform: 'translateY(0)'});
+  //     fdbLeave = TweenMax.to(element, 0.5, {opacity: 0, transform: 'translateY(2000px)', onComplete: done});
+  //     return function (canceled){
+  //       if(canceled){
+
+  //       }
+  //     };
+  //   }
+  // };
+});
 var animate = angular.module('animations',
   [
     'animations.fades'
@@ -125,7 +133,7 @@ var animate = angular.module('animations',
 
 var app = angular.module('app', ['ngAnimate', 'animations']);
 
-app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
+app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout){
   var demo = $scope.demo = {};
   demo.cards = [];
   demo.data = [
@@ -142,11 +150,12 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
   demo.mainAnimation = null;
   demo.animations = [
     'fade-normal',
-    'fade-down'
+    'fade-down',
+    'fade-down-big'
   ];
 
   demo.addCards = function(animation){
-    if(demo.cards.length){
+    if(demo.cards && demo.cards.length){
       demo.cards = [];
     }
     demo.mainAnimation = animation;
