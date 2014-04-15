@@ -1,19 +1,12 @@
 var app = angular.module('app', ['ngAnimate', 'animations']);
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout){
+  $scope.$on('fade-normal', function(){
+    console.log('got the done');
+  });
   var demo = $scope.demo = {};
   demo.cards = [];
-  demo.data = [
-    'News',
-    'Stocks',
-    'Tweets',
-    'Weather',
-    'Blog',
-    'Email',
-    'Sports',
-    'Messages',
-    'Requests'
-  ];
+
   demo.mainAnimation = null;
   demo.animations = [
     'fade-normal',
@@ -31,9 +24,12 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
         demo.cards.push({'header': data, 'type': animation});
       };
     };
-    angular.forEach(demo.data, function (header, index){
-      $timeout(pushToCards(header), index * 100);
-    });
+    var i   = 1,
+        end = 10;
+    for( ; i < end; i++){
+      $timeout(pushToCards('Item: '+i), i * 200);
+    }
+
   };
 
   demo.removeCard = function(index){
@@ -47,7 +43,7 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
       };
     };
     angular.forEach(demo.cards, function (card, index){
-      $timeout(popFromCards(), index * 100);
+      $timeout(popFromCards(), index * 300);
     });
   };
 

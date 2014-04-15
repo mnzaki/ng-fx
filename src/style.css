@@ -1,7 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300italic);
+
+body {
+  background-color: #ecf0f1;
+}
+
 .card {
   background: white;
   width: 30%;
-  margin: 10px 10px;
+  margin: 0 12px 12px 0 ;
   box-shadow:-1px 1px 3px 1px lightgrey;
   padding: 2%;
   border-radius: 3px;
@@ -16,38 +22,58 @@
   margin-top: 10px;
 }
 
+.erase {
+  background-color: #16a085;
+  border: none;
+  color: white;
+}
+
+.erase:hover {
+  background-color: #1abc9c;
+  color: white;
+}
+
 #wrapper {
   padding-left: 250px;
 }
 
-li a {
-  color: black;
+.animation-link {
+  font-size: 1.2em;
+  margin-left: 20px;
+  margin-top: 8px;
 }
 
-li a:hover {
+.animation-link a {
   color: white;
+  margin-top: 3px;
+}
+
+.animation-link:hover, .animation-link.active {
+  background-color: #3d556e;
+}
+
+.animation-link a:hover {
   text-decoration: none;
 }
 
-li.active {
-  background-color: blue;
+.side-bar-header {
+  color: white;
+  margin-left: 20px;
+  border-bottom: 2px white solid;
 }
 
 #sidebar-wrapper {
-  padding: 15px;
   margin-left: -250px;
   left: 250px;
   width: 250px;
-  background: lightgrey;
+  background: #2c3e50;
   position: fixed;
   height: 100%;
   overflow-y: auto;
   z-index: 1000;
+  font-family: 'Lato', sans-serif;
 }
 
-.sidebar-filter {
-  margin-bottom: 10px;
-}
 
 .sidebar-nav {
   list-style: none;
@@ -56,4 +82,13 @@ li.active {
 
 main {
   margin-right: 20%;
+  margin-left: 5%;
+}
+
+.main-header {
+  font-family: 'Lato', sans-serif;
+}
+
+i span {
+  font-size: 1.4em;
 }

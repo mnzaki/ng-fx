@@ -1,6 +1,16 @@
 angular.module('animations.create', [])
 
 .factory('Animation', function(){
+  var getScope = function(e){
+    return angular.element(e).scope();
+  };
+  var complete = function(element, name){
+    console.log(element);
+    var $scope = getScope(element);
+    return function (){
+      $scope.$emit(name);
+    };
+  };
   return {
     create: function(effect){
       var inEffect        = effect.enter,
@@ -12,12 +22,11 @@ angular.module('animations.create', [])
           move;
 
       this.enter = function(element, done){
-        inEffect.onComplete = done;
+        inEffect.onComplete = complete(element, effect.class);
         TweenMax.set(element, outEffect);
         enter = TweenMax.to(element, duration, inEffect);
         return function (canceled){
           if(canceled){
-            console.log('enter canceled', enter);
 
           }
         };
@@ -29,7 +38,7 @@ angular.module('animations.create', [])
         leave = TweenMax.to(element, duration, outEffectLeave);
         return function (canceled){
           if(canceled){
-            console.log('leave canceled');
+            leave.resume();
           }
         };
       };
@@ -74,7 +83,8 @@ fades.animation('.fade-normal', function (Animation){
   var effect = {
     enter: {opacity: 1},
     leave: {opacity: 0},
-    duration: 0.5
+    duration: 0.3,
+    class: 'fade-normal'
   };
 
   return new Animation.create(effect);
@@ -101,27 +111,6 @@ fades.animation('.fade-down-big', function (Animation){
   };
 
   return new Animation.create(effect);
-  // return {
-  //   enter: function(element, done){
-  //     TweenMax.set(element, {opacity: 0, transform: 'translateY(-2000px)'});
-  //     fdbEnter = TweenMax.to(element, 0.5, {opacity: 1, transform: 'translateY(0)', onComplete: done});
-  //     return function (canceled){
-  //       if(canceled){
-  //         fdbEnter.kill();
-  //       }
-  //     };
-  //   },
-
-  //   leave: function(element, done){
-  //     TweenMax.set(element, {opacity: 1, transform: 'translateY(0)'});
-  //     fdbLeave = TweenMax.to(element, 0.5, {opacity: 0, transform: 'translateY(2000px)', onComplete: done});
-  //     return function (canceled){
-  //       if(canceled){
-
-  //       }
-  //     };
-  //   }
-  // };
 });
 var animate = angular.module('animations',
   [
@@ -134,19 +123,12 @@ var animate = angular.module('animations',
 var app = angular.module('app', ['ngAnimate', 'animations']);
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout){
+  $scope.$on('fade-normal', function(){
+    console.log('got the done');
+  });
   var demo = $scope.demo = {};
   demo.cards = [];
-  demo.data = [
-    'News',
-    'Stocks',
-    'Tweets',
-    'Weather',
-    'Blog',
-    'Email',
-    'Sports',
-    'Messages',
-    'Requests'
-  ];
+
   demo.mainAnimation = null;
   demo.animations = [
     'fade-normal',
@@ -164,9 +146,12 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
         demo.cards.push({'header': data, 'type': animation});
       };
     };
-    angular.forEach(demo.data, function (header, index){
-      $timeout(pushToCards(header), index * 100);
-    });
+    var i   = 1,
+        end = 10;
+    for( ; i < end; i++){
+      $timeout(pushToCards('Item: '+i), i * 200);
+    }
+
   };
 
   demo.removeCard = function(index){
@@ -180,7 +165,7 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
       };
     };
     angular.forEach(demo.cards, function (card, index){
-      $timeout(popFromCards(), index * 100);
+      $timeout(popFromCards(), index * 300);
     });
   };
 
