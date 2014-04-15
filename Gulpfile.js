@@ -6,22 +6,30 @@ var paths = {
   animations: [
   './src/animationClass.js',
   './src/animations/*.js',
-  './src/animate.js',
-  './src/app.js'
+  './src/animate.js'
   ]
 };
 
 
-gulp.task('concat', function(){
+gulp.task('build', function(){
   return gulp.src(paths.animations)
-    .pipe(concat('main.js'))
+    .pipe(concat('animations.js'))
     .pipe(gulp.dest('./dist/'))
+    .pipe(notify({message: 'Build done'}));
+});
+
+gulp.task('concat', function(){
+  var app = paths.animations.slice();
+  app.push('./src/app.js');
+  return gulp.src(app)
+    .pipe(concat('main.js'))
+    .pipe(gulp.dest('./src/'))
     .pipe(notify({message: 'Concat done'}));
 });
 
-
 gulp.task('watch', function(){
-  gulp.watch(paths.animations, ['concat']);
+  gulp.watch(paths.animations, ['concat', 'build']);
+  gulp.watch('./src/app.js', ['concat']);
 });
 
-gulp.task('default', ['concat', 'watch']);
+gulp.task('default', ['build' , 'concat', 'watch']);

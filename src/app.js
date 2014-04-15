@@ -1,50 +1,64 @@
 var app = angular.module('app', ['ngAnimate', 'animations']);
 
-app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout){
+app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
   $scope.$on('fade-normal', function(){
     console.log('got the done');
   });
-  var demo = $scope.demo = {};
-  demo.cards = [];
+  $scope.demo = {};
+  $scope.demo.cards = [];
 
-  demo.mainAnimation = null;
-  demo.animations = [
+  $scope.demo.mainAnimation = null;
+  $scope.demo.animations = [
     'fade-normal',
     'fade-down',
-    'fade-down-big'
+    'fade-down-big',
+    'fade-left',
+    'fade-left-big'
   ];
 
-  demo.addCards = function(animation){
-    if(demo.cards && demo.cards.length){
-      demo.cards = [];
+  $scope.demo.addCards = function(animation){
+    if($scope.demo.cards && $scope.demo.cards.length){
+      $scope.demo.clean().then(function(){
+        $scope.demo.populate(animation);
+      });
+    } else {
+      $scope.demo.populate(animation);
     }
-    demo.mainAnimation = animation;
+  };
+
+  $scope.demo.populate = function(animation){
+    $scope.demo.mainAnimation = animation;
     var pushToCards = function(data){
       return function (){
-        demo.cards.push({'header': data, 'type': animation});
+        $scope.demo.cards.push({'header': data, 'type': animation});
       };
     };
     var i   = 1,
         end = 10;
     for( ; i < end; i++){
-      $timeout(pushToCards('Item: '+i), i * 200);
+      $timeout(pushToCards('Item: '+i), i * 100);
     }
-
   };
 
-  demo.removeCard = function(index){
-    demo.cards.splice(index, 1);
+  $scope.demo.removeCard = function(index){
+    $scope.demo.cards.splice(index, 1);
   };
 
-  demo.clean = function(){
-    var popFromCards = function(){
+  $scope.demo.clean = function(){
+    var dfrd = $q.defer();
+    var popCards = function(index){
       return function(){
-        demo.cards.pop();
+        $scope.demo.cards.pop();
+        if(index >= 8){
+          $scope.demo.mainAnimation = '';
+          dfrd.resolve(index);
+        }
       };
     };
-    angular.forEach(demo.cards, function (card, index){
-      $timeout(popFromCards(), index * 300);
+    angular.forEach($scope.demo.cards, function (card, index){
+      $timeout(popCards(index), 100 * index);
     });
+    return dfrd.promise;
   };
 
 }]);
@@ -64,3 +78,4 @@ app.directive('card', function(){
     '</div>'
   };
 });
+

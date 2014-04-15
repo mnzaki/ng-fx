@@ -1,11 +1,10 @@
 angular.module('animations.create', [])
 
-.factory('Animation', function(){
+.factory('Animation', function($timeout){
   var getScope = function(e){
     return angular.element(e).scope();
   };
   var complete = function(element, name){
-    console.log(element);
     var $scope = getScope(element);
     return function (){
       $scope.$emit(name);
@@ -23,11 +22,17 @@ angular.module('animations.create', [])
 
       this.enter = function(element, done){
         inEffect.onComplete = complete(element, effect.class);
+        inEffect.paused = true;
         TweenMax.set(element, outEffect);
         enter = TweenMax.to(element, duration, inEffect);
+        enter.play();
         return function (canceled){
           if(canceled){
-
+            $timeout(function(){
+              angular.element(element).remove();
+            }, 300);
+          } else {
+            enter.resume();
           }
         };
       };
@@ -38,7 +43,7 @@ angular.module('animations.create', [])
         leave = TweenMax.to(element, duration, outEffectLeave);
         return function (canceled){
           if(canceled){
-            leave.resume();
+
           }
         };
       };

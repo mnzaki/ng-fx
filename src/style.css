@@ -22,6 +22,18 @@ body {
   margin-top: 10px;
 }
 
+.search {
+  margin-top: 10px;
+  font-size: 1.4em;
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+}
+
+.search:focus {
+  background-color: #3d556e;
+}
+
 .erase {
   background-color: #16a085;
   border: none;
@@ -87,6 +99,7 @@ main {
 
 .main-header {
   font-family: 'Lato', sans-serif;
+  padding-bottom: 5px;
 }
 
 i span {

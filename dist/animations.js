@@ -1,11 +1,10 @@
 angular.module('animations.create', [])
 
-.factory('Animation', function(){
+.factory('Animation', function($timeout){
   var getScope = function(e){
     return angular.element(e).scope();
   };
   var complete = function(element, name){
-    console.log(element);
     var $scope = getScope(element);
     return function (){
       $scope.$emit(name);
@@ -23,11 +22,17 @@ angular.module('animations.create', [])
 
       this.enter = function(element, done){
         inEffect.onComplete = complete(element, effect.class);
+        inEffect.paused = true;
         TweenMax.set(element, outEffect);
         enter = TweenMax.to(element, duration, inEffect);
+        enter.play();
         return function (canceled){
           if(canceled){
-
+            $timeout(function(){
+              angular.element(element).remove();
+            }, 300);
+          } else {
+            enter.resume();
           }
         };
       };
@@ -38,7 +43,7 @@ angular.module('animations.create', [])
         leave = TweenMax.to(element, duration, outEffectLeave);
         return function (canceled){
           if(canceled){
-            leave.resume();
+
           }
         };
       };
@@ -112,6 +117,27 @@ fades.animation('.fade-down-big', function (Animation){
 
   return new Animation.create(effect);
 });
+
+fades.animation('.fade-left', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateX(0)'},
+    leave: {opacity: 0, transform: 'translateX(-20px)'},
+    inverse: {opacity: 0, transform: 'translateX(20px)'},
+    duration: 0.5
+  };
+  return new Animation.create(effect);
+});
+
+fades.animation('.fade-left-big', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateX(0)'},
+    leave: {opacity: 0, transform: 'translateX(-2000px)'},
+    inverse: {opacity: 0, transform: 'translateX(2000px)'},
+    duration: 0.5
+  };
+
+  return new Animation.create(effect);
+});
 var animate = angular.module('animations',
   [
     'animations.fades'
@@ -119,70 +145,3 @@ var animate = angular.module('animations',
 
 );
 
-
-var app = angular.module('app', ['ngAnimate', 'animations']);
-
-app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout){
-  $scope.$on('fade-normal', function(){
-    console.log('got the done');
-  });
-  var demo = $scope.demo = {};
-  demo.cards = [];
-
-  demo.mainAnimation = null;
-  demo.animations = [
-    'fade-normal',
-    'fade-down',
-    'fade-down-big'
-  ];
-
-  demo.addCards = function(animation){
-    if(demo.cards && demo.cards.length){
-      demo.cards = [];
-    }
-    demo.mainAnimation = animation;
-    var pushToCards = function(data){
-      return function (){
-        demo.cards.push({'header': data, 'type': animation});
-      };
-    };
-    var i   = 1,
-        end = 10;
-    for( ; i < end; i++){
-      $timeout(pushToCards('Item: '+i), i * 200);
-    }
-
-  };
-
-  demo.removeCard = function(index){
-    demo.cards.splice(index, 1);
-  };
-
-  demo.clean = function(){
-    var popFromCards = function(){
-      return function(){
-        demo.cards.pop();
-      };
-    };
-    angular.forEach(demo.cards, function (card, index){
-      $timeout(popFromCards(), index * 300);
-    });
-  };
-
-}]);
-
-app.directive('card', function(){
-  return {
-    restrict: 'E',
-    scope: {
-      title: '@'
-    },
-    transclude: true,
-    replace: true,
-    template:
-    '<div class="card">'+
-      '<h4 class="card-header">{{ title }}</h4>'+
-      '<div class="card-content" ng-transclude></div>'+
-    '</div>'
-  };
-});
