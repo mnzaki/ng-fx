@@ -25,14 +25,17 @@ angular.module('app', ['animations'])
 ```
 
 ## What's next?
-.Eventing system for animations, so for example below, the element will trigger an even when the fade-up animation is complete.
+1.Eventing system for animations, so for example below, the element will trigger an even when the fade-up animation is complete.
+
+2.animations for dom events / directives, so for example, below, the img will render a shake animation when the mouse hovers over it
+
+3.More animations!
+
+4 A better README.md :)
+``` html
+<div ng-if='show' class='trigger fade-up'>Hey</div> <!-- eventing system -->
+```
 
 ``` html
-<div ng-if='show' class='trigger fade-up'>Hey</div>
+<img src='pic.jpeg' class='img' animate-hover='shake' /> <!-- dom events -->
 ```
-.animations for dom events / directives, so for example, below, the img will render a shake animation when the mouse hovers over it
-
-``` html
-<img src='pic.jpeg' class='img' animate-hover='shake' />
-```
-.A better README.md :)
