@@ -5,7 +5,7 @@ A conversion of animate.css into angular ngAnimate javascript. ALl animations ar
 
 
 ## How to use it
-1. all you need is dist/animations.js
+1. all you need is `dist/animations.js`
 2. `bower install` ng-Animations rely on ng-animate and GSAP
 3. add to your angular app and your HTML file
 
