@@ -1,9 +1,7 @@
 var app = angular.module('app', ['ngAnimate', 'animations']);
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
-  $scope.$on('fade-normal', function(){
-    console.log('got the done');
-  });
+
   $scope.demo = {};
   $scope.demo.cards = [];
 
@@ -13,17 +11,22 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     'fade-down',
     'fade-down-big',
     'fade-left',
-    'fade-left-big'
+    'fade-left-big',
+    'fade-right',
+    'fade-right-big',
+    'fade-up',
+    'fade-up-big'
   ];
 
   $scope.demo.addCards = function(animation){
     if($scope.demo.cards && $scope.demo.cards.length){
-      $scope.demo.clean().then(function(){
-        $scope.demo.populate(animation);
-      });
-    } else {
-      $scope.demo.populate(animation);
+      // $scope.demo.clean().then(function(){
+      //   $scope.demo.populate(animation);
+      // });
+      $scope.demo.cards = [];
     }
+      $scope.demo.populate(animation);
+
   };
 
   $scope.demo.populate = function(animation){
@@ -44,13 +47,19 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     $scope.demo.cards.splice(index, 1);
   };
 
+  $scope.demo.erase = function(){
+    $scope.demo.clean().then(function(){
+      $scope.demo.mainAnimation = null;
+    });
+  };
+
   $scope.demo.clean = function(){
     var dfrd = $q.defer();
     var popCards = function(index){
       return function(){
         $scope.demo.cards.pop();
         if(index >= 8){
-          $scope.demo.mainAnimation = '';
+
           dfrd.resolve(index);
         }
       };

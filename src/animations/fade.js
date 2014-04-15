@@ -55,3 +55,47 @@ fades.animation('.fade-left-big', function (Animation){
 
   return new Animation.create(effect);
 });
+
+fades.animation('.fade-right', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateX(0)'},
+    leave: {opacity: 0, transform:'translateX(20px)'},
+    inverse: {opacity: 0, transform: 'translateX(-20px)'},
+    duration: 0.5
+  };
+
+  return new Animation.create(effect);
+});
+
+fades.animation('.fade-right-big', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateX(0)'},
+    leave: {opacity: 0, transform:'translateX(2000px)'},
+    inverse: {opacity: 0, transform: 'translateX(-2000px)'},
+    duration: 0.5
+  };
+
+  return new Animation.create(effect);
+});
+
+fades.animation('.fade-up', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateY(0)'},
+    leave: {opacity: 0, transform:'translateY(20px)'},
+    inverse: {opacity: 0, transform: 'translateY(-20px)'},
+    duration: 0.5
+  };
+
+  return new Animation.create(effect);
+});
+
+fades.animation('.fade-up-big', function (Animation){
+  var effect = {
+    enter: {opacity: 1, transform: 'translateY(0)'},
+    leave: {opacity: 0, transform:'translateY(2000px)'},
+    inverse: {opacity: 0, transform: 'translateY(-2000px)'},
+    duration: 0.5
+  };
+
+  return new Animation.create(effect);
+});

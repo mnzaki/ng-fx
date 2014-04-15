@@ -49,12 +49,13 @@ angular.module('animations.create', [])
       };
 
       this.move = function(element, done){
+        console.log('move');
         inEffect.onComplete = done;
         TweenMax.set(element, outEffect);
         move = TweenMax.to(element. duration, inEffect);
         return function (canceled){
           if(canceled){
-            console.log('moved canceled');
+
             move.kill();
           }
         };
