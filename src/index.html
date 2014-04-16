@@ -24,11 +24,11 @@
               <i>Animation library for Angular by: <span>Scott Moss</span></i>
             </header>
             <div class="controls row">
-              <a href ng-click='demo.erase()'  class="btn btn-lg erase col-xs-2">Erase</a>
+              <a href ng-click='demo.play(0)'  class="btn btn-lg erase col-xs-2">Play</a>
               <input ng-model='search' type="text" class="search {{ demo.mainAnimation }} col-xs-4 col-xs-offset-2" placeholder='type to filter'/>
             </div>
             <div class="cards row">
-              <card class='col-xs-6 col-md-1 {{ demo.mainAnimation }}' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
+              <card class='col-xs-6 col-md-1 {{ demo.mainAnimation }} easing-bounce' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
                 <div class='card-content'>
                   <small>Animation: {{ card.type }}</small>
                 </div>
