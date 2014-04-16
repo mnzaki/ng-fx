@@ -28,7 +28,7 @@
               <input ng-model='search' type="text" class="search {{ demo.mainAnimation }} col-xs-4 col-xs-offset-2" placeholder='type to filter'/>
             </div>
             <div class="cards row">
-              <card class='col-xs-6 col-md-1 {{ demo.mainAnimation }} easing-bounce' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
+              <card class='col-xs-6 col-md-1 {{ demo.mainAnimation }} easing-elastic' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
                 <div class='card-content'>
                   <small>Animation: {{ card.type }}</small>
                 </div>

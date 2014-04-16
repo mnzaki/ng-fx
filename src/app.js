@@ -82,6 +82,10 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     }
   };
 
+  $timeout(function(){
+    $scope.demo.play(0);
+  }, 1500);
+
 }]);
 
 app.directive('card', function(){
