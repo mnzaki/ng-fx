@@ -16,7 +16,8 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     'fade-right-big',
     'fade-up',
     'fade-up-big',
-    'bounce-normal'
+    'bounce-normal',
+    'bounce-down'
   ];
 
   $scope.demo.addCards = function(animation){
@@ -36,7 +37,7 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     var i   = 1,
         end = 10;
     for( ; i < end; i++){
-      $timeout(pushToCards('Item: '+i), i * 100);
+      $timeout(pushToCards('Item: '+i), i * 300);
     }
   };
 
@@ -62,7 +63,7 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
       };
     };
     angular.forEach($scope.demo.cards, function (card, index){
-      $timeout(popCards(index), 100 * index);
+      $timeout(popCards(index), 400 * index);
     });
     return dfrd.promise;
   };
@@ -75,16 +76,16 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
       $scope.demo.addCards(animation);
       $timeout(function(){
         $scope.demo.clean();
-      }, 1800);
+      }, 3000);
       $timeout(function(){
         $scope.demo.play(++index);
-      }, 3000);
+      }, 6000);
     }
   };
 
-  $timeout(function(){
-    $scope.demo.play(0);
-  }, 1500);
+  // $timeout(function(){
+  //   $scope.demo.play(0);
+  // }, 1500);
 
 }]);
 
