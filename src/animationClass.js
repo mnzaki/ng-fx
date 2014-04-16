@@ -26,7 +26,7 @@ angular.module('animations.create', [])
     return Array.prototype.slice.call(element);
   };
   return {
-    create: function(effect){
+    fade: function(effect){
       var inEffect        = effect.enter,
           outEffect       = effect.leave,
           outEffectLeave  = effect.inverse || effect.leave,
@@ -95,6 +95,53 @@ angular.module('animations.create', [])
         } else {
           done();
         }
+      };
+    },
+
+    bounce: function(effect){
+      var start     = effect.first,
+          mid       = effect.mid,
+          third     = effect.third,
+          end       = effect.end,
+          duration  = effect.duration;
+
+      this.enter = function(element, done){
+        end.onComplete = done;
+        var enter = new TimelineMax();
+        enter.to(element, start);
+        enter.to(element, duration, mid);
+        enter.to(element, duration, third);
+        enter.to(element, duration, end);
+        return function (canceled) {
+          if(canceled){
+            $timeout(function(){
+              angular.element(element).remove();
+            }, 800);
+          }
+        };
+      };
+      this.leave = function(element, done){
+        start.onComplete = done;
+        var leave = new TimelineMax();
+        leave.to(element, end);
+        leave.to(element, duration, third);
+        leave.to(element, duration, mid);
+        leave.to(element, duration, start);
+
+        return function (canceled){
+          if(canceled){
+
+          }
+        };
+      };
+      this.move = function(element, done){
+
+      };
+      this.beforeAddClass = function(element, className, done){
+
+      };
+      this.removeClass = function(element, className, done){
+
       };
     }
   };

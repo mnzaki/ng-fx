@@ -15,18 +15,15 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     'fade-right',
     'fade-right-big',
     'fade-up',
-    'fade-up-big'
+    'fade-up-big',
+    'bounce-normal'
   ];
 
   $scope.demo.addCards = function(animation){
     if($scope.demo.cards && $scope.demo.cards.length){
-      // $scope.demo.clean().then(function(){
-      //   $scope.demo.populate(animation);
-      // });
       $scope.demo.cards = [];
     }
       $scope.demo.populate(animation);
-
   };
 
   $scope.demo.populate = function(animation){
@@ -68,6 +65,21 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
       $timeout(popCards(index), 100 * index);
     });
     return dfrd.promise;
+  };
+
+  $scope.demo.play = function(index){
+    var animation = $scope.demo.animations[index];
+    console.log('here');
+    if(animation){
+      $scope.demo.mainAnimation = animation;
+      $scope.demo.addCards(animation);
+      $timeout(function(){
+        $scope.demo.clean();
+      }, 1800);
+      $timeout(function(){
+        $scope.demo.play(++index);
+      }, 3000);
+    }
   };
 
 }]);

@@ -26,7 +26,7 @@ angular.module('animations.create', [])
     return Array.prototype.slice.call(element);
   };
   return {
-    create: function(effect){
+    fade: function(effect){
       var inEffect        = effect.enter,
           outEffect       = effect.leave,
           outEffectLeave  = effect.inverse || effect.leave,
@@ -96,6 +96,53 @@ angular.module('animations.create', [])
           done();
         }
       };
+    },
+
+    bounce: function(effect){
+      var start     = effect.first,
+          mid       = effect.mid,
+          third     = effect.third,
+          end       = effect.end,
+          duration  = effect.duration;
+
+      this.enter = function(element, done){
+        end.onComplete = done;
+        var enter = new TimelineMax();
+        enter.to(element, start);
+        enter.to(element, duration, mid);
+        enter.to(element, duration, third);
+        enter.to(element, duration, end);
+        return function (canceled) {
+          if(canceled){
+            $timeout(function(){
+              angular.element(element).remove();
+            }, 800);
+          }
+        };
+      };
+      this.leave = function(element, done){
+        start.onComplete = done;
+        var leave = new TimelineMax();
+        leave.to(element, end);
+        leave.to(element, duration, third);
+        leave.to(element, duration, mid);
+        leave.to(element, duration, start);
+
+        return function (canceled){
+          if(canceled){
+
+          }
+        };
+      };
+      this.move = function(element, done){
+
+      };
+      this.beforeAddClass = function(element, className, done){
+
+      };
+      this.removeClass = function(element, className, done){
+
+      };
     }
   };
 }]);
@@ -105,9 +152,17 @@ String.prototype.cap = function() {
 };
 var bounces = angular.module('animations.bounces', ['animations.create']);
 
-// bounces.animation('.bounce-normal', function(){
+bounces.animation('.bounce-normal', function (Animation){
+  var effect = {
+    first: {opacity: 0, transform: 'scale(.3)'},
+    mid: {opacity: 1, transform: 'scale(1.05)'},
+    third: {transform: 'scale(.9)'},
+    end: {opacity: 1, transform: 'scale(1)'},
+    duration: 0.3
+  };
 
-// })
+  return new Animation.bounce(effect);
+});
 var fades = angular.module('animations.fades', ['animations.create']);
 
 
@@ -119,7 +174,7 @@ fades.animation('.fade-normal', function (Animation){
     class: 'fade-normal'
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 
@@ -131,7 +186,7 @@ fades.animation('.fade-down', function (Animation){
     inverse: {opacity: 0, transform: 'translateY(20px)'}
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-down-big', function (Animation){
@@ -142,7 +197,7 @@ fades.animation('.fade-down-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-left', function (Animation){
@@ -152,7 +207,7 @@ fades.animation('.fade-left', function (Animation){
     inverse: {opacity: 0, transform: 'translateX(20px)'},
     duration: 0.8
   };
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-left-big', function (Animation){
@@ -163,7 +218,7 @@ fades.animation('.fade-left-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-right', function (Animation){
@@ -174,7 +229,7 @@ fades.animation('.fade-right', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-right-big', function (Animation){
@@ -185,7 +240,7 @@ fades.animation('.fade-right-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-up', function (Animation){
@@ -196,7 +251,7 @@ fades.animation('.fade-up', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-up-big', function (Animation){
@@ -207,11 +262,12 @@ fades.animation('.fade-up-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 var animate = angular.module('animations',
   [
-    'animations.fades'
+    'animations.fades',
+    'animations.bounces'
   ]
 
 );

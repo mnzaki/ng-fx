@@ -9,7 +9,7 @@ fades.animation('.fade-normal', function (Animation){
     class: 'fade-normal'
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 
@@ -21,7 +21,7 @@ fades.animation('.fade-down', function (Animation){
     inverse: {opacity: 0, transform: 'translateY(20px)'}
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-down-big', function (Animation){
@@ -32,7 +32,7 @@ fades.animation('.fade-down-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-left', function (Animation){
@@ -42,7 +42,7 @@ fades.animation('.fade-left', function (Animation){
     inverse: {opacity: 0, transform: 'translateX(20px)'},
     duration: 0.8
   };
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-left-big', function (Animation){
@@ -53,7 +53,7 @@ fades.animation('.fade-left-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-right', function (Animation){
@@ -64,7 +64,7 @@ fades.animation('.fade-right', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-right-big', function (Animation){
@@ -75,7 +75,7 @@ fades.animation('.fade-right-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-up', function (Animation){
@@ -86,7 +86,7 @@ fades.animation('.fade-up', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
 
 fades.animation('.fade-up-big', function (Animation){
@@ -97,5 +97,5 @@ fades.animation('.fade-up-big', function (Animation){
     duration: 0.8
   };
 
-  return new Animation.create(effect);
+  return new Animation.fade(effect);
 });
