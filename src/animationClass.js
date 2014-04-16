@@ -135,6 +135,17 @@ angular.module('animations.create', [])
         };
       };
       this.move = function(element, done){
+        end.onComplete = done;
+        var move = new TimelineMax();
+        move.to(element, start);
+        move.to(element, duration, mid);
+        move.to(element, duration, third);
+        move.to(element, duration, end);
+        return function (canceled) {
+          if(canceled){
+            move.kill();
+          }
+        };
 
       };
       this.beforeAddClass = function(element, className, done){
