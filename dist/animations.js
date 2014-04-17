@@ -5,6 +5,7 @@ angular.module('animations.assist', [])
   return {
 
     emit: function(element, name, trigger){
+
       var $scope = angular.element(element).scope();
       return function (){
         $scope.$emit(trigger + name);
@@ -40,16 +41,16 @@ angular.module('animations.create', ['animations.assist'])
 .factory('FadeAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
   return function (effect){
     var inEffect        = effect.enter,
-          outEffect       = effect.leave,
-          outEffectLeave  = effect.inverse || effect.leave,
-          duration        = effect.duration,
-          enter,
-          leave,
-          move;
+        outEffect       = effect.leave,
+        outEffectLeave  = effect.inverse || effect.leave,
+        duration        = effect.duration,
+        enter,
+        leave,
+        move;
 
     this.enter = function(element, done){
       var options = Assist.parseClassList(element);
-
+      var emit;
       options.trigger ? inEffect.onComplete = Assist.emit(element, effect.animation, 'enter') : inEffect.onComplete = done;
       inEffect.ease = $window[options.ease].easeOut;
       TweenMax.set(element, outEffect);
@@ -59,21 +60,17 @@ angular.module('animations.create', ['animations.assist'])
           $timeout(function(){
             angular.element(element).remove();
           }, 300);
-        } else {
-          enter.resume();
         }
       };
     };
 
     this.leave = function(element, done){
       var options = Assist.parseClassList(element);
-      outEffect.onComplete = done;
-      outEffect.ease = $window[options.ease].easeIn;
+      options.trigger ? outEffectLeave.onComplete = Assist.emit(element, effect.animation, 'leave') : outEffectLeave.onComplete = done;
       TweenMax.set(element, inEffect);
       leave = TweenMax.to(element, duration, outEffectLeave);
       return function (canceled){
         if(canceled){
-
         }
       };
     };

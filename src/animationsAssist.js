@@ -5,6 +5,7 @@ angular.module('animations.assist', [])
   return {
 
     emit: function(element, name, trigger){
+
       var $scope = angular.element(element).scope();
       return function (){
         $scope.$emit(trigger + name);

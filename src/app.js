@@ -4,16 +4,38 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
 
   $scope.demo = {};
   $scope.demo.cards = [];
-  $scope.demo.count = 0;
+  $scope.demo.enters = 0;
+  $scope.demo.isPlay;
+  var cleanOut;
+  var playTime;
   function listeners(){
     angular.forEach($scope.demo.animations, function (className){
       $scope.$on('enter' + className, function(){
         $scope.$apply(function(){
-          $scope.demo.count +=1;
+          $scope.demo.enters +=1;
         });
       });
     });
   }
+
+  function populate(animation){
+    if(cleanOut){
+      $scope.demo.stop();
+    }
+    console.log($scope.demo.isPlay);
+    $scope.demo.mainAnimation = animation;
+    var pushToCards = function(data){
+      return function (){
+        $scope.demo.cards.push({'header': data, 'type': animation});
+      };
+    };
+    var i   = 1,
+        end = 10;
+    for( ; i < end; i++){
+      $timeout(pushToCards('Item: '+i), i * 300);
+    }
+  }
+
 
   $scope.demo.mainAnimation = null;
   $scope.demo.animations = [
@@ -37,28 +59,19 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     if($scope.demo.cards && $scope.demo.cards.length){
       $scope.demo.cards = [];
     }
-      $scope.demo.populate(animation);
+
+    populate(animation);
   };
 
-  $scope.demo.populate = function(animation){
-    $scope.demo.mainAnimation = animation;
-    var pushToCards = function(data){
-      return function (){
-        $scope.demo.cards.push({'header': data, 'type': animation});
-      };
-    };
-    var i   = 1,
-        end = 10;
-    for( ; i < end; i++){
-      $timeout(pushToCards('Item: '+i), i * 300);
-    }
-  };
+
 
   $scope.demo.removeCard = function(index){
     $scope.demo.cards.splice(index, 1);
   };
 
-  $scope.demo.erase = function(){
+
+
+   $scope.demo.erase = function(){
     $scope.demo.clean().then(function(){
       $scope.demo.mainAnimation = null;
     });
@@ -86,18 +99,24 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     if(animation){
       $scope.demo.mainAnimation = animation;
       $scope.demo.addCards(animation);
-      $timeout(function(){
+      cleanOut = $timeout(function(){
         $scope.demo.clean();
       }, 4000);
-      $timeout(function(){
+      playTime = $timeout(function(){
         $scope.demo.play(++index);
       }, 7000);
     }
   };
 
-  // $timeout(function(){
-  //   $scope.demo.play(0);
-  // }, 1500);
+  $scope.demo.stop = function(){
+    $timeout.cancel(cleanOut);
+    $timeout.cancel(playTime);
+    $scope.demo.isPlay = false;
+  };
+
+  $timeout(function(){
+    $scope.demo.play(0);
+  }, 1500);
 
 }]);
 
