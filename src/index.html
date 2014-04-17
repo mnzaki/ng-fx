@@ -12,9 +12,12 @@
       <div id="wrapper">
         <div id="sidebar-wrapper">
           <h2 class="side-bar-header">Animations</h2>
-          <div ng-repeat='animation in demo.animations' ng-class="{'animation-link': true,'active': animation === demo.mainAnimation}">
-            <a href ng-click='demo.addCards(animation)'>{{ animation }}</a>
+          <div id='side-bar-scroll'>
+            <div ng-repeat='animation in demo.animations' ng-class="{'animation-link': true,'active': animation === demo.mainAnimation}">
+              <a href ng-click='demo.addCards(animation)'>{{ animation }}</a>
+            </div>
           </div>
+          <h2 class="side-bar-header name">Scott Moss</h2>
         </div>
         <div class="container main">
           <main>
@@ -25,10 +28,10 @@
             </header>
             <div class="controls row">
               <a href ng-click='demo.play(0)'  class="btn btn-lg erase col-xs-2">Play</a>
-              <input ng-model='search' type="text" class="search {{ demo.mainAnimation }} col-xs-4 col-xs-offset-2" placeholder='type to filter'/>
+              <h3 ng-show='demo.count'class="ef-fade-up col-xs-5 col-xs-offset-3">Animations triggered: {{ demo.count }}</h3>
             </div>
             <div class="cards row">
-              <card class='col-xs-6 col-md-1 {{ demo.mainAnimation }} easing-elastic' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
+              <card class='col-xs-6 col-md-1 {{ "ef-"+demo.mainAnimation }}  ef-trigger ef-easing-bounce' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
                 <div class='card-content'>
                   <small>Animation: {{ card.type }}</small>
                 </div>

@@ -74,6 +74,11 @@ body {
   border-bottom: 2px white solid;
 }
 
+.name {
+  border-bottom: none;
+  border-top: 2px white solid;
+}
+
 #sidebar-wrapper {
   margin-left: -250px;
   left: 250px;
@@ -81,9 +86,14 @@ body {
   background: #2c3e50;
   position: fixed;
   height: 100%;
-  overflow-y: auto;
   z-index: 1000;
   font-family: 'Lato', sans-serif;
+  color: white;
+}
+
+#side-bar-scroll {
+  overflow-y: scroll;
+  height: 55%;
 }
 
 

@@ -4,6 +4,17 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
 
   $scope.demo = {};
   $scope.demo.cards = [];
+  $scope.demo.count = 0;
+  function listeners(){
+    angular.forEach($scope.demo.animations, function (className){
+      $scope.$on(className, function(){
+        $scope.demo.count += 1;
+        console.log($scope.demo.count);
+      });
+    });
+  }
+
+
 
   $scope.demo.mainAnimation = null;
   $scope.demo.animations = [
@@ -17,8 +28,11 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     'fade-up',
     'fade-up-big',
     'bounce-normal',
-    'bounce-down'
+    'bounce-down',
+    'bounce-left'
   ];
+
+  listeners();
 
   $scope.demo.addCards = function(animation){
     if($scope.demo.cards && $scope.demo.cards.length){
@@ -70,7 +84,6 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
 
   $scope.demo.play = function(index){
     var animation = $scope.demo.animations[index];
-    console.log('here');
     if(animation){
       $scope.demo.mainAnimation = animation;
       $scope.demo.addCards(animation);
@@ -104,4 +117,17 @@ app.directive('card', function(){
     '</div>'
   };
 });
+
+app.directive('remove', [ '$animate', function ($animate){
+  function link(scope, element, attrs){
+    scope.$on('fade-down', function(){
+      console.log('in remove');
+      element.remove();
+    });
+  }
+
+  return {
+    link: link
+  };
+}]);
 

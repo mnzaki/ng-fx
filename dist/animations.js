@@ -1,30 +1,37 @@
 angular.module('animations.create', [])
 
-.factory('Animation', ['$timeout', '$window', function ($timeout, $window){
+
+.filter('cap', function(){
+  return function (input){
+    return input.charAt(0).toUpperCase() + input.slice(1);
+  };
+})
+
+.factory('Animation', ['$timeout', '$window', '$filter', function ($timeout, $window, $filter){
   var getScope = function(e){
     return angular.element(e).scope();
   };
-  var complete = function(element, name){
+  var emit = function(element, name){
     var $scope = getScope(element);
     return function (){
       $scope.$emit(name);
     };
   };
 
-  var getEase = function(element){
-    var reg = /(easing-)\w*\D\w*/;
-    var classes = element[0].className.match(reg);
-    var ease;
-    if(classes){
-      ease = classes[0].split('-').splice(1);
-      ease = ease[0].split(' ')[0];
-      return ease;
-    }
-    return ease;
+  var parseClassList = function(element){
+    var list = element[0].classList,
+        results = {trigger: false, ease: 'Elastic'};
+    angular.forEach(list, function (className){
+      if(className.slice(0,9) === 'ef-easing'){
+        results.ease = ($filter('cap')(className.slice(10)));
+      }
+      if(className === 'ef-trigger'){
+        results.trigger = true;
+      }
+    });
+    return results;
   };
-  var convertElement = function(element){
-    return Array.prototype.slice.call(element);
-  };
+
   return {
     fade: function(effect){
       var inEffect        = effect.enter,
@@ -36,9 +43,10 @@ angular.module('animations.create', [])
           move;
 
       this.enter = function(element, done){
-        var easeType = getEase(convertElement(element)).cap();
-        inEffect.onComplete = complete(element, effect.class);
-        inEffect.ease = $window[easeType].easeOut;
+        var options = parseClassList(element);
+
+        options.trigger ? inEffect.onComplete = emit(element, effect.animation) : inEffect.onComplete = done;
+        inEffect.ease = $window[options.ease].easeOut;
         TweenMax.set(element, outEffect);
         enter = TweenMax.to(element, duration, inEffect);
         return function (canceled){
@@ -53,9 +61,9 @@ angular.module('animations.create', [])
       };
 
       this.leave = function(element, done){
-        var easeType = getEase(convertElement(element)).cap();
+        var options = parseClassList(element);
         outEffect.onComplete = done;
-        outEffect.ease = $window[easeType].easeIn;
+        outEffect.ease = $window[options.ease].easeIn;
         TweenMax.set(element, inEffect);
         leave = TweenMax.to(element, duration, outEffectLeave);
         return function (canceled){
@@ -130,7 +138,9 @@ angular.module('animations.create', [])
 
         return function (canceled){
           if(canceled){
-
+            $timeout(function(){
+              angular.element(element).remove();
+            }, 800);
           }
         };
       };
@@ -158,36 +168,33 @@ angular.module('animations.create', [])
   };
 }]);
 
-String.prototype.cap = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
 var fades = angular.module('animations.fades', ['animations.create']);
 
 
-fades.animation('.fade-normal', function (Animation){
+fades.animation('.ef-fade-normal', function (Animation){
   var effect = {
     enter: {opacity: 1},
     leave: {opacity: 0},
-    duration: 0.6,
-    class: 'fade-normal'
+    duration: 0.6
   };
 
   return new Animation.fade(effect);
 });
 
 
-fades.animation('.fade-down', function (Animation){
+fades.animation('.ef-fade-down', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform: 'translateY(-20px)'},
     duration: 0.8,
-    inverse: {opacity: 0, transform: 'translateY(20px)'}
+    inverse: {opacity: 0, transform: 'translateY(20px)'},
+    animation: 'fade-down'
   };
 
   return new Animation.fade(effect);
 });
 
-fades.animation('.fade-down-big', function (Animation){
+fades.animation('.ef-fade-down-big', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform: 'translateY(-2000px)'},
@@ -198,17 +205,18 @@ fades.animation('.fade-down-big', function (Animation){
   return new Animation.fade(effect);
 });
 
-fades.animation('.fade-left', function (Animation){
+fades.animation('.ef-fade-left', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform: 'translateX(-20px)'},
     inverse: {opacity: 0, transform: 'translateX(20px)'},
-    duration: 0.8
+    duration: 0.8,
+    animation: 'fade-left'
   };
   return new Animation.fade(effect);
 });
 
-fades.animation('.fade-left-big', function (Animation){
+fades.animation('.ef-fade-left-big', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform: 'translateX(-2000px)'},
@@ -219,7 +227,7 @@ fades.animation('.fade-left-big', function (Animation){
   return new Animation.fade(effect);
 });
 
-fades.animation('.fade-right', function (Animation){
+fades.animation('.ef-fade-right', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform:'translateX(20px)'},
@@ -230,7 +238,7 @@ fades.animation('.fade-right', function (Animation){
   return new Animation.fade(effect);
 });
 
-fades.animation('.fade-right-big', function (Animation){
+fades.animation('.ef-fade-right-big', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform:'translateX(2000px)'},
@@ -241,7 +249,7 @@ fades.animation('.fade-right-big', function (Animation){
   return new Animation.fade(effect);
 });
 
-fades.animation('.fade-up', function (Animation){
+fades.animation('.ef-fade-up', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform:'translateY(20px)'},
@@ -252,7 +260,7 @@ fades.animation('.fade-up', function (Animation){
   return new Animation.fade(effect);
 });
 
-fades.animation('.fade-up-big', function (Animation){
+fades.animation('.ef-fade-up-big', function (Animation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform:'translateY(2000px)'},
@@ -282,6 +290,18 @@ bounces.animation('.bounce-down', function (Animation){
     mid: {opacity: 1, transform: 'translateY(30px)'},
     third: {transform: 'translateY(-10px)'},
     end: {transform: 'translateY(0)'},
+    duration: 0.2
+  };
+
+  return new Animation.bounce(effect);
+});
+
+bounces.animation('.bounce-left', function (Animation){
+  var effect = {
+    first: {opacity: 0,  transform: 'translateX(-2000px)'},
+    mid: {opacity: 1, transform: 'translateX(30px)'},
+    third: {transform: 'translateX(-10px)'},
+    end: {transform: 'translateX(0)'},
     duration: 0.2
   };
 

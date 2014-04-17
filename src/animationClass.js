@@ -1,30 +1,37 @@
 angular.module('animations.create', [])
 
-.factory('Animation', ['$timeout', '$window', function ($timeout, $window){
+
+.filter('cap', function(){
+  return function (input){
+    return input.charAt(0).toUpperCase() + input.slice(1);
+  };
+})
+
+.factory('Animation', ['$timeout', '$window', '$filter', function ($timeout, $window, $filter){
   var getScope = function(e){
     return angular.element(e).scope();
   };
-  var complete = function(element, name){
+  var emit = function(element, name){
     var $scope = getScope(element);
     return function (){
       $scope.$emit(name);
     };
   };
 
-  var getEase = function(element){
-    var reg = /(easing-)\w*\D\w*/;
-    var classes = element[0].className.match(reg);
-    var ease;
-    if(classes){
-      ease = classes[0].split('-').splice(1);
-      ease = ease[0].split(' ')[0];
-      return ease;
-    }
-    return ease;
+  var parseClassList = function(element){
+    var list = element[0].classList,
+        results = {trigger: false, ease: 'Elastic'};
+    angular.forEach(list, function (className){
+      if(className.slice(0,9) === 'ef-easing'){
+        results.ease = ($filter('cap')(className.slice(10)));
+      }
+      if(className === 'ef-trigger'){
+        results.trigger = true;
+      }
+    });
+    return results;
   };
-  var convertElement = function(element){
-    return Array.prototype.slice.call(element);
-  };
+
   return {
     fade: function(effect){
       var inEffect        = effect.enter,
@@ -36,9 +43,10 @@ angular.module('animations.create', [])
           move;
 
       this.enter = function(element, done){
-        var easeType = getEase(convertElement(element)).cap();
-        inEffect.onComplete = complete(element, effect.class);
-        inEffect.ease = $window[easeType].easeOut;
+        var options = parseClassList(element);
+
+        options.trigger ? inEffect.onComplete = emit(element, effect.animation) : inEffect.onComplete = done;
+        inEffect.ease = $window[options.ease].easeOut;
         TweenMax.set(element, outEffect);
         enter = TweenMax.to(element, duration, inEffect);
         return function (canceled){
@@ -53,9 +61,9 @@ angular.module('animations.create', [])
       };
 
       this.leave = function(element, done){
-        var easeType = getEase(convertElement(element)).cap();
+        var options = parseClassList(element);
         outEffect.onComplete = done;
-        outEffect.ease = $window[easeType].easeIn;
+        outEffect.ease = $window[options.ease].easeIn;
         TweenMax.set(element, inEffect);
         leave = TweenMax.to(element, duration, outEffectLeave);
         return function (canceled){
@@ -130,7 +138,9 @@ angular.module('animations.create', [])
 
         return function (canceled){
           if(canceled){
-
+            $timeout(function(){
+              angular.element(element).remove();
+            }, 800);
           }
         };
       };
@@ -157,7 +167,3 @@ angular.module('animations.create', [])
     }
   };
 }]);
-
-String.prototype.cap = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};

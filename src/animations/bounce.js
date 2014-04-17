@@ -23,3 +23,15 @@ bounces.animation('.bounce-down', function (Animation){
 
   return new Animation.bounce(effect);
 });
+
+bounces.animation('.bounce-left', function (Animation){
+  var effect = {
+    first: {opacity: 0,  transform: 'translateX(-2000px)'},
+    mid: {opacity: 1, transform: 'translateX(30px)'},
+    third: {transform: 'translateX(-10px)'},
+    end: {transform: 'translateX(0)'},
+    duration: 0.2
+  };
+
+  return new Animation.bounce(effect);
+});
