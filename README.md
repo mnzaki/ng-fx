@@ -1,4 +1,4 @@
-ngAnimations.js
+ng-Effects
 ===============
 
 A conversion of animate.css into angular ngAnimate javascript. All animations are done in Javascript, no CSS.
