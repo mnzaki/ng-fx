@@ -72,11 +72,17 @@ body {
   color: white;
   margin-left: 20px;
   border-bottom: 2px white solid;
+  font-family: 'Lato', sans-serif;
+}
+
+#sidebar-wrapper img {
+  margin-left: 20px;
 }
 
 .name {
   border-bottom: none;
   border-top: 2px white solid;
+  font-family: 'Lato', sans-serif;
 }
 
 #sidebar-wrapper {
@@ -110,8 +116,4 @@ main {
 .main-header {
   font-family: 'Lato', sans-serif;
   padding-bottom: 5px;
-}
-
-i span {
-  font-size: 1.4em;
 }

@@ -8,13 +8,12 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
   function listeners(){
     angular.forEach($scope.demo.animations, function (className){
       $scope.$on(className, function(){
-        $scope.demo.count += 1;
-        console.log($scope.demo.count);
+        $scope.$apply(function(){
+          $scope.demo.count +=1;
+        });
       });
     });
   }
-
-
 
   $scope.demo.mainAnimation = null;
   $scope.demo.animations = [
@@ -89,10 +88,10 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
       $scope.demo.addCards(animation);
       $timeout(function(){
         $scope.demo.clean();
-      }, 3000);
+      }, 4000);
       $timeout(function(){
         $scope.demo.play(++index);
-      }, 6000);
+      }, 7000);
     }
   };
 

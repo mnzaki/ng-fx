@@ -18,17 +18,15 @@
             </div>
           </div>
           <h2 class="side-bar-header name">Scott Moss</h2>
+          <a href="https://github.com/hendrixer/ng-Effects"><img src="assets/GitHub-Mark/PNG/GitHub-Mark-Light-64px.png" /></a>
         </div>
         <div class="container main">
           <main>
             <header class='main-header text-center'>
-              <h1>ng-Animations.js</h1>
-              <a href="https://github.com/Hendrixer/ngAnimations.js"><img src="./assets/GitHub-Mark/PNG/GitHub-Mark-32px.png" /></a>
-              <i>Animation library for Angular by: <span>Scott Moss</span></i>
+              <h1>ng-Effects</h1>
             </header>
             <div class="controls row">
-              <a href ng-click='demo.play(0)'  class="btn btn-lg erase col-xs-2">Play</a>
-              <h3 ng-show='demo.count'class="ef-fade-up col-xs-5 col-xs-offset-3">Animations triggered: {{ demo.count }}</h3>
+              <h3 ng-show='demo.count > 1'class="ef-fade-up col-xs-5 col-xs-offset-3">Animations triggered: {{ demo.count }}</h3>
             </div>
             <div class="cards row">
               <card class='col-xs-6 col-md-1 {{ "ef-"+demo.mainAnimation }}  ef-trigger ef-easing-bounce' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
