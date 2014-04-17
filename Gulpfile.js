@@ -4,6 +4,7 @@ var gulp    = require('gulp'),
 
 var paths = {
   animations: [
+  './src/animationsAssist.js',
   './src/animationClass.js',
   './src/animations/fade.js',
   './src/animations/bounce.js',

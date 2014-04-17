@@ -72,6 +72,17 @@ body {
   color: white;
   margin-left: 20px;
   border-bottom: 2px white solid;
+  font-family: 'Lato', sans-serif;
+}
+
+#sidebar-wrapper img {
+  margin-left: 20px;
+}
+
+.name {
+  border-bottom: none;
+  border-top: 2px white solid;
+  font-family: 'Lato', sans-serif;
 }
 
 #sidebar-wrapper {
@@ -81,9 +92,14 @@ body {
   background: #2c3e50;
   position: fixed;
   height: 100%;
-  overflow-y: auto;
   z-index: 1000;
   font-family: 'Lato', sans-serif;
+  color: white;
+}
+
+#side-bar-scroll {
+  overflow-y: auto;
+  height: 55%;
 }
 
 
@@ -100,8 +116,4 @@ main {
 .main-header {
   font-family: 'Lato', sans-serif;
   padding-bottom: 5px;
-}
-
-i span {
-  font-size: 1.4em;
 }
