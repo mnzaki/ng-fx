@@ -1,7 +1,7 @@
 var fades = angular.module('animations.fades', ['animations.create']);
 
 
-fades.animation('.ef-fade-normal', function (Animation){
+fades.animation('.ef-fade-normal', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1},
     leave: {opacity: 0},
@@ -9,11 +9,11 @@ fades.animation('.ef-fade-normal', function (Animation){
     animation: 'fade-normal'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
 
-fades.animation('.ef-fade-down', function (Animation){
+fades.animation('.ef-fade-down', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform: 'translateY(-20px)'},
@@ -22,10 +22,10 @@ fades.animation('.ef-fade-down', function (Animation){
     animation: 'fade-down'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
-fades.animation('.ef-fade-down-big', function (Animation){
+fades.animation('.ef-fade-down-big', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform: 'translateY(-2000px)'},
@@ -34,10 +34,10 @@ fades.animation('.ef-fade-down-big', function (Animation){
     animation: 'fade-down-big'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
-fades.animation('.ef-fade-left', function (Animation){
+fades.animation('.ef-fade-left', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform: 'translateX(-20px)'},
@@ -45,10 +45,10 @@ fades.animation('.ef-fade-left', function (Animation){
     duration: 0.8,
     animation: 'fade-left'
   };
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
-fades.animation('.ef-fade-left-big', function (Animation){
+fades.animation('.ef-fade-left-big', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform: 'translateX(-2000px)'},
@@ -57,10 +57,10 @@ fades.animation('.ef-fade-left-big', function (Animation){
     animation: 'fade-left-big'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
-fades.animation('.ef-fade-right', function (Animation){
+fades.animation('.ef-fade-right', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform:'translateX(20px)'},
@@ -69,10 +69,10 @@ fades.animation('.ef-fade-right', function (Animation){
     animation: 'fade-right'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
-fades.animation('.ef-fade-right-big', function (Animation){
+fades.animation('.ef-fade-right-big', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateX(0)'},
     leave: {opacity: 0, transform:'translateX(2000px)'},
@@ -81,10 +81,10 @@ fades.animation('.ef-fade-right-big', function (Animation){
     animation: 'fade-right-big'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
-fades.animation('.ef-fade-up', function (Animation){
+fades.animation('.ef-fade-up', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform:'translateY(20px)'},
@@ -93,10 +93,10 @@ fades.animation('.ef-fade-up', function (Animation){
     animation: 'fade-up'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });
 
-fades.animation('.ef-fade-up-big', function (Animation){
+fades.animation('.ef-fade-up-big', function (FadeAnimation){
   var effect = {
     enter: {opacity: 1, transform: 'translateY(0)'},
     leave: {opacity: 0, transform:'translateY(2000px)'},
@@ -105,5 +105,5 @@ fades.animation('.ef-fade-up-big', function (Animation){
     animation: 'fade-up-big'
   };
 
-  return new Animation.fade(effect);
+  return new FadeAnimation(effect);
 });

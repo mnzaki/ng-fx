@@ -1,40 +1,11 @@
-angular.module('animations.create', [])
+angular.module('animations.create', ['animations.assist'])
 
 
-.filter('cap', function(){
-  return function (input){
-    return input.charAt(0).toUpperCase() + input.slice(1);
-  };
-})
 
-.factory('Animation', ['$timeout', '$window', '$filter', function ($timeout, $window, $filter){
-  var getScope = function(e){
-    return angular.element(e).scope();
-  };
-  var emit = function(element, name){
-    var $scope = getScope(element);
-    return function (){
-      $scope.$emit(name);
-    };
-  };
 
-  var parseClassList = function(element){
-    var list = element[0].classList,
-        results = {trigger: false, ease: 'Elastic'};
-    angular.forEach(list, function (className){
-      if(className.slice(0,9) === 'ef-easing'){
-        results.ease = ($filter('cap')(className.slice(10)));
-      }
-      if(className === 'ef-trigger'){
-        results.trigger = true;
-      }
-    });
-    return results;
-  };
-
-  return {
-    fade: function(effect){
-      var inEffect        = effect.enter,
+.factory('FadeAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
+  return function (effect){
+    var inEffect        = effect.enter,
           outEffect       = effect.leave,
           outEffectLeave  = effect.inverse || effect.leave,
           duration        = effect.duration,
@@ -42,71 +13,73 @@ angular.module('animations.create', [])
           leave,
           move;
 
-      this.enter = function(element, done){
-        var options = parseClassList(element);
+    this.enter = function(element, done){
+      var options = Assist.parseClassList(element);
 
-        options.trigger ? inEffect.onComplete = emit(element, effect.animation) : inEffect.onComplete = done;
-        inEffect.ease = $window[options.ease].easeOut;
-        TweenMax.set(element, outEffect);
-        enter = TweenMax.to(element, duration, inEffect);
-        return function (canceled){
-          if(canceled){
-            $timeout(function(){
-              angular.element(element).remove();
-            }, 300);
-          } else {
-            enter.resume();
-          }
-        };
-      };
-
-      this.leave = function(element, done){
-        var options = parseClassList(element);
-        outEffect.onComplete = done;
-        outEffect.ease = $window[options.ease].easeIn;
-        TweenMax.set(element, inEffect);
-        leave = TweenMax.to(element, duration, outEffectLeave);
-        return function (canceled){
-          if(canceled){
-
-          }
-        };
-      };
-
-      this.move = function(element, done){
-        console.log('move');
-        inEffect.onComplete = done;
-        TweenMax.set(element, outEffect);
-        move = TweenMax.to(element. duration, inEffect);
-        return function (canceled){
-          if(canceled){
-
-            move.kill();
-          }
-        };
-      };
-
-      this.beforeAddClass = function(element, className, done){
-        outEffect.onComplete = done;
-        if(className === 'ng-hide'){
-          TweenMax.to(element, duration, outEffectLeave);
+      options.trigger ? inEffect.onComplete = Assist.emit(element, effect.animation, 'enter') : inEffect.onComplete = done;
+      inEffect.ease = $window[options.ease].easeOut;
+      TweenMax.set(element, outEffect);
+      enter = TweenMax.to(element, duration, inEffect);
+      return function (canceled){
+        if(canceled){
+          $timeout(function(){
+            angular.element(element).remove();
+          }, 300);
         } else {
-          done();
+          enter.resume();
         }
       };
+    };
 
-      this.removeClass = function(element, className, done){
-        inEffect.onComplete = done;
-        if(className === 'ng-hide'){
-          TweenMax.set(element, outEffect);
-          TweenMax.to(element, duration, inEffect);
-        } else {
-          done();
+    this.leave = function(element, done){
+      var options = Assist.parseClassList(element);
+      outEffect.onComplete = done;
+      outEffect.ease = $window[options.ease].easeIn;
+      TweenMax.set(element, inEffect);
+      leave = TweenMax.to(element, duration, outEffectLeave);
+      return function (canceled){
+        if(canceled){
+
         }
       };
-    },
+    };
 
-    bounce: function(effect){
+    this.move = function(element, done){
+      console.log('move');
+      inEffect.onComplete = done;
+      TweenMax.set(element, outEffect);
+      move = TweenMax.to(element. duration, inEffect);
+      return function (canceled){
+        if(canceled){
+
+          move.kill();
+        }
+      };
+    };
+
+    this.beforeAddClass = function(element, className, done){
+      outEffect.onComplete = done;
+      if(className === 'ng-hide'){
+        TweenMax.to(element, duration, outEffectLeave);
+      } else {
+        done();
+      }
+    };
+
+    this.removeClass = function(element, className, done){
+      inEffect.onComplete = done;
+      if(className === 'ng-hide'){
+        TweenMax.set(element, outEffect);
+        TweenMax.to(element, duration, inEffect);
+      } else {
+        done();
+      }
+    };
+  };
+}])
+
+.factory('BounceAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
+    return function (effect){
       var start     = effect.first,
           mid       = effect.mid,
           third     = effect.third,
@@ -164,6 +137,6 @@ angular.module('animations.create', [])
       this.removeClass = function(element, className, done){
 
       };
-    }
-  };
+    };
 }]);
+

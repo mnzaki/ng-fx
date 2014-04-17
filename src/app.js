@@ -7,7 +7,7 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
   $scope.demo.count = 0;
   function listeners(){
     angular.forEach($scope.demo.animations, function (className){
-      $scope.$on(className, function(){
+      $scope.$on('enter' + className, function(){
         $scope.$apply(function(){
           $scope.demo.count +=1;
         });
