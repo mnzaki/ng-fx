@@ -26,10 +26,10 @@
               <h1>ng-Fx</h1>
             </header>
             <div class="controls row">
-              <h3 ng-show='demo.enters' class="ef-fade-up col-xs-10 col-xs-offset-4 ">Animations triggered: {{ demo.enters }}</h3>
+              <h3 ng-show='demo.enters' class="fx-fade-up col-xs-10 col-xs-offset-4 ">Animations triggered: {{ demo.enters }}</h3>
             </div>
             <div class="cards row">
-              <card class='col-xs-6 col-md-1 {{ "ef-"+demo.mainAnimation }}  ef-trigger ef-easing-back' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
+              <card class='col-xs-6 col-md-1 {{ "fx-"+demo.mainAnimation }}  fx-trigger fx-easing-back' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
                 <div class='card-content'>
                   <small>Animation: {{ card.type }}</small>
                 </div>

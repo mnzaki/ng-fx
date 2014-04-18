@@ -16,10 +16,10 @@ angular.module('animations.assist', [])
       var list = element[0].classList,
           results = {trigger: false, ease: 'Elastic'};
       angular.forEach(list, function (className){
-        if(className.slice(0,9) === 'ef-easing'){
+        if(className.slice(0,9) === 'fx-easing'){
           results.ease = ($filter('cap')(className.slice(10)));
         }
-        if(className === 'ef-trigger'){
+        if(className === 'fx-trigger'){
           results.trigger = true;
         }
       });
