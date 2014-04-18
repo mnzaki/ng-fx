@@ -32,12 +32,12 @@ angular.module('animations.assist', [])
 
     addTimer: function(options, element, end){
       var self = this;
-      var time = options.duration;
+      var time = options.stagger ? (options.duration * 3) * 1000 : options.duration * 1000;
       var timer = $timeout(function(){
         if(options.trigger){
           self.emit(element, options.animation, options.motion);
         }
-      }, time * 1000).then(end);
+      }, time).then(end);
       element.data(options.timeoutKey, timer);
     },
     removeTimer: function(element, timeoutKey, timer){
