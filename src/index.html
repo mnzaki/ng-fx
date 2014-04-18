@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-css-only/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset='UTF-8'>
-    <title>ng-Animations</title>
+    <title>ng-Fx</title>
   </head>
   <body>
     <div ng-controller='MainController'>
@@ -23,13 +23,29 @@
         <div class="container main">
           <main>
             <header class='main-header text-center'>
-              <h1>ng-Fx</h1>
+              <h1 ng-click='demo.shuffle()'>ng-Fx</h1>
             </header>
-            <div class="controls row">
-              <h3 ng-show='demo.enters' class="fx-fade-up col-xs-10 col-xs-offset-4 ">Animations triggered: {{ demo.enters }}</h3>
+            <div class="controls row ">
+              <h2>options</h2>
+              <div class="col-xs-1 options1">
+                <a class="btn btn-lrg  btn-green dropdown-toggle">Easings</a>
+                <ul class="dropdown-menu">
+                  <li ng-repeat='ease in demo.easings'>
+                    <a ng-click='demo.setEase(ease)'class="selects">{{ ease }}</a>
+                  </li>
+                </ul>
+              </div>
+                <div class="col-xs-1 options2">
+                  <a class="btn btn-lrg  btn-green dropdown-toggle">Speed</a>
+                  <ul class="dropdown-menu">
+                    <li ng-repeat='speed in demo.speeds'>
+                      <a ng-click='demo.setSpeed(speed)'class="selects">{{ speed }} ms</a>
+                    </li>
+                  </ul>
+                </div>
             </div>
             <div class="cards row">
-              <card class='col-xs-6 col-md-1 {{ "fx-"+demo.mainAnimation }}  fx-trigger fx-easing-back' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
+              <card class='col-xs-6 col-md-1 {{ "fx-"+demo.mainAnimation }} fx-speed-{{ demo.speed || 500 }} fx-trigger fx-easing-{{ demo.ease }}' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
                 <div class='card-content'>
                   <small>Animation: {{ card.type }}</small>
                 </div>
@@ -42,6 +58,7 @@
     <script src="../bower_components/gsap/src/minified/TweenMax.min.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/bootstrap-custom/ui-bootstrap-custom-0.10.0.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>

@@ -117,3 +117,25 @@ main {
   font-family: 'Lato', sans-serif;
   padding-bottom: 5px;
 }
+
+.selects {
+  cursor: pointer;
+}
+
+.btn-green, .btn-green:hover {
+  background-color: #16a085;
+  color: white;
+  text-decoration: none;
+}
+.options1, .options2 {
+  border: solid #2c3e50 5px;
+  padding: 10px;
+}
+.options1 {
+  border-right: none;
+}
+
+.options2 {
+  border-left: none;
+  width: 95px;
+}

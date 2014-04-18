@@ -1,42 +1,18 @@
-var app = angular.module('app', ['ngAnimate', 'animations']);
+var app = angular.module('app', ['ngAnimate', 'animations', 'ui.bootstrap']);
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
 
   $scope.demo = {};
   $scope.demo.cards = [];
-  $scope.demo.enters = 0;
-  $scope.demo.isPlay;
-  var cleanOut;
-  var playTime;
-  function listeners(){
-    angular.forEach($scope.demo.animations, function (className){
-      $scope.$on('enter' + className, function(){
-        $scope.$apply(function(){
-          $scope.demo.enters +=1;
-        });
-      });
-    });
-  }
-
-  function populate(animation){
-    if(cleanOut){
-      $scope.demo.stop();
-    }
-    console.log($scope.demo.isPlay);
-    $scope.demo.mainAnimation = animation;
-    var pushToCards = function(data){
-      return function (){
-        $scope.demo.cards.push({'header': data, 'type': animation});
-      };
-    };
-    var i   = 1,
-        end = 10;
-    for( ; i < end; i++){
-      $timeout(pushToCards('Item: '+i), i * 300);
+  $scope.demo.ease = 'cubic';
+  $scope.demo.speed = 500;
+  $scope.demo.speeds = [100];
+  getSpeeds();
+  function getSpeeds(){
+    for(var i = 200; i < 1500; i+=100){
+      $scope.demo.speeds.push(i);
     }
   }
-
-
   $scope.demo.mainAnimation = null;
   $scope.demo.animations = [
     'fade-normal',
@@ -53,23 +29,64 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     'bounce-left'
   ];
 
-  listeners();
+  $scope.demo.easings = [
+    'quad',
+    'cubic',
+    'quart',
+    'quint',
+    'strong',
+    'back',
+    'bounce',
+    'circ',
+    'elastic',
+    'expo',
+    'sine'
+  ];
+
+
+  $scope.demo.setSpeed = function(speed){
+    $scope.demo.speed = speed;
+  };
+
+  $scope.demo.setEase = function(ease){
+    $scope.demo.ease = ease;
+  };
+
+  var cleanOut;
+  var playTime;
+
+  function populate(animation){
+    if(cleanOut){
+      $scope.demo.stop();
+    }
+
+    $scope.demo.mainAnimation = animation;
+    var pushToCards = function(data){
+      return function (){
+        $scope.demo.cards.push({'header': data, 'type': animation});
+      };
+    };
+    var i   = 1,
+        end = 10;
+    for( ; i < end; i++){
+      $timeout(pushToCards('Item: '+i), i * 300);
+    }
+  }
 
   $scope.demo.addCards = function(animation){
     if($scope.demo.cards && $scope.demo.cards.length){
-      $scope.demo.cards = [];
+      $scope.demo.clean().then(function(){
+        populate(animation);
+      });
+    } else {
+      populate(animation);
+
     }
-
-    populate(animation);
   };
-
-
 
   $scope.demo.removeCard = function(index){
     $scope.demo.cards.splice(index, 1);
   };
-
-
 
    $scope.demo.erase = function(){
     $scope.demo.clean().then(function(){
@@ -82,7 +99,7 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     var popCards = function(index){
       return function(){
         $scope.demo.cards.pop();
-        if(index >= 8){
+        if(!$scope.demo.cards.length){
 
           dfrd.resolve(index);
         }
@@ -101,17 +118,16 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
       $scope.demo.addCards(animation);
       cleanOut = $timeout(function(){
         $scope.demo.clean();
-      }, 4000);
+      }, $scope.demo.speed * 6);
       playTime = $timeout(function(){
         $scope.demo.play(++index);
-      }, 7000);
+      }, $scope.demo.speed * 14);
     }
   };
 
   $scope.demo.stop = function(){
     $timeout.cancel(cleanOut);
     $timeout.cancel(playTime);
-    $scope.demo.isPlay = false;
   };
 
   $timeout(function(){
