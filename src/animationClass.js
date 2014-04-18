@@ -8,55 +8,80 @@ angular.module('animations.create', ['animations.assist'])
     var inEffect        = effect.enter,
         outEffect       = effect.leave,
         outEffectLeave  = effect.inverse || effect.leave,
-        duration        = effect.duration,
-        enter,
-        leave,
-        move;
+        fx_type         = effect.animation,
+        timeoutKey      = '$$fxTimer';
+
+
 
     this.enter = function(element, done){
       var options = Assist.parseClassList(element);
-      var emit;
-      options.trigger ? inEffect.onComplete = Assist.emit(element, effect.animation, 'enter') : inEffect.onComplete = done;
+      options.motion = 'enter';
+      options.animation = fx_type;
+      options.timeoutKey = timeoutKey;
+      Assist.addTimer(options, element, done);
       inEffect.ease = $window[options.ease].easeOut;
       TweenMax.set(element, outEffect);
-      enter = TweenMax.to(element, duration, inEffect);
+      TweenMax.to(element, options.duration, inEffect);
+
       return function (canceled){
-        if(canceled){
-          $timeout(function(){
-            angular.element(element).remove();
-          }, 300);
+        var timer = element.data(timeoutKey);
+        if(timer){
+          Assist.removeTimer(element, timeoutKey, timer);
         }
       };
     };
 
     this.leave = function(element, done){
       var options = Assist.parseClassList(element);
-      options.trigger ? outEffectLeave.onComplete = Assist.emit(element, effect.animation, 'leave') : outEffectLeave.onComplete = done;
+      options.motion = 'leave';
+      options.animation = fx_type;
+      options.timeoutKey = timeoutKey;
+      Assist.addTimer(options, element, done);
+      outEffectLeave.ease = $window[options.ease].easeIn;
       TweenMax.set(element, inEffect);
-      leave = TweenMax.to(element, duration, outEffectLeave);
+      TweenMax.to(element, options.duration, outEffectLeave);
       return function (canceled){
-        if(canceled){
+        var timer = element.data(timeoutKey);
+        if(timer){
+          Assist.removeTimer(element, timeoutKey, timer);
         }
       };
     };
 
     this.move = function(element, done){
-      console.log('move');
-      inEffect.onComplete = done;
+      var options = Assist.parseClassList(element);
+      options.motion = 'move';
+      options.animation = fx_type;
+      options.timeoutKey = timeoutKey;
+      Assist.addTimer(options, element, done);
       TweenMax.set(element, outEffect);
-      move = TweenMax.to(element. duration, inEffect);
+      TweenMax.to(element, options.duration, inEffect);
       return function (canceled){
         if(canceled){
-
-          move.kill();
+          var timer = element.data(timeoutKey);
+          if(timer){
+            Assist.removeTimer(element, timeoutKey, timer);
+          }
         }
       };
     };
 
     this.beforeAddClass = function(element, className, done){
-      outEffect.onComplete = done;
-      if(className === 'ng-hide'){
-        TweenMax.to(element, duration, outEffectLeave);
+      if(className === 'ng-hide' && className.hide){
+        var options = Assist.parseClassList(element);
+        options.motion = 'enter';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        Assist.addTimer(options, element, done);
+        TweenMax.to(element, options.duration, outEffectLeave);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
       } else {
         done();
       }
@@ -64,9 +89,21 @@ angular.module('animations.create', ['animations.assist'])
 
     this.removeClass = function(element, className, done){
       inEffect.onComplete = done;
-      if(className === 'ng-hide'){
+      if(className === 'ng-hide' && className.show){
+        var options = Assist.parseClassList(element);
+        options.motion = 'enter';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
         TweenMax.set(element, outEffect);
-        TweenMax.to(element, duration, inEffect);
+        TweenMax.to(element, options.duration, inEffect);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
       } else {
         done();
       }
@@ -106,11 +143,7 @@ angular.module('animations.create', ['animations.assist'])
         leave.to(element, duration, start);
 
         return function (canceled){
-          if(canceled){
-            $timeout(function(){
-              angular.element(element).remove();
-            }, 800);
-          }
+
         };
       };
       this.move = function(element, done){
