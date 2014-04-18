@@ -32,12 +32,12 @@ angular.module('animations.assist', [])
 
     addTimer: function(options, element, end){
       var self = this;
-      var time = options.duration;
+      var time = options.stagger ? (options.duration * 3) * 1000 : options.duration * 1000;
       var timer = $timeout(function(){
         if(options.trigger){
           self.emit(element, options.animation, options.motion);
         }
-      }, time * 1000).then(end);
+      }, time).then(end);
       element.data(options.timeoutKey, timer);
     },
     removeTimer: function(element, timeoutKey, timer){
@@ -167,37 +167,53 @@ angular.module('animations.create', ['animations.assist'])
 
 .factory('BounceAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
     return function (effect){
-      var start     = effect.first,
-          mid       = effect.mid,
-          third     = effect.third,
-          end       = effect.end,
-          duration  = effect.duration;
+      var start       = effect.first,
+          mid         = effect.mid,
+          third       = effect.third,
+          end         = effect.end,
+          fx_type     = effect.animation,
+          timeoutKey  = '$$fxTimer';
 
       this.enter = function(element, done){
-        end.onComplete = done;
+        var options = Assist.parseClassList(element);
+        options.motion = 'enter';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
         var enter = new TimelineMax();
         enter.to(element, start);
-        enter.to(element, duration, mid);
-        enter.to(element, duration, third);
-        enter.to(element, duration, end);
-        return function (canceled) {
+        enter.to(element, options.duration, mid);
+        enter.to(element, options.duration, third);
+        enter.to(element, options.duration, end);
+        return function (canceled){
           if(canceled){
-            $timeout(function(){
-              angular.element(element).remove();
-            }, 800);
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
           }
         };
       };
       this.leave = function(element, done){
-        start.onComplete = done;
+        var options = Assist.parseClassList(element);
+        options.motion = 'leave';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
         var leave = new TimelineMax();
         leave.to(element, end);
-        leave.to(element, duration, third);
-        leave.to(element, duration, mid);
-        leave.to(element, duration, start);
-
+        leave.to(element, options.duration, third);
+        leave.to(element, options.duration, mid);
+        leave.to(element, options.duration, start);
         return function (canceled){
-
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
         };
       };
       this.move = function(element, done){
@@ -341,7 +357,7 @@ bounces.animation('.fx-bounce-normal', function (BounceAnimation){
     mid: {opacity: 1, transform: 'scale(1.05)'},
     third: {transform: 'scale(.9)'},
     end: {opacity: 1, transform: 'scale(1)'},
-    duration: 0.2
+    animation: 'bounce-normal'
   };
 
   return new BounceAnimation(effect);
@@ -353,7 +369,7 @@ bounces.animation('.fx-bounce-down', function (BounceAnimation){
     mid: {opacity: 1, transform: 'translateY(30px)'},
     third: {transform: 'translateY(-10px)'},
     end: {transform: 'translateY(0)'},
-    duration: 0.2
+    animation: 'bounce-down'
   };
 
   return new BounceAnimation(effect);
@@ -365,7 +381,7 @@ bounces.animation('.fx-bounce-left', function (BounceAnimation){
     mid: {opacity: 1, transform: 'translateX(30px)'},
     third: {transform: 'translateX(-10px)'},
     end: {transform: 'translateX(0)'},
-    duration: 0.2
+    animation: 'bounce-left'
   };
 
   return new BounceAnimation(effect);

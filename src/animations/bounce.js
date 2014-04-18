@@ -6,7 +6,7 @@ bounces.animation('.fx-bounce-normal', function (BounceAnimation){
     mid: {opacity: 1, transform: 'scale(1.05)'},
     third: {transform: 'scale(.9)'},
     end: {opacity: 1, transform: 'scale(1)'},
-    duration: 0.2
+    animation: 'bounce-normal'
   };
 
   return new BounceAnimation(effect);
@@ -18,7 +18,7 @@ bounces.animation('.fx-bounce-down', function (BounceAnimation){
     mid: {opacity: 1, transform: 'translateY(30px)'},
     third: {transform: 'translateY(-10px)'},
     end: {transform: 'translateY(0)'},
-    duration: 0.2
+    animation: 'bounce-down'
   };
 
   return new BounceAnimation(effect);
@@ -30,7 +30,7 @@ bounces.animation('.fx-bounce-left', function (BounceAnimation){
     mid: {opacity: 1, transform: 'translateX(30px)'},
     third: {transform: 'translateX(-10px)'},
     end: {transform: 'translateX(0)'},
-    duration: 0.2
+    animation: 'bounce-left'
   };
 
   return new BounceAnimation(effect);

@@ -113,37 +113,53 @@ angular.module('animations.create', ['animations.assist'])
 
 .factory('BounceAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
     return function (effect){
-      var start     = effect.first,
-          mid       = effect.mid,
-          third     = effect.third,
-          end       = effect.end,
-          duration  = effect.duration;
+      var start       = effect.first,
+          mid         = effect.mid,
+          third       = effect.third,
+          end         = effect.end,
+          fx_type     = effect.animation,
+          timeoutKey  = '$$fxTimer';
 
       this.enter = function(element, done){
-        end.onComplete = done;
+        var options = Assist.parseClassList(element);
+        options.motion = 'enter';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
         var enter = new TimelineMax();
         enter.to(element, start);
-        enter.to(element, duration, mid);
-        enter.to(element, duration, third);
-        enter.to(element, duration, end);
-        return function (canceled) {
+        enter.to(element, options.duration, mid);
+        enter.to(element, options.duration, third);
+        enter.to(element, options.duration, end);
+        return function (canceled){
           if(canceled){
-            $timeout(function(){
-              angular.element(element).remove();
-            }, 800);
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
           }
         };
       };
       this.leave = function(element, done){
-        start.onComplete = done;
+        var options = Assist.parseClassList(element);
+        options.motion = 'leave';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
         var leave = new TimelineMax();
         leave.to(element, end);
-        leave.to(element, duration, third);
-        leave.to(element, duration, mid);
-        leave.to(element, duration, start);
-
+        leave.to(element, options.duration, third);
+        leave.to(element, options.duration, mid);
+        leave.to(element, options.duration, start);
         return function (canceled){
-
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
         };
       };
       this.move = function(element, done){
