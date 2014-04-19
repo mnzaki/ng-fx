@@ -5,7 +5,7 @@ ng-Fx
 
 ## Dependencies
 + Angular.js (1.2+)
-+ ng-Animate 
++ ng-Animate
 + [GSAP.js](http://www.greensock.com/gsap-js/)
 
 ## Downloading
@@ -13,12 +13,12 @@ ng-Fx
     + ```bower install ng-Fx --save```
 2. Or, from this repo
   + you'll need the main file in ```dist/ng-fx.js```
-  + [TweenMax](https://github.com/greensock/GreenSock-JS/) library from GSAP 
+  + [TweenMax](https://github.com/greensock/GreenSock-JS/) library from GSAP
   + [ng-Animate](http://google.com)
 
 ## Installing
 1. Include ```ng-animate.js``` and ```ng-fx.js``` into your html with script tags
-2. Include the dependencies into your angular app,  ```fx.animations``` 
+2. Include the dependencies into your angular app,  ```fx.animations```
 ```javascript
 angular.module('myApp', ['ng-animate', 'fx.animations'])
 ```
@@ -107,7 +107,3 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
   + if you're submitting new animations:
     + ```(new fx) added 3d rotation animation ```
 + Submit issues as you see them. There are probably better, faster, easier ways to achieve what ng-Fx is designed to do so.
-
-     
-
-

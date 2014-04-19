@@ -131,11 +131,13 @@ angular.module('app', ['ngAnimate', 'fx.animations', 'ui.bootstrap'])
   $scope.demo.stop = function(){
     $timeout.cancel(cleanOut);
     $timeout.cancel(playTime);
+    cleanOut = false;
+    playTime = false;
   };
 
-  // $timeout(function(){
-  //   $scope.demo.play(0);
-  // }, 1500);
+  $timeout(function(){
+    $scope.demo.play(0);
+  }, 2000);
 
 }])
 
