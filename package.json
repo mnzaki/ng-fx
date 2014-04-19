@@ -1,0 +1,27 @@
+{
+  "name": "ng-Fx",
+  "version": "0.0.0",
+  "description": "ng-Fx ===============",
+  "main": "Gulpfile.js",
+  "dependencies": {
+    "gulp": "~3.6.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-ngmin": "~0.2.0",
+    "gulp-notify": "~1.2.5",
+    "gulp-uglify": "~0.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hendrixer/ng-Fx.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hendrixer/ng-Fx/issues"
+  },
+  "homepage": "https://github.com/Hendrixer/ng-Fx"
+}
