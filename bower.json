@@ -31,8 +31,5 @@
     "angular-animate": "~1.2.16",
     "angular": "*",
     "gsap": "~1.11.6"
-  },
-  "devDependencies": {
-    "bootstrap-css-only": "*"
   }
 }
