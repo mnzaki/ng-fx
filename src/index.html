@@ -11,13 +11,13 @@
     <div ng-controller='MainController'>
       <div id="wrapper">
         <div id="sidebar-wrapper">
-          <h2 class="side-bar-header">Animations</h2>
+          <h2 class="side-bar-header" remove>Animations</h2>
           <div id='side-bar-scroll'>
-            <div ng-repeat='animation in demo.animations' ng-class="{'animation-link': true,'active': animation === demo.mainAnimation}">
-              <a id='{{ animation }}'href ng-click='demo.addCards(animation)'>{{ animation }}</a>
+            <div ng-click='demo.addCards(animation)' ng-repeat='animation in demo.animations' ng-class="{'animation-link': true,'active': animation === demo.mainAnimation}">
+              <a id='{{ animation }}'href >{{ animation }}</a>
             </div>
           </div>
-          <h2 class="side-bar-header name">Scott Moss</h2>
+          <h3 class="side-bar-header name">by Scott Moss</h3>
           <a href="https://github.com/hendrixer/ng-Effects"><img src="assets/GitHub-Mark/PNG/GitHub-Mark-Light-64px.png" /></a>
         </div>
         <div class="container main">

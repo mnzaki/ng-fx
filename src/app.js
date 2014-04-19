@@ -1,6 +1,6 @@
-var app = angular.module('app', ['ngAnimate', 'animations', 'ui.bootstrap']);
+angular.module('app', ['ngAnimate', 'fx.animations', 'ui.bootstrap'])
 
-app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
+.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
 
   $scope.demo = {};
   $scope.demo.cards = [];
@@ -8,11 +8,14 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
   $scope.demo.speed = 500;
   $scope.demo.speeds = [100];
   getSpeeds();
+
+
   function getSpeeds(){
     for(var i = 200; i < 1500; i+=100){
       $scope.demo.speeds.push(i);
     }
   }
+
   $scope.demo.mainAnimation = null;
   $scope.demo.animations = [
     'fade-normal',
@@ -130,13 +133,13 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     $timeout.cancel(playTime);
   };
 
-  $timeout(function(){
-    $scope.demo.play(0);
-  }, 1500);
+  // $timeout(function(){
+  //   $scope.demo.play(0);
+  // }, 1500);
 
-}]);
+}])
 
-app.directive('card', function(){
+.directive('card', function(){
   return {
     restrict: 'E',
     scope: {
@@ -152,16 +155,4 @@ app.directive('card', function(){
   };
 });
 
-app.directive('remove', [ '$animate', function ($animate){
-  function link(scope, element, attrs){
-    scope.$on('fade-down', function(){
-      console.log('in remove');
-      element.remove();
-    });
-  }
-
-  return {
-    link: link
-  };
-}]);
 

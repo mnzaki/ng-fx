@@ -53,11 +53,13 @@ body {
   font-size: 1.2em;
   margin-left: 20px;
   margin-top: 8px;
+  cursor: pointer;
 }
 
 .animation-link a {
   color: white;
   margin-top: 3px;
+
 }
 
 .animation-link:hover, .animation-link.active {
