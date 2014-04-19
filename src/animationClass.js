@@ -1,4 +1,4 @@
-angular.module('animations.create', ['animations.assist'])
+angular.module('fx.animations.create', ['fx.animations.assist'])
 
 
 

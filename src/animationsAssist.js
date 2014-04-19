@@ -1,4 +1,4 @@
-angular.module('animations.assist', [])
+angular.module('fx.animations.assist', [])
 
 
 .factory('Assist', ['$filter', '$window', '$timeout', function ($filter, $window, $timeout){
@@ -7,7 +7,7 @@ angular.module('animations.assist', [])
     emit: function(element, name, trigger){
 
       var $scope = angular.element(element).scope();
-      $scope.$emit(trigger+name);
+      $scope.$emit(trigger);
 
     },
 
