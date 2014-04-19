@@ -20,7 +20,7 @@
     "bower_components",
     "src",
     "README.md",
-    "animationsList.txt",
+    "animationList.txt",
     "easingList.txt",
     "Gulpfile.js",
     "bower.json",

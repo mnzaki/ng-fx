@@ -1,6 +1,6 @@
 angular.module('fx.animations.bounces', ['fx.animations.create'])
 
-.animation('.fx-bounce-normal', function (BounceAnimation){
+.animation('.fx-bounce-normal', ['BounceAnimation', function (BounceAnimation){
   var effect = {
     first: {opacity: 0, transform: 'scale(.3)'},
     mid: {opacity: 1, transform: 'scale(1.05)'},
@@ -10,9 +10,9 @@ angular.module('fx.animations.bounces', ['fx.animations.create'])
   };
 
   return new BounceAnimation(effect);
-})
+}])
 
-.animation('.fx-bounce-down', function (BounceAnimation){
+.animation('.fx-bounce-down', ['BounceAnimation', function (BounceAnimation){
   var effect = {
     first: {opacity: 0, transform: 'translateY(-2000px)'},
     mid: {opacity: 1, transform: 'translateY(30px)'},
@@ -22,9 +22,9 @@ angular.module('fx.animations.bounces', ['fx.animations.create'])
   };
 
   return new BounceAnimation(effect);
-})
+}])
 
-.animation('.fx-bounce-left', function (BounceAnimation){
+.animation('.fx-bounce-left', ['BounceAnimation', function (BounceAnimation){
   var effect = {
     first: {opacity: 0,  transform: 'translateX(-2000px)'},
     mid: {opacity: 1, transform: 'translateX(30px)'},
@@ -34,4 +34,4 @@ angular.module('fx.animations.bounces', ['fx.animations.create'])
   };
 
   return new BounceAnimation(effect);
-});
+}]);
