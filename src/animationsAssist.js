@@ -19,6 +19,8 @@ angular.module('fx.animations.assist', [])
         if(className.slice(0,9) === 'fx-easing'){
           var ease = $filter('cap')(className.slice(10));
           results.ease = $window[ease] ? ease : 'Elastic';
+        } else {
+          results.ease = 'Cubic';
         }
         if(className === 'fx-trigger'){
           results.trigger = true;
