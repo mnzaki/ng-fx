@@ -12,7 +12,7 @@ ng-Fx
 1. The best way to install ng-Fx is to use bower
     + ```bower install ng-Fx --save```
 2. Or, from this repo
-  + you'll need the main file in ```dist/ng-fx.js```
+  + you'll need the main file in ```dist/ng-Fx.js```
   + [TweenMax](https://github.com/greensock/GreenSock-JS/) library from GSAP
   + [ng-Animate](http://google.com)
 
@@ -83,8 +83,8 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
 </ul>
 ```
 ###List of animations and easings
-+ [Animations](https://github.com/)
-+ [Easings](https://github.com/)
++ [Animations](https://github.com/Hendrixer/ng-Fx/blob/master/animationList.txt)
++ [Easings](https://github.com/Hendrixer/ng-Fx/blob/master/easingList.txt)
 
 ##What's next
 + More animations
