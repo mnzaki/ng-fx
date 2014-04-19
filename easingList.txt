@@ -1,0 +1,11 @@
+quad
+cubic
+quart
+quint
+strong
+back
+bounce
+circ
+elastic
+expo
+sine

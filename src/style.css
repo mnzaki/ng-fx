@@ -100,7 +100,7 @@ body {
 }
 
 #side-bar-scroll {
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 55%;
 }
 

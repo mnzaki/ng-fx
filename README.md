@@ -11,6 +11,6 @@ An animating and eventing library for Angular js. ng-Fx can be used to have beat
 
 ## Installation
 1. The best way to install ng-Fx is to use bower
-    . ```bower install ng-Fx --save
+     ```bower install ng-Fx --save 
 
 

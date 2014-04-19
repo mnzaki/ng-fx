@@ -1,6 +1,6 @@
 {
   "name": "ngAnimations.js",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "homepage": "https://github.com/Hendrixer/ngAnimations.js",
   "authors": [
     "Hendrixer"
@@ -15,17 +15,24 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
+    ".*",
     "node_modules",
     "bower_components",
-    "test",
+    "src",
+    "README.md",
+    "animationsList.txt",
+    "easingList.txt",
+    "Gulpfile.js",
     "bower.json",
-    "tests"
+    "tests",
+    ".gitignore"
   ],
   "dependencies": {
     "angular-animate": "~1.2.16",
     "angular": "*",
-    "gsap": "~1.11.6",
+    "gsap": "~1.11.6"
+  },
+  "devDependencies": {
     "bootstrap-css-only": "*"
   }
 }

@@ -1,0 +1,12 @@
+fade-normal
+fade-down
+fade-down-big
+fade-left
+fade-left-big
+fade-right
+fade-right-big
+fade-up
+fade-up-big
+bounce-normal
+bounce-down
+bounce-left
