@@ -10,3 +10,4 @@ fade-up-big
 bounce-normal
 bounce-down
 bounce-left
+bounce-up
