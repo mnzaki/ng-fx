@@ -83,8 +83,8 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
 </ul>
 ```
 ###List of animations and easings
-+ [Animations](https://github.com/)
-+ [Easings](https://github.com/)
++ [Animations](https://github.com/Hendrixer/ng-Fx/blob/master/animationList.txt)
++ [Easings](https://github.com/Hendrixer/ng-Fx/blob/master/easingList.txt)
 
 ##What's next
 + More animations
