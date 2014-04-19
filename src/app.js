@@ -1,4 +1,4 @@
-angular.module('app', ['ngAnimate', 'fx.animations'])
+angular.module('app', ['ngAnimate', 'fx.animations', 'ui.router'])
 
 .controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
 
