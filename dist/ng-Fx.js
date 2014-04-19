@@ -375,6 +375,17 @@ angular.module('fx.animations.bounces', ['fx.animations.create'])
   };
 
   return new BounceAnimation(effect);
+}])
+
+.animation('.fx-bounce-up', ['BounceAnimation', function (BounceAnimation) {
+  var effect = {
+    first: {opacity: 0,   transform: 'translateY(2000px)'},
+    mid: {opacity: 1, transform: 'translateY(-30px)'},
+    third: {transform: 'translateY(10px)'},
+    end: {transform: 'translateY(0)'},
+    animation: 'bounce-up'
+  };
+  return new BounceAnimation(effect);
 }]);
 angular.module('fx.animations',
   [

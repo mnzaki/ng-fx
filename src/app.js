@@ -1,4 +1,4 @@
-angular.module('app', ['ngAnimate', 'fx.animations', 'ui.bootstrap'])
+angular.module('app', ['ngAnimate', 'fx.animations'])
 
 .controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
 
@@ -29,7 +29,8 @@ angular.module('app', ['ngAnimate', 'fx.animations', 'ui.bootstrap'])
     'fade-up-big',
     'bounce-normal',
     'bounce-down',
-    'bounce-left'
+    'bounce-left',
+    'bounce-up'
   ];
 
   $scope.demo.easings = [
