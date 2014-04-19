@@ -12,7 +12,7 @@ ng-Fx
 1. The best way to install ng-Fx is to use bower
     + ```bower install ng-Fx --save```
 2. Or, from this repo
-  + you'll need the main file in ```dist/ng-fx.js```
+  + you'll need the main file in ```dist/ng-Fx.js```
   + [TweenMax](https://github.com/greensock/GreenSock-JS/) library from GSAP
   + [ng-Animate](http://google.com)
 
