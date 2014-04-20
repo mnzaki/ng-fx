@@ -15,45 +15,34 @@ var paths = {
 };
 
 
-gulp.task('shrink', function(){
+gulp.task('concat', function(){
   return gulp.src(paths.animations)
     .pipe(concat('ng-Fx.js'))
-    .pipe(gulp.dest('./dist/'))
-    .pipe(notify({message: 'Build done'}));
-});
-
-gulp.task('concat', function(){
-  var app = paths.animations.slice();
-  app.push('./src/app.js');
-  return gulp.src(app)
-    .pipe(concat('main.js'))
-    .pipe(gulp.dest('./src/'))
-    .pipe(notify({message: 'Concat done'}));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('minify', function(){
   return gulp.src(paths.animations)
     .pipe(concat('ng-Fx.min.js'))
-    .pipe(gulp.dest('./dist/'))
-    .pipe(notify({message: 'Build done'}));
+    .pipe(gulp.dest('./dist/'));
 });
 
 
-gulp.task('min', ['minify'],function(){
+gulp.task('preMin', ['minify'],function(){
   return gulp.src('./dist/ng-Fx.min.js')
     .pipe(min())
     .pipe(gulp.dest('./dist/'))
     .pipe(notify({message: 'Min done'}));
 });
 
-gulp.task('uglify', ['min'],function(){
+gulp.task('uglify', ['preMin'],function(){
   return gulp.src('./dist/ng-fx.min.js')
    .pipe(uglify())
    .pipe(gulp.dest('./dist/'))
-   .pipe(notify({message: 'Ugly done'}));
+   .pipe(notify({message: 'Build Done'}));
 });
 
-gulp.task('build', ['shrink', 'concat','uglify']);
+gulp.task('build', ['concat','uglify']);
 
 gulp.task('watch', function(){
   gulp.watch(paths.animations, ['build']);
