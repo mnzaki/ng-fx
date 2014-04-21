@@ -1,8 +1,2 @@
-angular.module('fx.animations',
-  [
-    'fx.animations.fades',
-    'fx.animations.bounces'
-  ]
-
-);
+angular.module('fx.animations',['fx.animations.fades','fx.animations.bounces']);
 

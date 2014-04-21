@@ -2,18 +2,30 @@ var gulp    = require('gulp'),
     concat  = require('gulp-concat'),
     notify  = require('gulp-notify'),
     min     = require('gulp-ngmin'),
-    uglify  = require('gulp-uglify');
+    uglify  = require('gulp-uglify'),
+    jshint  = require('gulp-jshint');
 
 var paths = {
   animations: [
-  './src/animationsAssist.js',
-  './src/animationClass.js',
-  './src/animations/fade.js',
-  './src/animations/bounce.js',
-  './src/animate.js'
+    './src/animationsAssist.js',
+    './src/animationClass.js',
+    './src/animations/*.js',
+    './src/animate.js'
   ]
 };
 
+gulp.task('lint', function(){
+  return gulp.src(paths.animations)
+    .pipe(jshint({
+      globals: {
+        'TweenMax': true,
+        'TimelineMax': true,
+        'angular': true
+      }
+    }))
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(notify({message: 'Linting done'}));
+});
 
 gulp.task('concat', function(){
   return gulp.src(paths.animations)
@@ -42,11 +54,11 @@ gulp.task('uglify', ['preMin'],function(){
    .pipe(notify({message: 'Build Done'}));
 });
 
-gulp.task('build', ['concat','uglify']);
+
+gulp.task('build', ['lint', 'concat','uglify']);
 
 gulp.task('watch', function(){
   gulp.watch(paths.animations, ['build']);
-  gulp.watch('./src/app.js', ['build']);
 });
 
 gulp.task('default', ['build' ,'watch']);

@@ -1,8 +1,5 @@
 angular.module('fx.animations.create', ['fx.animations.assist'])
 
-
-
-
 .factory('FadeAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
   return function (effect){
     var inEffect        = effect.enter,
@@ -10,8 +7,6 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
         outEffectLeave  = effect.inverse || effect.leave,
         fx_type         = effect.animation,
         timeoutKey      = '$$fxTimer';
-
-
 
     this.enter = function(element, done){
       var options = Assist.parseClassList(element);
@@ -24,8 +19,11 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       TweenMax.to(element, options.duration, inEffect);
       return function (canceled){
         var timer = element.data(timeoutKey);
-        if(timer){
-          Assist.removeTimer(element, timeoutKey, timer);
+        if(canceled){
+          if(timer){
+            Assist.removeTimer(element, timeoutKey, timer);
+          }
+
         }
       };
     };
@@ -41,8 +39,10 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       TweenMax.to(element, options.duration, outEffectLeave);
       return function (canceled){
         var timer = element.data(timeoutKey);
-        if(timer){
-          Assist.removeTimer(element, timeoutKey, timer);
+        if(canceled){
+          if(timer){
+            Assist.removeTimer(element, timeoutKey, timer);
+          }
         }
       };
     };
@@ -162,12 +162,17 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
         };
       };
       this.move = function(element, done){
-        end.onComplete = done;
+        var options = Assist.parseClassList(element);
+        options.motion = 'leave';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
         var move = new TimelineMax();
         move.to(element, start);
-        move.to(element, duration, mid);
-        move.to(element, duration, third);
-        move.to(element, duration, end);
+        move.to(element, options.duration, mid);
+        move.to(element, options.duration, third);
+        move.to(element, options.duration, end);
         return function (canceled) {
           if(canceled){
             move.kill();
@@ -176,10 +181,51 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
 
       };
       this.beforeAddClass = function(element, className, done){
-
+        if(className === 'ng-hide' && className.hide){
+          var options = Assist.parseClassList(element);
+          options.motion = 'beforeAddClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          Assist.addTimer(options, element, done);
+          var bac = new TimelineMax();
+          bac.to(element, end);
+          bac.to(element, options.duration, third);
+          bac.to(element, options.duration, mid);
+          bac.to(element, options.duration, start);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
       };
       this.removeClass = function(element, className, done){
-
+        if(className === 'hg-hide' && className.show){
+          var options = Assist.parseClassList(element);
+          options.motion = 'removeClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          var rc = new TimelineMax();
+          rc.to(element, start);
+          rc.to(element, options.duration, mid);
+          rc.to(element, options.duration, third);
+          rc.to(element, options.duration, end);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
       };
     };
 }]);
