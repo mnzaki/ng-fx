@@ -26,7 +26,7 @@
     "jshint-stylish": "^0.1.5"
   },
   "scripts": {
-    "test": "gulp lint;./node_modules/karma/bin/karma start --single-run --browsers PhantomJS"
+    "test": "gulp lint;./node_modules/karma/bin/karma start karma.conf.js --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
