@@ -29,7 +29,7 @@
     "package.json",
     "coverage",
     "karma.conf.js",
-    "sepc"
+    "sepcs"
   ],
   "dependencies": {
     "angular-animate": "~1.2.16",
