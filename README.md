@@ -59,7 +59,7 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
 </ul>
 ```
 ###Events
-+ Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animtion is complete the even will look like so '[ enter or leave] + [animation name]', 'enter fade-down'. You just have to add the CSS class ```fx-trigger``` to an animated element.
++ Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so '[ enter or leave] + [animation name]', 'enter fade-down'. You just have to add the CSS class ```fx-trigger``` to an animated element.
 ``` javascript
 angular.module('myApp', ['ng-animate', 'fx.animations'])
 .directive('goAway', function(){
@@ -82,15 +82,15 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
   </li>
 </ul>
 ```
-###List of animations and easings
+###List of animations and ease types
 + [Animations](https://github.com/Hendrixer/ng-Fx/blob/master/animationList.txt)
-+ [Easings](https://github.com/Hendrixer/ng-Fx/blob/master/easingList.txt)
++ [Ease Types](https://github.com/Hendrixer/ng-Fx/blob/master/easingList.txt)
 
 ##What's next
 + More animations
 + More flexibility
 + Easy api to create your own animations
-+ Events triggered unique to dom element and not just animation type
++ Events triggered are unique to element and not just animation type
 
 ##Contributing
 1. Fork it
