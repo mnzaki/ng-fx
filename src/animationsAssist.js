@@ -17,9 +17,7 @@ angular.module('fx.animations.assist', [])
       angular.forEach(list, function (className){
         if(className.slice(0,9) === 'fx-easing'){
           var ease = className.slice(10);
-          console.log('here');
           results.ease = $window[$filter('cap')(ease)] ? $window[$filter('cap')(ease)] : $window.Elastic;
-          console.log(results.ease);
         }
         if(className === 'fx-trigger'){
           results.trigger = true;
