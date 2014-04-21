@@ -32,6 +32,7 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
   + ui-view (if you're using ui.router)
   + ng-switch
   + ng-class
+  + ng-repeat
 + Adding the animations are as simple as adding a css class. ng-Fx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation.
 ``` html
 <ul ng-init="foods=['apple', 'chips', 'muffin']">
