@@ -78,7 +78,6 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       inEffect.ease = $window[options.ease].easeOut;
       TweenMax.set(element, outEffect);
       TweenMax.to(element, options.duration, inEffect);
-
       return function (canceled){
         var timer = element.data(timeoutKey);
         if(timer){

@@ -10,7 +10,21 @@
     "gulp-notify": "~1.2.5",
     "gulp-uglify": "~0.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "karma": "^0.12.9",
+    "mocha": "^1.18.2",
+    "karma-mocha": "^0.1.3",
+    "karma-chrome-launcher": "^0.1.3",
+    "karma-safari-launcher": "^0.1.1",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-ie-launcher": "^0.1.5",
+    "karma-opera-launcher": "^0.1.0",
+    "expect.js": "^0.3.1",
+    "karma-jasmine": "0.2.0",
+    "karma-allure-reporter": "^1.0.1",
+    "karma-html-reporter": "^0.2.3",
+    "karma-coverage": "^0.2.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
