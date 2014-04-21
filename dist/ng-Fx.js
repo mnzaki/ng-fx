@@ -12,15 +12,14 @@ angular.module('fx.animations.assist', [])
     },
 
     parseClassList: function(element){
-
       var list = element[0].classList,
-          results = {trigger: false, duration: 0.3};
+          results = {trigger: false, duration: 0.3, ease: $window.Back};
       angular.forEach(list, function (className){
         if(className.slice(0,9) === 'fx-easing'){
-          var ease = $filter('cap')(className.slice(10));
-          results.ease = $window[ease] ? ease : 'Elastic';
-        } else {
-          results.ease = 'Cubic';
+          var ease = className.slice(10);
+          console.log('here');
+          results.ease = $window[$filter('cap')(ease)] ? $window[$filter('cap')(ease)] : $window.Elastic;
+          console.log(results.ease);
         }
         if(className === 'fx-trigger'){
           results.trigger = true;
@@ -70,7 +69,7 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       options.animation = fx_type;
       options.timeoutKey = timeoutKey;
       Assist.addTimer(options, element, done);
-      inEffect.ease = $window[options.ease].easeOut;
+      inEffect.ease = options.ease.easeOut;
       TweenMax.set(element, outEffect);
       TweenMax.to(element, options.duration, inEffect);
       return function (canceled){
@@ -90,7 +89,7 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       options.animation = fx_type;
       options.timeoutKey = timeoutKey;
       Assist.addTimer(options, element, done);
-      outEffectLeave.ease = $window[options.ease].easeIn;
+      outEffectLeave.ease = options.ease.easeIn;
       TweenMax.set(element, inEffect);
       TweenMax.to(element, options.duration, outEffectLeave);
       return function (canceled){

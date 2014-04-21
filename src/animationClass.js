@@ -14,7 +14,7 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       options.animation = fx_type;
       options.timeoutKey = timeoutKey;
       Assist.addTimer(options, element, done);
-      inEffect.ease = $window[options.ease].easeOut;
+      inEffect.ease = options.ease.easeOut;
       TweenMax.set(element, outEffect);
       TweenMax.to(element, options.duration, inEffect);
       return function (canceled){
@@ -34,7 +34,7 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       options.animation = fx_type;
       options.timeoutKey = timeoutKey;
       Assist.addTimer(options, element, done);
-      outEffectLeave.ease = $window[options.ease].easeIn;
+      outEffectLeave.ease = options.ease.easeIn;
       TweenMax.set(element, inEffect);
       TweenMax.to(element, options.duration, outEffectLeave);
       return function (canceled){
