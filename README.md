@@ -1,4 +1,4 @@
-ng-Fx
+ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ng-Fx.svg?branch=master)](https://travis-ci.org/Hendrixer/ng-Fx)
 ===============
 
 ### A simple way to add beautiful animations to your angular apps. Animations based off [animate.css](http://daneden.github.io/animate.css/). All animations are built in JavaScript.
@@ -97,6 +97,7 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
 2. Clone your fork
 3. Create new branch
 4. Make changes
+5. Build it, run ```gulp``` and the files will be linted, concatenated, and minified
 5. Push to new branch on your forked repo
 6. Pull request from your branch to ng-Fx master
 
@@ -107,3 +108,9 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
   + if you're submitting new animations:
     + ```(new fx) added 3d rotation animation ```
 + Submit issues as you see them. There are probably better, faster, easier ways to achieve what ng-Fx is designed to do so.
+
+###Testing
++ ng-Fx uses Karma + Travis for unit and ci
++ Make sure you didn't break anything
+  + run ```karma start``` or ```npm test```
++ Features will not be accepted without specs created for them.
