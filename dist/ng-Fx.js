@@ -36,7 +36,9 @@ angular.module('fx.animations.assist', [])
         if(options.trigger){
           self.emit(element, options.animation, options.motion);
         }
-      }, time).then(end);
+      }, time).then(function(){
+        end('wassup');
+      });
       element.data(options.timeoutKey, timer);
     },
     removeTimer: function(element, timeoutKey, timer){
@@ -62,14 +64,16 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
         timeoutKey      = '$$fxTimer';
 
     this.enter = function(element, done){
-      var options = Assist.parseClassList(element);
-      options.motion = 'enter';
-      options.animation = fx_type;
-      options.timeoutKey = timeoutKey;
-      Assist.addTimer(options, element, done);
-      inEffect.ease = options.ease.easeOut;
-      TweenMax.set(element, outEffect);
-      TweenMax.to(element, options.duration, inEffect);
+      // var options = Assist.parseClassList(element);
+      // options.motion = 'enter';
+      // options.animation = fx_type;
+      // options.timeoutKey = timeoutKey;
+      // Assist.addTimer(options, element, done);
+      // inEffect.ease = options.ease.easeOut;
+      // TweenMax.set(element, outEffect);
+      // TweenMax.to(element, options.duration, inEffect);
+      element.css('opacity', 1);
+      done();
       return function (canceled){
         var timer = element.data(timeoutKey);
         if(canceled){
@@ -119,7 +123,7 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
     };
 
     this.beforeAddClass = function(element, className, done){
-      if(className === 'ng-hide' && className.hide){
+      if(className === 'ng-hide'){
         var options = Assist.parseClassList(element);
         options.motion = 'enter';
         options.animation = fx_type;
@@ -140,10 +144,9 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
     };
 
     this.removeClass = function(element, className, done){
-      inEffect.onComplete = done;
-      if(className === 'ng-hide' && className.show){
+      if(className === 'ng-hide'){
         var options = Assist.parseClassList(element);
-        options.motion = 'enter';
+        options.motion = 'removeClass';
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         TweenMax.set(element, outEffect);

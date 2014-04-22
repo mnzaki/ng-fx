@@ -39,15 +39,21 @@ describe('Testing Async Animations', function() {
   var testCase = false;
   beforeEach(module('ngAnimate'));
   beforeEach(module('ngAnimateMock'));
+
   beforeEach(module(function($animateProvider){
     $animateProvider.register('.fade', function(){
       return {
         enter: function(element, done){
           testCase = true;
           done();
+        },
+        leave: function(element, done) {
+          testCase = false;
+          done();
         }
       };
     });
+
   }));
 
   it("should asynchronously test the animation", function() {
@@ -55,10 +61,18 @@ describe('Testing Async Animations', function() {
       var element = $compile('<div class="fade">hello</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
+      $rootScope.$digest();
+
       $animate.enabled(true);
       $animate.enter(element, $rootElement);
       $rootScope.$digest();
+
       expect(testCase).to.be(true);
+
+      $animate.leave(element);
+      $rootScope.$digest();
+
+      expect(testCase).to.be(false);
     });
   });
 
