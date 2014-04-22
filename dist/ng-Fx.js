@@ -36,9 +36,8 @@ angular.module('fx.animations.assist', [])
         if(options.trigger){
           self.emit(element, options.animation, options.motion);
         }
-      }, time).then(function(){
-        end('wassup');
-      });
+        end();
+      }, time);
       element.data(options.timeoutKey, timer);
     },
     removeTimer: function(element, timeoutKey, timer){
@@ -64,23 +63,20 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
         timeoutKey      = '$$fxTimer';
 
     this.enter = function(element, done){
-      // var options = Assist.parseClassList(element);
-      // options.motion = 'enter';
-      // options.animation = fx_type;
-      // options.timeoutKey = timeoutKey;
-      // Assist.addTimer(options, element, done);
-      // inEffect.ease = options.ease.easeOut;
-      // TweenMax.set(element, outEffect);
-      // TweenMax.to(element, options.duration, inEffect);
-      element.css('opacity', 1);
-      done();
+      var options = Assist.parseClassList(element);
+      options.motion = 'enter';
+      options.animation = fx_type;
+      options.timeoutKey = timeoutKey;
+      Assist.addTimer(options, element, done);
+      inEffect.ease = options.ease.easeOut;
+      TweenMax.set(element, outEffect);
+      TweenMax.to(element, options.duration, inEffect);
       return function (canceled){
         var timer = element.data(timeoutKey);
         if(canceled){
           if(timer){
             Assist.removeTimer(element, timeoutKey, timer);
           }
-
         }
       };
     };

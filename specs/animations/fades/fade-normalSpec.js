@@ -1,64 +1,13 @@
-// describe('FadeAnimation constructor', function(){
-//   var newAnimation,
-//       effect,
-//       element,
-//       win,
-//       complete;
+describe('Fade normal animation', function() {
 
-//       effect = {
-//         enter: {opacity: 1},
-//         leave: {opacity: 0},
-//         animation: 'fade-normal'
-//       };
-
-//       element = angular.element('<div>...</div>');
-//       element.css('opacity', 0);
-//       complete = function(log){
-//         console.log(log);
-//       };
-//   beforeEach(module('fx.animations.fades'));
-
-//   beforeEach(function(){
-//     inject(function(FadeAnimation, $window){
-//       win = $window
-//       newAnimation = new FadeAnimation(effect);
-//     });
-//   });
-
-//   it('should fade in on enter', function(done){
-//     newAnimation.enter(element, complete);
-//     console.log(element.css('opacity'));
-//     win.setTimeout(function(){
-//       console.log(element.css('opacity'));
-//       done();
-//     }, 2000);
-//   });
-// });
-
-describe('Testing Async Animations', function() {
-  var testCase = false;
   beforeEach(module('ngAnimate'));
   beforeEach(module('ngAnimateMock'));
+  beforeEach(module('fx.animations'));
 
-  beforeEach(module(function($animateProvider){
-    $animateProvider.register('.fade', function(){
-      return {
-        enter: function(element, done){
-          testCase = true;
-          done();
-        },
-        leave: function(element, done) {
-          testCase = false;
-          done();
-        }
-      };
-    });
-
-  }));
-
-  it("should asynchronously test the animation", function() {
-    inject(function($animate, $compile, $document, $rootScope, $rootElement) {
-      var element = $compile('<div class="fade">hello</div>')($rootScope);
+  it("should fade in", function(done) {
+    inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
+      var element = $compile('<div class="fx-fade-normal">hello</div>')($rootScope);
+      element.css('opacity', 0);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -66,14 +15,11 @@ describe('Testing Async Animations', function() {
       $animate.enabled(true);
       $animate.enter(element, $rootElement);
       $rootScope.$digest();
-
-      expect(testCase).to.be(true);
-
-      $animate.leave(element);
-      $rootScope.$digest();
-
-      expect(testCase).to.be(false);
+      $timeout.flush();
+      $window.setTimeout(function(){
+        expect(element.css('opacity')).to.be('1');
+        done();
+      },500);
     });
   });
-
 });

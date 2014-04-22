@@ -1,6 +1,6 @@
 {
   "name": "ngAnimations.js",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "homepage": "https://hendrixer.github.io",
   "authors": [
     "Hendrixer"
@@ -24,7 +24,6 @@
     "easingList.txt",
     "Gulpfile.js",
     "bower.json",
-    "tests",
     ".gitignore",
     "package.json",
     "coverage",
