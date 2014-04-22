@@ -3,6 +3,8 @@ ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ng-Fx.svg?branch=maste
 
 ### A simple way to add beautiful animations to your angular apps. Animations based off [animate.css](http://daneden.github.io/animate.css/). All animations are built in JavaScript.
 
+#### ng-Fx does not rely on CSS for animations. This allows it to be dynamic and able to adjust on the fly. The only predefined CSS classes are the animations and the easings. ng-Animate allows ng-Fx to create JavaScript based animations, so the classes do no correspond to a style in a CSS file.
+
 ## Dependencies
 + Angular.js (1.2+)
 + ng-Animate
@@ -51,7 +53,7 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
 </ul>
 ```
 ###Speed
-+ Adjusting the speed in the ng-fx is a snap too! Your animations speeds on which they enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you.
++ Adjusting the speed in the ng-fx is a snap too! Your animations speeds on which they enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined clases for speeds__. Any speed in ms can be accepting.
 ``` html
 <ul ng-init="foods=['apple', 'chips', 'muffin']">
   <li class='fx-fade-down fx-easing-bounce fx-speed-800' ng-repeat="food in foods">
