@@ -30,4 +30,5 @@ src/app.js
 src/index.html
 src/style.css
 coverage
+
 .DS_Store
