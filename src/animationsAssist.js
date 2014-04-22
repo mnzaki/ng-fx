@@ -36,7 +36,9 @@ angular.module('fx.animations.assist', [])
         if(options.trigger){
           self.emit(element, options.animation, options.motion);
         }
-      }, time).then(end);
+      }, time).then(function(){
+        end('wassup');
+      });
       element.data(options.timeoutKey, timer);
     },
     removeTimer: function(element, timeoutKey, timer){
