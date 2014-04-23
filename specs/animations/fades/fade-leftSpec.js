@@ -1,12 +1,18 @@
 describe('Fade normal animation', function() {
-
+  var prefixes = {
+    '-webkit-transform': true,
+    '-moz-transform': true,
+    '-o-transform': true,
+    'transform': true
+  };
+  var trans;
   beforeEach(module('ngAnimate'));
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should fade-normal in", function(done) {
+  it("should fade-left in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-normal">fade-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-fade-left">fade-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -16,51 +22,69 @@ describe('Fade normal animation', function() {
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){
+        angular.forEach(prefixes, function(bool, prefix){
+          if(element.css(prefix)){
+            trans = prefix;
+          }
+        });
         expect(element.css('opacity')).to.be('1');
+        expect(element.css(trans)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
       },500);
     });
   });
 
-  it('should fade-normal out', function(done){
+  it("should fade-left in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-normal">fade-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-fade-left">fade-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
 
       $animate.enabled(true);
-      $animate.leave(element);
+      $animate.leave(element, $rootElement);
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){
+        angular.forEach(prefixes, function(bool, prefix){
+          if(element.css(prefix)){
+            trans = prefix;
+          }
+        });
         expect(element.css('opacity')).to.be('0');
+        expect(element.css(trans)).to.be('');
         done();
       },500);
     });
   });
 
-  it('should fade-normal move', function(done){
+  it("should fade-left in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-normal">fade-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-fade-left">fade-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
 
       $animate.enabled(true);
-      $animate.move(element, $rootElement);
+      $animate.enter(element, $rootElement);
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){
+        angular.forEach(prefixes, function(bool, prefix){
+          if(element.css(prefix)){
+            trans = prefix;
+          }
+        });
         expect(element.css('opacity')).to.be('1');
+        expect(element.css(trans)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
       },500);
     });
   });
 
-  it('should fade-normal removeClass', function(done){
+  it('should fade-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-normal ng-hide">fade-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-fade-left ng-hide">fade-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -70,15 +94,21 @@ describe('Fade normal animation', function() {
       $rootScope.$digest();
 
       $window.setTimeout(function(){
+        angular.forEach(prefixes, function(bool, prefix){
+          if(element.css(prefix)){
+            trans = prefix;
+          }
+        });
         expect(element.css('opacity')).to.be('1');
+        expect(element.css(trans)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
       },500);
     });
   });
 
-  it('should fade-normal addClass', function(done){
+  it('should fade-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-normal">fade-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-fade-left">fade-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -87,7 +117,13 @@ describe('Fade normal animation', function() {
       $animate.addClass(element, 'ng-hide');
       $rootScope.$digest();
       $window.setTimeout(function(){
+        angular.forEach(prefixes, function(bool, prefix){
+          if(element.css(prefix)){
+            trans = prefix;
+          }
+        });
         expect(element.css('opacity')).to.be('0');
+        expect(element.css(trans)).to.be('');
         done();
       },500);
     });

@@ -64,10 +64,10 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
       };
     };
 
-    this.beforeAddClass = function(element, className, done){
+    this.addClass = function(element, className, done){
       if(className === 'ng-hide'){
         var options = Assist.parseClassList(element);
-        options.motion = 'enter';
+        options.motion = 'addClass';
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         Assist.addTimer(options, element, done);
