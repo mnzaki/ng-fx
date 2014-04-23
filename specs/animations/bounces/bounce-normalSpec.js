@@ -1,18 +1,18 @@
-describe('Fade down big animation', function() {
+describe('Bounce normal animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
     '-o-transform': true,
     'transform': true
   };
-  var trans;
+  var transform;
   beforeEach(module('ngAnimate'));
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should fade-down-big in", function(done) {
+  it("should bounce-normal in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-down-big">fade-down-big</div>')($rootScope);
+      var element = $compile('<div class="fx-bounce-normal">bounce-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -24,19 +24,19 @@ describe('Fade down big animation', function() {
       $window.setTimeout(function(){
         angular.forEach(prefixes, function(bool, prefix){
           if(element.css(prefix)){
-            trans = prefix;
+            transform = prefix;
           }
         });
         expect(element.css('opacity')).to.be('1');
-        expect(element.css(trans)).to.be('matrix(1, 0, 0, 1, 0, 0)');
+        expect(element.css(transform)[9]).to.be('9');
         done();
       },500);
     });
   });
 
-  it("should fade-down-big out", function(done) {
+  it("should bounce-normal out", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-down-big">fade-down-big</div>')($rootScope);
+      var element = $compile('<div class="fx-bounce-normal">bounce-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -46,21 +46,15 @@ describe('Fade down big animation', function() {
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){
-        angular.forEach(prefixes, function(bool, prefix){
-          if(element.css(prefix)){
-            trans = prefix;
-          }
-        });
         expect(element.css('opacity')).to.be('0');
-        expect(element.css(trans)).to.be('');
         done();
-      },500);
+      },1000);
     });
   });
 
-  it("should fade-down-big move", function(done) {
+  it("should bounce-normal move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-down-big">fade-down-big</div>')($rootScope);
+      var element = $compile('<div class="fx-bounce-normal">bounce-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -72,19 +66,19 @@ describe('Fade down big animation', function() {
       $window.setTimeout(function(){
         angular.forEach(prefixes, function(bool, prefix){
           if(element.css(prefix)){
-            trans = prefix;
+            transform = prefix;
           }
         });
         expect(element.css('opacity')).to.be('1');
-        expect(element.css(trans)).to.be('matrix(1, 0, 0, 1, 0, 0)');
+        expect(element.css(transform)[9]).to.be('9');
         done();
       },500);
     });
   });
 
-  it('should fade-down-big removeClass', function(done){
+  it('should bounce-normal removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-down-big ng-hide">fade-down-big</div>')($rootScope);
+      var element = $compile('<div class="fx-bounce-normal ng-hide">bounce-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -96,19 +90,19 @@ describe('Fade down big animation', function() {
       $window.setTimeout(function(){
         angular.forEach(prefixes, function(bool, prefix){
           if(element.css(prefix)){
-            trans = prefix;
+            transform = prefix;
           }
         });
         expect(element.css('opacity')).to.be('1');
-        expect(element.css(trans)).to.be('matrix(1, 0, 0, 1, 0, 0)');
+        expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
-      },500);
+      },1000);
     });
   });
 
-  it('should fade-down-big addClass', function(done){
+  it('should bounce-normal addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-fade-down-big">fade-down-big</div>')($rootScope);
+      var element = $compile('<div class="fx-bounce-normal">bounce-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -117,15 +111,9 @@ describe('Fade down big animation', function() {
       $animate.addClass(element, 'ng-hide');
       $rootScope.$digest();
       $window.setTimeout(function(){
-        angular.forEach(prefixes, function(bool, prefix){
-          if(element.css(prefix)){
-            trans = prefix;
-          }
-        });
         expect(element.css('opacity')).to.be('0');
-        expect(element.css(trans)).to.be('');
         done();
-      },500);
+      },1000);
     });
   });
 });

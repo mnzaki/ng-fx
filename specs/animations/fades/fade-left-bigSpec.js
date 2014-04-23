@@ -1,4 +1,4 @@
-describe('Fade normal animation', function() {
+describe('Fade left big animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -34,7 +34,7 @@ describe('Fade normal animation', function() {
     });
   });
 
-  it("should fade-left-big in", function(done) {
+  it("should fade-left-big move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left-big">fade-left-big</div>')($rootScope);
       $rootElement.append(element);
@@ -42,7 +42,7 @@ describe('Fade normal animation', function() {
       $rootScope.$digest();
 
       $animate.enabled(true);
-      $animate.leave(element, $rootElement);
+      $animate.leave(element);
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){
@@ -66,7 +66,7 @@ describe('Fade normal animation', function() {
       $rootScope.$digest();
 
       $animate.enabled(true);
-      $animate.enter(element, $rootElement);
+      $animate.move(element, $rootElement);
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){

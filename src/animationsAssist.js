@@ -5,10 +5,8 @@ angular.module('fx.animations.assist', [])
   return {
 
     emit: function(element, animation, motion){
-
       var $scope = angular.element(element).scope();
       $scope.$emit(animation + ' ' +motion);
-
     },
 
     parseClassList: function(element){
@@ -40,6 +38,7 @@ angular.module('fx.animations.assist', [])
       }, time);
       element.data(options.timeoutKey, timer);
     },
+
     removeTimer: function(element, timeoutKey, timer){
       $timeout.cancel(timer);
       element.removeData(timeoutKey);

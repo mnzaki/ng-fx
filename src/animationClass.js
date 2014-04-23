@@ -178,8 +178,8 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
         };
 
       };
-      this.beforeAddClass = function(element, className, done){
-        if(className === 'ng-hide' && className.hide){
+      this.addClass = function(element, className, done){
+        if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
           options.motion = 'beforeAddClass';
           options.animation = fx_type;
@@ -203,7 +203,7 @@ angular.module('fx.animations.create', ['fx.animations.assist'])
         }
       };
       this.removeClass = function(element, className, done){
-        if(className === 'hg-hide' && className.show){
+        if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
           options.motion = 'removeClass';
           options.animation = fx_type;
