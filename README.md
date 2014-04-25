@@ -19,7 +19,7 @@ ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ng-Fx.svg?branch=maste
   + [ng-Animate](http://google.com)
 
 ## Installing
-1. Include ```ng-animate.js``` and ```ng-fx.js``` and ```TweenMax.js``` into your html with script tags
+1. Include ```angular-animate.js``` and ```ng-fx.js``` and ```TweenMax.js``` into your html with script tags
 2. Include the dependencies into your angular app,  ```fx.animations```
 ```javascript
 angular.module('myApp', ['ng-animate', 'fx.animations'])
