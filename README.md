@@ -22,7 +22,7 @@ ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ng-Fx.svg?branch=maste
 1. Include ```angular-animate.js``` and ```ng-fx.js``` and ```TweenMax.js``` into your html with script tags
 2. Include the dependencies into your angular app,  ```fx.animations```
 ```javascript
-angular.module('myApp', ['ng-animate', 'fx.animations'])
+angular.module('myApp', ['ngAnimate', 'fx.animations'])
 ```
 ##Using
 ###Animations
@@ -64,7 +64,7 @@ angular.module('myApp', ['ng-animate', 'fx.animations'])
 ###Events
 + Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so '[ enter or leave] + [animation name]', 'enter fade-down'. You just have to add the CSS class ```fx-trigger``` to an animated element.
 ``` javascript
-angular.module('myApp', ['ng-animate', 'fx.animations'])
+angular.module('myApp', ['ngAnimate', 'fx.animations'])
 .directive('goAway', function(){
   function link(scope, element){
     scope.$on('enter', function(){
