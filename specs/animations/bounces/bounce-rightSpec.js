@@ -10,7 +10,7 @@ describe('Bounce left animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  iit("should bounce-left in", function(done) {
+  it("should bounce-left in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-right">bounce-left</div>')($rootScope);
       $rootElement.append(element);
