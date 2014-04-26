@@ -68,5 +68,16 @@
       animation: 'bounce-up'
     };
     return new BounceAnimation(effect);
+  }])
+
+  .animation('.fx-bounce-right', ['BounceAnimation', function (BounceAnimation) {
+    var effect = {
+      first: {opacity: 0,   transform: 'translateX(2000px)'},
+      mid: {opacity: 1, transform: 'translateX(-30px)'},
+      third: {transform: 'translateX(10px)'},
+      end: {transform: 'translateX(0)'},
+      animation: 'bounce-right'
+    };
+    return new BounceAnimation(effect);
   }]);
 }(angular));
