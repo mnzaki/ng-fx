@@ -11,3 +11,5 @@ bounce-normal
 bounce-down
 bounce-left
 bounce-up
+bounce-right
+rotate-normal
