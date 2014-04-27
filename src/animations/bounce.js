@@ -44,6 +44,7 @@
       animation: 'bounce-down'
     };
 
+
     return new BounceAnimation(effect);
   }])
 

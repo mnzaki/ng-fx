@@ -1,8 +1,8 @@
 
 (function(angular){
   "use strict";
-  angular.module('fx.animations.assist', [])
 
+  angular.module('fx.animations.assist', [])
 
   .factory('Assist', ['$filter', '$window', '$timeout', function ($filter, $window, $timeout){
     return {
@@ -13,11 +13,13 @@
       },
 
       parseClassList: function(element){
-        var list = element[0].classList,
+        var ease,
+            list    = element[0].classList,
             results = {trigger: false, duration: 0.3, ease: $window.Back};
+
         angular.forEach(list, function (className){
           if(className.slice(0,9) === 'fx-easing'){
-            var ease = className.slice(10);
+            ease = className.slice(10);
             results.ease = $window[$filter('cap')(ease)] ? $window[$filter('cap')(ease)] : $window.Elastic;
           }
           if(className === 'fx-trigger'){
@@ -169,127 +171,263 @@
   }])
 
   .factory('BounceAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
-      return function (effect){
-        var start       = effect.first,
-            mid         = effect.mid,
-            third       = effect.third,
-            end         = effect.end,
-            fx_type     = effect.animation,
-            timeoutKey  = '$$fxTimer';
+    return function (effect){
+      var start       = effect.first,
+          mid         = effect.mid,
+          third       = effect.third,
+          end         = effect.end,
+          fx_type     = effect.animation,
+          timeoutKey  = '$$fxTimer';
 
-        this.enter = function(element, done){
-          var options = Assist.parseClassList(element);
-          options.motion = 'enter';
-          options.animation = fx_type;
-          options.timeoutKey = timeoutKey;
-          options.stagger = true;
-          Assist.addTimer(options, element, done);
-          var enter = new TimelineMax();
-          enter.to(element, start);
-          enter.to(element, options.duration, mid);
-          enter.to(element, options.duration, third);
-          enter.to(element, options.duration, end);
-          return function (canceled){
-            if(canceled){
-              var timer = element.data(timeoutKey);
-              if(timer){
-                Assist.removeTimer(element, timeoutKey, timer);
-              }
+      this.enter = function(element, done){
+        var options = Assist.parseClassList(element);
+        options.motion = 'enter';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
+        var enter = new TimelineMax();
+        enter.to(element, start);
+        enter.to(element, options.duration, mid);
+        enter.to(element, options.duration, third);
+        enter.to(element, options.duration, end);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
             }
-          };
-        };
-        this.leave = function(element, done){
-          var options = Assist.parseClassList(element);
-          options.motion = 'leave';
-          options.animation = fx_type;
-          options.timeoutKey = timeoutKey;
-          options.stagger = true;
-          Assist.addTimer(options, element, done);
-          var leave = new TimelineMax();
-          leave.to(element, end);
-          leave.to(element, options.duration, third);
-          leave.to(element, options.duration, mid);
-          leave.to(element, options.duration, start);
-          return function (canceled){
-            if(canceled){
-              var timer = element.data(timeoutKey);
-              if(timer){
-                Assist.removeTimer(element, timeoutKey, timer);
-              }
-            }
-          };
-        };
-        this.move = function(element, done){
-          var options = Assist.parseClassList(element);
-          options.motion = 'leave';
-          options.animation = fx_type;
-          options.timeoutKey = timeoutKey;
-          options.stagger = true;
-          Assist.addTimer(options, element, done);
-          var move = new TimelineMax();
-          move.to(element, start);
-          move.to(element, options.duration, mid);
-          move.to(element, options.duration, third);
-          move.to(element, options.duration, end);
-          return function (canceled) {
-            if(canceled){
-              move.kill();
-            }
-          };
-
-        };
-        this.addClass = function(element, className, done){
-          if(className === 'ng-hide'){
-            var options = Assist.parseClassList(element);
-            options.motion = 'beforeAddClass';
-            options.animation = fx_type;
-            options.timeoutKey = timeoutKey;
-            Assist.addTimer(options, element, done);
-            var bac = new TimelineMax();
-            bac.to(element, end);
-            bac.to(element, options.duration, third);
-            bac.to(element, options.duration, mid);
-            bac.to(element, options.duration, start);
-            return function (canceled){
-              if(canceled){
-                var timer = element.data(timeoutKey);
-                if(timer){
-                  Assist.removeTimer(element, timeoutKey, timer);
-                }
-              }
-            };
-          } else {
-            done();
-          }
-        };
-        this.removeClass = function(element, className, done){
-          if(className === 'ng-hide'){
-            var options = Assist.parseClassList(element);
-            options.motion = 'removeClass';
-            options.animation = fx_type;
-            options.timeoutKey = timeoutKey;
-            var rc = new TimelineMax();
-            rc.to(element, start);
-            rc.to(element, options.duration, mid);
-            rc.to(element, options.duration, third);
-            rc.to(element, options.duration, end);
-            return function (canceled){
-              if(canceled){
-                var timer = element.data(timeoutKey);
-                if(timer){
-                  Assist.removeTimer(element, timeoutKey, timer);
-                }
-              }
-            };
-          } else {
-            done();
           }
         };
       };
+
+      this.leave = function(element, done){
+        var options = Assist.parseClassList(element);
+        options.motion = 'leave';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
+        var leave = new TimelineMax();
+        leave.to(element, end);
+        leave.to(element, options.duration, third);
+        leave.to(element, options.duration, mid);
+        leave.to(element, options.duration, start);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
+      };
+
+      this.move = function(element, done){
+        var options = Assist.parseClassList(element);
+        options.motion = 'leave';
+        options.animation = fx_type;
+        options.timeoutKey = timeoutKey;
+        options.stagger = true;
+        Assist.addTimer(options, element, done);
+        var move = new TimelineMax();
+        move.to(element, start);
+        move.to(element, options.duration, mid);
+        move.to(element, options.duration, third);
+        move.to(element, options.duration, end);
+        return function (canceled) {
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
+      };
+
+      this.addClass = function(element, className, done){
+        if(className === 'ng-hide'){
+          var options = Assist.parseClassList(element);
+          options.motion = 'addClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          Assist.addTimer(options, element, done);
+          var bac = new TimelineMax();
+          bac.to(element, end);
+          bac.to(element, options.duration, third);
+          bac.to(element, options.duration, mid);
+          bac.to(element, options.duration, start);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
+      };
+
+      this.removeClass = function(element, className, done){
+        if(className === 'ng-hide'){
+          var options = Assist.parseClassList(element);
+          options.motion = 'removeClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          var rc = new TimelineMax();
+          rc.to(element, start);
+          rc.to(element, options.duration, mid);
+          rc.to(element, options.duration, third);
+          rc.to(element, options.duration, end);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
+      };
+    };
+  }])
+
+  .factory('RotateAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
+    return function (effect){
+      var start         = effect.start,
+            end         = effect.end,
+            leaveEnd    = effect.inverse,
+            fx_type     = effect.animation,
+            timeoutKey  = '$$fxTimer';
+
+      this.enter = function(element, done){
+        var options = Assist.parseClassList(element);
+            options.motion = 'enter';
+            options.animation = fx_type;
+            options.timeoutKey = timeoutKey;
+
+        Assist.addTimer(options, element, done);
+        TweenMax.set(element, start);
+        TweenMax.to(element, options.duration, end);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
+      };
+
+      this.leave = function(element, done){
+        var options = Assist.parseClassList(element);
+            options.motion = 'leave';
+            options.animation = fx_type;
+            options.timeoutKey = timeoutKey;
+
+        Assist.addTimer(options, element, done);
+        TweenMax.set(element, end);
+        TweenMax.to(element, options.duration, leaveEnd);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
+      };
+
+      this.move = function(element, done){
+        var options = Assist.parseClassList(element);
+            options.motion = 'move';
+            options.animation = fx_type;
+            options.timeoutKey = timeoutKey;
+
+        Assist.addTimer(options, element, done);
+        TweenMax.set(element, end);
+        TweenMax.to(element, start);
+        return function (canceled){
+          if (canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
+      };
+
+      this.addClass = function(element, className, done){
+        if(className === 'ng-hide'){
+          var options = Assist.parseClassList(element);
+          options.motion = 'addClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          Assist.addTimer(options, element, done);
+          TweenMax.set(element, end);
+          TweenMax.to(element, options.duration, start);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
+      };
+
+       this.removeClass = function(element, className, done){
+        if(className === 'ng-hide'){
+          var options = Assist.parseClassList(element);
+          options.motion = 'addClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          Assist.addTimer(options, element, done);
+          TweenMax.set(element, start);
+          TweenMax.to(element, options.duration, end);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
+      };
+    };
   }]);
 }(angular, TweenMax, TimelineMax));
 
 
+
+/*
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Using Angular's '.animate', all fade animations are created with javaScript.
+
+    @BounceAnimation
+      Constructor function that returns a new animation object that has all
+      required methods for ngAnimate ex: this.enter(), this.leave(), etc
+
+    @effect
+      The actual animation that will be applied to the element, staggered
+       first: the style to applied to the element 1/4 through the animtion
+       mid: style to be applied to to the element 2/4 through the animation
+       third: style to be applied to the element 3/4 through the animation
+       end: style to be applied to the element when it's complete
+       animation: the name of the animtion for the eventing system
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+*/
 
 (function(angular){
   "use strict";
@@ -317,6 +455,7 @@
       animation: 'bounce-down'
     };
 
+
     return new BounceAnimation(effect);
   }])
 
@@ -341,15 +480,43 @@
       animation: 'bounce-up'
     };
     return new BounceAnimation(effect);
+  }])
+
+  .animation('.fx-bounce-right', ['BounceAnimation', function (BounceAnimation) {
+    var effect = {
+      first: {opacity: 0,   transform: 'translateX(2000px)'},
+      mid: {opacity: 1, transform: 'translateX(-30px)'},
+      third: {transform: 'translateX(10px)'},
+      end: {transform: 'translateX(0)'},
+      animation: 'bounce-right'
+    };
+    return new BounceAnimation(effect);
   }]);
 }(angular));
+
+/*
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Using Angular's '.animate', all fade animations are created with javaScript.
+
+    @FadeAnimation
+      Constructor function that returns a new animation object that has all
+      required methods for ngAnimate ex: this.enter(), this.leave(), etc
+
+    @effect
+      The actual animation that will be applied to the element
+       enter: style to be applied when angular triggers the enter event
+       leave: style to be applied when angular triggers the leave event
+       inverse: style to be appiled to offset the enter event
+       animation: the name of the animtion for the eventing system
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+*/
 
 
 (function(angular){
   "use strict";
 
   angular.module('fx.animations.fades', ['fx.animations.create'])
-
 
   .animation('.fx-fade-normal', ['FadeAnimation', function (FadeAnimation){
     var effect = {
@@ -446,7 +613,51 @@
     return new FadeAnimation(effect);
   }]);
 }(angular));
+
+/*
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Using Angular's '.animate', all fade animations are created with javaScript.
+
+    @BounceAnimation
+      Constructor function that returns a new animation object that has all
+      required methods for ngAnimate ex: this.enter(), this.leave(), etc
+
+    @effect
+      The actual animation that will be applied to the element, staggered
+       first: the style to applied to the element 1/4 through the animtion
+       mid: style to be applied to to the element 2/4 through the animation
+       third: style to be applied to the element 3/4 through the animation
+       end: style to be applied to the element when it's complete
+       animation: the name of the animtion for the eventing system
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+*/
+
 (function(angular){
-  angular.module('fx.animations',['fx.animations.fades','fx.animations.bounces']);
+  "use strict";
+
+  angular.module('fx.animations.rotations', ['fx.animations.create'])
+
+  .animation('.fx-rotate-normal', ['RotateAnimation', function(RotateAnimation){
+    var effect = {
+      start: {opacity: 0, transformOrigin: 'center center', transform: 'rotate(-200deg)'},
+      end: {opacity: 1, transformOrigin: 'center center', transform: 'rotate(0)'},
+      inverse: {opacity: 0, transformOrigin: 'center center', transform: 'rotate(200deg)'},
+      animation: 'rotate-normal'
+    };
+    return new RotateAnimation(effect);
+  }]);
+
+}(angular));
+
+// Collect all the animations into one master module. this module is the main module
+
+(function(angular){
+  "use strict";
+  angular.module('fx.animations',
+    ['fx.animations.fades',
+      'fx.animations.bounces',
+      'fx.animations.rotations']
+      );
 }(angular));
 
