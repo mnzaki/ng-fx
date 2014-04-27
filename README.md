@@ -67,7 +67,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 angular.module('myApp', ['ngAnimate', 'fx.animations'])
 .directive('goAway', function(){
   function link(scope, element){
-    scope.$on('enter', function(){
+    scope.$on('enter fade-down', function(){
       element.remove();
     });
   }
