@@ -113,7 +113,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 + Submit issues as you see them. There are probably better, faster, easier ways to achieve what ng-Fx is designed to do so.
 
 ###Testing
-+ ng-Fx uses Karma + Travis for unit and ci
++ ng-Fx uses Karma + Jasmine + Travis for unit and ci
 + Make sure you didn't break anything
   + run ```karma start``` or ```npm test```
 + Features will not be accepted without specs created for them.
