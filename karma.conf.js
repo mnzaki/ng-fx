@@ -20,7 +20,7 @@ module.exports = function(config) {
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/gsap/src/minified/TweenMax.min.js',
 
-      'src/animations/*js',
+      'src/animations/*.js',
       'src/animate.js',
       'src/animationsAssist.js',
       'src/animationClass.js',
