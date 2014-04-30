@@ -11,7 +11,8 @@ var paths = {
     './src/animationClass.js',
     './src/animations/*.js',
     './src/animate.js'
-  ]
+  ],
+  dist: './dist/'
 };
 
 gulp.task('lint', function(){
@@ -30,27 +31,27 @@ gulp.task('lint', function(){
 gulp.task('concat', function(){
   return gulp.src(paths.animations)
     .pipe(concat('ng-Fx.js'))
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('minify', function(){
   return gulp.src(paths.animations)
     .pipe(concat('ng-Fx.min.js'))
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest(paths.dist));
 });
 
 
 gulp.task('preMin', ['minify'],function(){
   return gulp.src('./dist/ng-Fx.min.js')
     .pipe(min())
-    .pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest(paths.dist))
     .pipe(notify({message: 'Min done'}));
 });
 
 gulp.task('uglify', ['preMin'],function(){
   return gulp.src('./dist/ng-fx.min.js')
    .pipe(uglify())
-   .pipe(gulp.dest('./dist/'))
+   .pipe(gulp.dest(paths.dist))
    .pipe(notify({message: 'Build Done'}));
 });
 
