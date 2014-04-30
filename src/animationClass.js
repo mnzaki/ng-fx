@@ -150,6 +150,7 @@
         options.stagger = true;
         Assist.addTimer(options, element, done);
         var leave = new TimelineMax();
+        console.log('leave here', leave);
         leave.to(element, end);
         leave.to(element, options.duration, third);
         leave.to(element, options.duration, mid);
