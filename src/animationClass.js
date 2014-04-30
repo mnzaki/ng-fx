@@ -118,7 +118,8 @@
           third       = effect.third,
           end         = effect.end,
           fx_type     = effect.animation,
-          timeoutKey  = '$$fxTimer';
+          timeoutKey  = '$$fxTimer',
+          repeat      = {repeat: 0};
 
       this.enter = function(element, done){
         var options = Assist.parseClassList(element);
@@ -127,7 +128,7 @@
         options.timeoutKey = timeoutKey;
         options.stagger = true;
         Assist.addTimer(options, element, done);
-        var enter = new TimelineMax();
+        var enter = new TimelineMax(repeat);
         enter.to(element, start);
         enter.to(element, options.duration, mid);
         enter.to(element, options.duration, third);
@@ -149,7 +150,7 @@
         options.timeoutKey = timeoutKey;
         options.stagger = true;
         Assist.addTimer(options, element, done);
-        var leave = new TimelineMax();
+        var leave = new TimelineMax(repeat);
         leave.to(element, end);
         leave.to(element, options.duration, third);
         leave.to(element, options.duration, mid);
@@ -171,7 +172,7 @@
         options.timeoutKey = timeoutKey;
         options.stagger = true;
         Assist.addTimer(options, element, done);
-        var move = new TimelineMax();
+        var move = new TimelineMax(repeat);
         move.to(element, start);
         move.to(element, options.duration, mid);
         move.to(element, options.duration, third);
@@ -193,7 +194,7 @@
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
-          var bac = new TimelineMax();
+          var bac = new TimelineMax(repeat);
           bac.to(element, end);
           bac.to(element, options.duration, third);
           bac.to(element, options.duration, mid);
@@ -217,7 +218,7 @@
           options.motion = 'removeClass';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
-          var rc = new TimelineMax();
+          var rc = new TimelineMax(repeat);
           rc.to(element, start);
           rc.to(element, options.duration, mid);
           rc.to(element, options.duration, third);
