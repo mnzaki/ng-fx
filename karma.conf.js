@@ -18,7 +18,7 @@ module.exports = function(config) {
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-animate/angular-animate.js',
-      'bower_components/gsap/src/minified/TweenMax.min.js',
+      'bower_components/gsap/src/uncompressed/TweenMax.js',
 
       'src/animations/*.js',
       'src/animate.js',
