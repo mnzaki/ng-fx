@@ -54,6 +54,7 @@
         options.motion = 'move';
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
+        inEffect.ease = options.ease.easeOut;
         Assist.addTimer(options, element, done);
         TweenMax.set(element, outEffect);
         TweenMax.to(element, options.duration, inEffect);
@@ -128,6 +129,7 @@
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         options.stagger = true;
+        end.ease = options.ease.easeOut;
         Assist.addTimer(options, element, done);
         var enter = new TimelineMax();
         enter.to(element, startTime, start);
@@ -150,6 +152,7 @@
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         options.stagger = true;
+        start.ease = options.ease.easeIn;
         Assist.addTimer(options, element, done);
         var leave = new TimelineMax();
         leave.to(element, startTime, end);
@@ -172,6 +175,7 @@
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         options.stagger = true;
+        end.ease = options.ease.easeOut;
         Assist.addTimer(options, element, done);
         var move = new TimelineMax();
         move.to(element, startTime, start);
@@ -253,6 +257,7 @@
             options.animation = fx_type;
             options.timeoutKey = timeoutKey;
 
+        end.ease = options.ease.easeOut;
         Assist.addTimer(options, element, done);
         TweenMax.set(element, start);
         TweenMax.to(element, options.duration, end);
@@ -272,6 +277,7 @@
             options.animation = fx_type;
             options.timeoutKey = timeoutKey;
 
+        leaveEnd.ease = options.ease.easeIn;
         Assist.addTimer(options, element, done);
         TweenMax.set(element, end);
         TweenMax.to(element, options.duration, leaveEnd);
@@ -291,6 +297,7 @@
             options.animation = fx_type;
             options.timeoutKey = timeoutKey;
 
+        start.ease = options.ease.easeOut;
         Assist.addTimer(options, element, done);
         TweenMax.set(element, end);
         TweenMax.to(element, start);
