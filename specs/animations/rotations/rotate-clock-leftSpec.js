@@ -1,4 +1,4 @@
-describe('Rotate normal animation', function() {
+describe('Rotate down left animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -10,9 +10,9 @@ describe('Rotate normal animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should rotate-normal in", function(done) {
+  it("should rotate-clock-left in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-normal" style="background-color: blue; color: white">rotate-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -29,15 +29,15 @@ describe('Rotate normal animation', function() {
         });
 
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('50% 50% 0px');
+        expect(element.css(transform + '-origin')).to.be('0% 100% 0px');
         done();
       },500);
     });
   });
 
-  it("should rotate-normal out", function(done) {
+  it("should rotate-clock-left out", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-normal">rotate-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -54,15 +54,15 @@ describe('Rotate normal animation', function() {
         });
 
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('50% 50% 0px');
+        expect(element.css(transform + '-origin')).to.be('0% 100% 0px');
         done();
       },500);
     });
   });
 
-  it("should rotate-normal move", function(done) {
+  it("should rotate-clock-left move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-normal">rotate-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -84,9 +84,9 @@ describe('Rotate normal animation', function() {
     });
   });
 
-  it('should rotate-normal removeClass', function(done){
+  it('should rotate-clock-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-normal ng-hide">rotate-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left ng-hide" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -108,9 +108,9 @@ describe('Rotate normal animation', function() {
     });
   });
 
-  it('should rotate-normal addClass', function(done){
+  it('should rotate-clock-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-normal">rotate-normal</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();

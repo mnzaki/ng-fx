@@ -1,4 +1,4 @@
-describe('Rotate down left animation', function() {
+describe('Rotate normal animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -10,9 +10,9 @@ describe('Rotate down left animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should rotate-down-left in", function(done) {
+  it("should rotate-counterclock in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left" style="background-color: blue; color: white">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -29,15 +29,15 @@ describe('Rotate down left animation', function() {
         });
 
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('0% 100% 0px');
+        expect(element.css(transform + '-origin')).to.be('50% 50% 0px');
         done();
       },500);
     });
   });
 
-  it("should rotate-down-left out", function(done) {
+  it("should rotate-counterclock out", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -54,15 +54,15 @@ describe('Rotate down left animation', function() {
         });
 
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('0% 100% 0px');
+        expect(element.css(transform + '-origin')).to.be('50% 50% 0px');
         done();
       },500);
     });
   });
 
-  it("should rotate-down-left move", function(done) {
+  it("should rotate-counterclock move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -84,9 +84,9 @@ describe('Rotate down left animation', function() {
     });
   });
 
-  it('should rotate-down-left removeClass', function(done){
+  it('should rotate-counterclock removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left ng-hide">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock ng-hide" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -108,9 +108,9 @@ describe('Rotate down left animation', function() {
     });
   });
 
-  it('should rotate-down-left addClass', function(done){
+  it('should rotate-counterclock addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
