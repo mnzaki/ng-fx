@@ -640,21 +640,31 @@
 
   angular.module('fx.animations.rotations', ['fx.animations.create'])
 
-  .animation('.fx-rotate-normal', ['RotateAnimation', function(RotateAnimation){
+  .animation('.fx-rotate-counterclock', ['RotateAnimation', function(RotateAnimation){
     var effect = {
       start: {opacity: 0, transformOrigin: 'center center', transform: 'rotate(-200deg)'},
       end: {opacity: 1, transformOrigin: 'center center', transform: 'rotate(0)'},
       inverse: {opacity: 0, transformOrigin: 'center center', transform: 'rotate(200deg)'},
-      animation: 'rotate-normal'
+      animation: 'rotate-counterclock'
     };
     return new RotateAnimation(effect);
   }])
-    .animation('.fx-rotate-down-left', ['RotateAnimation', function(RotateAnimation){
+
+  .animation('.fx-rotate-clock', ['RotateAnimation', function(RotateAnimation){
+    var effect = {
+      start: {opacity: 0, transformOrigin: 'center center', transform: 'rotate(200deg)'},
+      end: {opacity: 1, transformOrigin: 'center center', transform: 'rotate(0)'},
+      inverse: {opacity: 0, transformOrigin: 'center center', transform: 'rotate(-200deg)'},
+      animation: 'rotate-clock'
+    };
+    return new RotateAnimation(effect);
+  }])
+  .animation('.fx-rotate-clock-left', ['RotateAnimation', function(RotateAnimation){
     var effect = {
       start: {opacity: 0, transformOrigin: 'left bottom', transform: 'rotate(-90deg)'},
       end: {opacity: 1, transformOrigin: 'left bottom', transform: 'rotate(0)'},
       inverse: {opacity: 0, transformOrigin: 'left bottom', transform: 'rotate(90deg)'},
-      animation: 'rotate-down-left'
+      animation: 'rotate-clock-left'
     };
     return new RotateAnimation(effect);
   }]);

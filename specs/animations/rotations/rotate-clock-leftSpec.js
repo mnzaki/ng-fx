@@ -10,9 +10,9 @@ describe('Rotate down left animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should rotate-down-left in", function(done) {
+  it("should rotate-clock-left in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left" style="background-color: blue; color: white">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -35,9 +35,9 @@ describe('Rotate down left animation', function() {
     });
   });
 
-  it("should rotate-down-left out", function(done) {
+  it("should rotate-clock-left out", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -60,9 +60,9 @@ describe('Rotate down left animation', function() {
     });
   });
 
-  it("should rotate-down-left move", function(done) {
+  it("should rotate-clock-left move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -84,9 +84,9 @@ describe('Rotate down left animation', function() {
     });
   });
 
-  it('should rotate-down-left removeClass', function(done){
+  it('should rotate-clock-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left ng-hide">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left ng-hide">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -108,9 +108,9 @@ describe('Rotate down left animation', function() {
     });
   });
 
-  it('should rotate-down-left addClass', function(done){
+  it('should rotate-clock-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-down-left">rotate-down-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
