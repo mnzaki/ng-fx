@@ -31,6 +31,15 @@
       animation: 'rotate-normal'
     };
     return new RotateAnimation(effect);
+  }])
+    .animation('.fx-rotate-down-left', ['RotateAnimation', function(RotateAnimation){
+    var effect = {
+      start: {opacity: 0, transformOrigin: 'left bottom', transform: 'rotate(-90deg)'},
+      end: {opacity: 1, transformOrigin: 'left bottom', transform: 'rotate(0)'},
+      inverse: {opacity: 0, transformOrigin: 'left bottom', transform: 'rotate(90deg)'},
+      animation: 'rotate-down-left'
+    };
+    return new RotateAnimation(effect);
   }]);
 
 }(angular));
