@@ -12,6 +12,8 @@ bounce-down
 bounce-left
 bounce-up
 bounce-right
-rotate-normal
-rotate-down-left
-..more
+rotate-clock
+rotate-counterclock
+rotate-clock-left
+rotate-counterclock-right
+
