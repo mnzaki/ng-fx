@@ -35,7 +35,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
   + ng-switch
   + ng-class
   + ng-repeat
-+ Adding the animations are as simple as adding a css class. ng-Fx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation.
++ Adding the animations are as simple as adding a css class. ng-Fx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ng-repeat will not trigger animations upon page load, the collection you are iterating over must be empty at first then populated, you can achieve this with a simple timeout or some other async operation.__
 ``` html
 <ul ng-init="foods=['apple', 'chips', 'muffin']">
   <li class='fx-fade-down' ng-repeat="food in foods">
