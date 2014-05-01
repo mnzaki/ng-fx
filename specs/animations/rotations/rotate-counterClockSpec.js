@@ -37,7 +37,7 @@ describe('Rotate normal animation', function() {
 
   it("should rotate-counterclock out", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock">rotate-counterclock</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -62,7 +62,7 @@ describe('Rotate normal animation', function() {
 
   it("should rotate-counterclock move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock">rotate-counterclock</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -86,7 +86,7 @@ describe('Rotate normal animation', function() {
 
   it('should rotate-counterclock removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock ng-hide">rotate-counterclock</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock ng-hide" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -110,7 +110,7 @@ describe('Rotate normal animation', function() {
 
   it('should rotate-counterclock addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock">rotate-counterclock</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();

@@ -10,7 +10,7 @@ describe('Rotate normal animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  iit("should rotate-counterclock in", function(done) {
+  it("should rotate-counterclock in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
@@ -35,7 +35,7 @@ describe('Rotate normal animation', function() {
     });
   });
 
-  iit("should rotate-counterclock out", function(done) {
+  it("should rotate-counterclock out", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
@@ -60,7 +60,7 @@ describe('Rotate normal animation', function() {
     });
   });
 
-  iit("should rotate-counterclock move", function(done) {
+  it("should rotate-counterclock move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
@@ -84,7 +84,7 @@ describe('Rotate normal animation', function() {
     });
   });
 
-  iit('should rotate-counterclock removeClass', function(done){
+  it('should rotate-counterclock removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-counterclock ng-hide" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
@@ -108,7 +108,7 @@ describe('Rotate normal animation', function() {
     });
   });
 
-  iit('should rotate-counterclock addClass', function(done){
+  it('should rotate-counterclock addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);

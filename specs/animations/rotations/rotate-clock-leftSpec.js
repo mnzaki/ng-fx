@@ -37,7 +37,7 @@ describe('Rotate down left animation', function() {
 
   it("should rotate-clock-left out", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock-left">rotate-clock-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -62,7 +62,7 @@ describe('Rotate down left animation', function() {
 
   it("should rotate-clock-left move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock-left">rotate-clock-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -86,7 +86,7 @@ describe('Rotate down left animation', function() {
 
   it('should rotate-clock-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock-left ng-hide">rotate-clock-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left ng-hide" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -110,7 +110,7 @@ describe('Rotate down left animation', function() {
 
   it('should rotate-clock-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock-left">rotate-clock-left</div>')($rootScope);
+      var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
