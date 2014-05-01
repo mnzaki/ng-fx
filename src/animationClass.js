@@ -119,7 +119,8 @@
           end         = effect.end,
           fx_type     = effect.animation,
           timeoutKey  = '$$fxTimer',
-          repeat      = {repeat: 0};
+          startTime   = 0.1;
+
 
       this.enter = function(element, done){
         var options = Assist.parseClassList(element);
@@ -128,8 +129,8 @@
         options.timeoutKey = timeoutKey;
         options.stagger = true;
         Assist.addTimer(options, element, done);
-        var enter = new TimelineMax(repeat);
-        enter.to(element, start);
+        var enter = new TimelineMax();
+        enter.to(element, startTime, start);
         enter.to(element, options.duration, mid);
         enter.to(element, options.duration, third);
         enter.to(element, options.duration, end);
@@ -150,8 +151,8 @@
         options.timeoutKey = timeoutKey;
         options.stagger = true;
         Assist.addTimer(options, element, done);
-        var leave = new TimelineMax(repeat);
-        leave.to(element, end);
+        var leave = new TimelineMax();
+        leave.to(element, startTime, end);
         leave.to(element, options.duration, third);
         leave.to(element, options.duration, mid);
         leave.to(element, options.duration, start);
@@ -172,8 +173,8 @@
         options.timeoutKey = timeoutKey;
         options.stagger = true;
         Assist.addTimer(options, element, done);
-        var move = new TimelineMax(repeat);
-        move.to(element, start);
+        var move = new TimelineMax();
+        move.to(element, startTime, start);
         move.to(element, options.duration, mid);
         move.to(element, options.duration, third);
         move.to(element, options.duration, end);
@@ -194,8 +195,8 @@
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
-          var bac = new TimelineMax(repeat);
-          bac.to(element, end);
+          var bac = new TimelineMax();
+          bac.to(element, startTime, end);
           bac.to(element, options.duration, third);
           bac.to(element, options.duration, mid);
           bac.to(element, options.duration, start);
@@ -218,8 +219,8 @@
           options.motion = 'removeClass';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
-          var rc = new TimelineMax(repeat);
-          rc.to(element, start);
+          var rc = new TimelineMax();
+          rc.to(element, startTime, start);
           rc.to(element, options.duration, mid);
           rc.to(element, options.duration, third);
           rc.to(element, options.duration, end);
