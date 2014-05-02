@@ -1,4 +1,4 @@
-describe('Rotate normal animation', function() {
+describe('zoom normal animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -10,9 +10,9 @@ describe('Rotate normal animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should rotate-clock in", function(done) {
+  it("should zoom-normal in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock" style="background-color: blue; color: white">rotate-clock</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-normal">zoom-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -27,17 +27,16 @@ describe('Rotate normal animation', function() {
             transform = prefix;
           }
         });
-
+        expect(element.css('opacity')).to.be('1');
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('50% 50% 0px');
         done();
       },500);
     });
   });
 
-  it("should rotate-clock out", function(done) {
+  it('should zoom-normal out', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock" style="background-color: blue; color: white">rotate-clock</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-normal">zoom-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -47,22 +46,15 @@ describe('Rotate normal animation', function() {
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){
-        angular.forEach(prefixes, function(bool, prefix){
-          if(element.css(prefix)){
-            transform = prefix;
-          }
-        });
-
-        expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('50% 50% 0px');
+        expect(element.css('opacity')).to.be('0');
         done();
       },500);
     });
   });
 
-  it("should rotate-clock move", function(done) {
+  it('should zoom-normal move', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock" style="background-color: blue; color: white">rotate-clock</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-normal">zoom-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -78,15 +70,15 @@ describe('Rotate normal animation', function() {
           }
         });
         expect(element.css('opacity')).to.be('1');
-        expect(parseInt(element.css(transform)[7])).to.be.above(0);
+        expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
       },500);
     });
   });
 
-  it('should rotate-clock removeClass', function(done){
+  it('should zoom-normal removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock ng-hide" style="background-color: blue; color: white">rotate-clock</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-normal ng-hide">zoom-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -104,13 +96,13 @@ describe('Rotate normal animation', function() {
         expect(element.css('opacity')).to.be('1');
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
-      },1000);
+      },500);
     });
   });
 
-  it('should rotate-clock addClass', function(done){
+  it('should zoom-normal addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-clock" style="background-color: blue; color: white">rotate-clock</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-normal">zoom-normal</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -121,7 +113,7 @@ describe('Rotate normal animation', function() {
       $window.setTimeout(function(){
         expect(element.css('opacity')).to.be('0');
         done();
-      },1000);
+      },500);
     });
   });
 });
