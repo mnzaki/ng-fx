@@ -1,6 +1,6 @@
 (function(angular, TweenMax, TimelineMax){
   "use strict";
-
+  var timeoutKey = '$$fxTimer';
   angular.module('fx.animations.create', ['fx.animations.assist'])
 
   .factory('FadeAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
@@ -8,8 +8,7 @@
       var inEffect        = effect.enter,
           outEffect       = effect.leave,
           outEffectLeave  = effect.inverse || effect.leave,
-          fx_type         = effect.animation,
-          timeoutKey      = '$$fxTimer';
+          fx_type         = effect.animation;
 
       this.enter = function(element, done){
         var options = Assist.parseClassList(element);
@@ -49,24 +48,7 @@
         };
       };
 
-      this.move = function(element, done){
-        var options = Assist.parseClassList(element);
-        options.motion = 'move';
-        options.animation = fx_type;
-        options.timeoutKey = timeoutKey;
-        inEffect.ease = options.ease.easeOut;
-        Assist.addTimer(options, element, done);
-        TweenMax.set(element, outEffect);
-        TweenMax.to(element, options.duration, inEffect);
-        return function (canceled){
-          if(canceled){
-            var timer = element.data(timeoutKey);
-            if(timer){
-              Assist.removeTimer(element, timeoutKey, timer);
-            }
-          }
-        };
-      };
+      this.move = this.enter;
 
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
@@ -119,7 +101,6 @@
           third       = effect.third,
           end         = effect.end,
           fx_type     = effect.animation,
-          timeoutKey  = '$$fxTimer',
           startTime   = 0.1;
 
 
@@ -169,28 +150,7 @@
         };
       };
 
-      this.move = function(element, done){
-        var options = Assist.parseClassList(element);
-        options.motion = 'leave';
-        options.animation = fx_type;
-        options.timeoutKey = timeoutKey;
-        options.stagger = true;
-        end.ease = options.ease.easeOut;
-        Assist.addTimer(options, element, done);
-        var move = new TimelineMax();
-        move.to(element, startTime, start);
-        move.to(element, options.duration, mid);
-        move.to(element, options.duration, third);
-        move.to(element, options.duration, end);
-        return function (canceled) {
-          if(canceled){
-            var timer = element.data(timeoutKey);
-            if(timer){
-              Assist.removeTimer(element, timeoutKey, timer);
-            }
-          }
-        };
-      };
+      this.move = this.enter;
 
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
@@ -245,11 +205,10 @@
 
   .factory('RotateAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
     return function (effect){
-      var start         = effect.start,
-            end         = effect.end,
-            leaveEnd    = effect.inverse,
-            fx_type     = effect.animation,
-            timeoutKey  = '$$fxTimer';
+      var start       = effect.start,
+          end         = effect.end,
+          leaveEnd    = effect.inverse,
+          fx_type     = effect.animation;
 
       this.enter = function(element, done){
         var options = Assist.parseClassList(element);
@@ -291,25 +250,7 @@
         };
       };
 
-      this.move = function(element, done){
-        var options = Assist.parseClassList(element);
-            options.motion = 'move';
-            options.animation = fx_type;
-            options.timeoutKey = timeoutKey;
-
-        start.ease = options.ease.easeOut;
-        Assist.addTimer(options, element, done);
-        TweenMax.set(element, end);
-        TweenMax.to(element, start);
-        return function (canceled){
-          if (canceled){
-            var timer = element.data(timeoutKey);
-            if(timer){
-              Assist.removeTimer(element, timeoutKey, timer);
-            }
-          }
-        };
-      };
+      this.move = this.enter;
 
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
@@ -342,6 +283,99 @@
           Assist.addTimer(options, element, done);
           TweenMax.set(element, start);
           TweenMax.to(element, options.duration, end);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
+      };
+    };
+  }])
+
+  .factory('ZoomAnimation', ['$timeout', '$window', 'Assist', function ($timeout, $window, Assist){
+    return function (effect){
+      var start       = effect.start,
+          end         = effect.end,
+          fx_type     = effect.animation;
+
+      this.enter = function(element, done){
+        var options             = Assist.parseClassList(element);
+            options.motion      = 'enter';
+            options.animation   = fx_type;
+            options.timeoutKey  = timeoutKey;
+        end.ease = options.ease.easeOut;
+        Assist.addTimer(options, element, done);
+        TweenMax.set(element, start);
+        TweenMax.to(element, options.duration, end);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
+      };
+
+      this.leave = function(element, done){
+        var options             = Assist.parseClassList(element);
+            options.motion      = 'lave';
+            options.animation   = fx_type;
+            options.timeoutKey  = timeoutKey;
+
+        start.ease = options.ease.easeIn;
+        Assist.addTimer(options, element, done);
+        TweenMax.set(element, end);
+        TweenMax.to(element, options.duration, start);
+        return function (canceled){
+          if(canceled){
+            var timer = element.data(timeoutKey);
+            if(timer){
+              Assist.removeTimer(element, timeoutKey, timer);
+            }
+          }
+        };
+      };
+
+      this.move = this.enter;
+
+      this.removeClass = function(element, className, done){
+        if(className === 'ng-hide'){
+          var options = Assist.parseClassList(element);
+          options.motion = 'addClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          Assist.addTimer(options, element, done);
+          TweenMax.set(element, start);
+          TweenMax.to(element, options.duration, end);
+          return function (canceled){
+            if(canceled){
+              var timer = element.data(timeoutKey);
+              if(timer){
+                Assist.removeTimer(element, timeoutKey, timer);
+              }
+            }
+          };
+        } else {
+          done();
+        }
+      };
+
+      this.addClass = function(element, className, done){
+        if(className === 'ng-hide'){
+          var options = Assist.parseClassList(element);
+          options.motion = 'addClass';
+          options.animation = fx_type;
+          options.timeoutKey = timeoutKey;
+          Assist.addTimer(options, element, done);
+          TweenMax.set(element, end);
+          TweenMax.to(element, options.duration, start);
           return function (canceled){
             if(canceled){
               var timer = element.data(timeoutKey);
