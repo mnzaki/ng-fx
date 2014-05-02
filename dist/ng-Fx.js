@@ -676,6 +676,15 @@
       animation: 'rotate-counterclock-right'
     };
     return new RotateAnimation(effect);
+  }])
+  .animation('.fx-rotate-counterclock-up', ['RotateAnimation', function(RotateAnimation){
+    var effect = {
+      start: {opacity: 0, transformOrigin: 'left bottom', transform: 'rotate(90deg)'},
+      end: {opacity: 1, transformOrigin: 'left bottom', transform: 'rotate(0)'},
+      inverse: {opacity: 0, transformOrigin: 'left bottom', transform: 'rotate(-90deg)'},
+      animation: 'rotate-counterclock-up'
+    };
+    return new RotateAnimation(effect);
   }]);
 
 }(angular));
