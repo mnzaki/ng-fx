@@ -726,6 +726,15 @@
       animation: 'rotate-counterclock-up'
     };
     return new RotateAnimation(effect);
+  }])
+  .animation('.fx-rotate-clock-up', ['RotateAnimation', function(RotateAnimation){
+    var effect = {
+      start: {opacity: 0, transformOrigin: 'right bottom', transform: 'rotate(-90deg)'},
+      end: {opacity: 1, transformOrigin: 'right bottom', transform: 'rotate(0)'},
+      inverse: {opacity: 0, transformOrigin: 'right bottom', transform: 'rotate(90deg)'},
+      animation: 'rotate-clock-up'
+    };
+    return new RotateAnimation(effect);
   }]);
 
 }(angular));
