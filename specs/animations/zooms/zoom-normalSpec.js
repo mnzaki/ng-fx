@@ -76,7 +76,7 @@ describe('zoom normal animation', function() {
     });
   });
 
-  iit('should zoom-normal removeClass', function(done){
+  it('should zoom-normal removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-normal ng-hide">zoom-normal</div>')($rootScope);
       $rootElement.append(element);
@@ -100,7 +100,7 @@ describe('zoom normal animation', function() {
     });
   });
 
-  iit('should zoom-normal addClass', function(done){
+  it('should zoom-normal addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-normal">zoom-normal</div>')($rootScope);
       $rootElement.append(element);
