@@ -16,4 +16,5 @@ rotate-clock
 rotate-counterclock
 rotate-clock-left
 rotate-counterclock-right
-
+rotate-counterclock-up
+zoom-normal
