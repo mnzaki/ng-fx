@@ -743,6 +743,16 @@
     };
 
     return new ZoomAnimation(effect);
+  }])
+
+  .animation('.fx-zoom-down', ['ZoomAnimation', function (ZoomAnimation){
+    var effect = {
+      start: {opacity: 0, transform: 'scale(.1) translateY(-2000px)', animationTimingFunction: 'ease-in-out'},
+      end: {opacity: 1, transform: 'scale(1) translateY(60px)', animationTimingFunction: 'ease-out'},
+      animation: 'zoom-down'
+    };
+
+    return new ZoomAnimation(effect);
   }]);
 }(angular));
 // Collect all the animations into one master module. this module is the main module
