@@ -756,8 +756,8 @@
 
   .animation('.fx-zoom-down', ['ZoomAnimation', function (ZoomAnimation){
     var effect = {
-      start: {opacity: 0, transform: 'scale(.1) translateY(-2000px)', animationTimingFunction: 'ease-in-out'},
-      end: {opacity: 1, transform: 'scale(1) translateY(60px)', animationTimingFunction: 'ease-out'},
+      start: {opacity: 0, transform: 'scale(.1) translateY(-2000px)'},
+      end: {opacity: 1, transform: 'scale(1) translateY(60px)'},
       animation: 'zoom-down'
     };
 
