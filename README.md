@@ -5,6 +5,9 @@ ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ng-Fx.svg?branch=maste
 
 #### ng-Fx does not rely on CSS for animations. This allows it to be dynamic and able to adjust on the fly. The only predefined CSS classes are the animations and the easings. ng-Animate allows ng-Fx to create JavaScript based animations, so the classes do no correspond to a style in a CSS file.
 
+## Interactive Demo
+Preview the goodness at [hendrixer.github.io](https://hendrixer.github.io/).
+
 ## Dependencies
 + Angular.js (1.2+)
 + ng-Animate
