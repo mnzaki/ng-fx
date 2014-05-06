@@ -10,9 +10,9 @@ describe('zoom normal animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should zoom-down in", function(done) {
+  it("should zoom-up in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-zoom-down">zoom-down</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-up">zoom-up</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -34,9 +34,9 @@ describe('zoom normal animation', function() {
     });
   });
 
-  it('should zoom-down out', function(done){
+  it('should zoom-up out', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-zoom-down">zoom-down</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-up">zoom-up</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -52,9 +52,9 @@ describe('zoom normal animation', function() {
     });
   });
 
-  it('should zoom-down move', function(done){
+  it('should zoom-up move', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-zoom-down">zoom-down</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-up">zoom-up</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -76,9 +76,9 @@ describe('zoom normal animation', function() {
     });
   });
 
-  it('should zoom-down removeClass', function(done){
+  it('should zoom-up removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-zoom-down ng-hide">zoom-down</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-up ng-hide">zoom-up</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -100,9 +100,9 @@ describe('zoom normal animation', function() {
     });
   });
 
-  it('should zoom-down addClass', function(done){
+  it('should zoom-up addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-zoom-down">zoom-down</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-up">zoom-up</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
