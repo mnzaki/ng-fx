@@ -39,8 +39,17 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
   + ng-class
   + ng-repeat
 + Adding the animations are as simple as adding a css class. ng-Fx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ng-repeat will not trigger animations upon page load, the collection you are iterating over must be empty at first then populated, you can achieve this with a simple timeout or some other async operation.__
+
+```javascript
+angular.module('foodApp', ['ngAnimate', 'fx.animations'])
+.controller('FoodController', function($scope, $timeout){
+  $timeout(function(){
+    $scope.foods = ['apple', 'muffin', 'chips'];
+  }, 100);
+});
+```
 ``` html
-<ul ng-init="foods=['apple', 'chips', 'muffin']">
+<ul ng-controller="FoodController">
   <li class='fx-fade-down' ng-repeat="food in foods">
     {{ food }}
   </li>
@@ -49,7 +58,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 ###Easings
 + You can also add a different easing to any animation you want. It is as easy as adding an animation, just use a CSS class. Building on the previous example, you can just add ```fx-easing-your easing here```
 ``` html
-<ul ng-init="foods=['apple', 'chips', 'muffin']">
+<ul ng-controller="FoodController">
   <li class='fx-fade-down fx-easing-bounce' ng-repeat="food in foods">
     {{ food }}
   </li>
@@ -58,7 +67,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 ###Speed
 + Adjusting the speed in the ng-fx is a snap too! Your animations speeds on which they enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined classes for speeds__. Any speed (in ms) can be accepted.
 ``` html
-<ul ng-init="foods=['apple', 'chips', 'muffin']">
+<ul ng-controller="FoodController">
   <li class='fx-fade-down fx-easing-bounce fx-speed-800' ng-repeat="food in foods">
     {{ food }}
   </li>
@@ -68,10 +77,15 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 + Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so '[ enter or leave] + [animation name]', 'enter fade-down'. You just have to add the CSS class ```fx-trigger``` to an animated element.
 ``` javascript
 angular.module('myApp', ['ngAnimate', 'fx.animations'])
-.directive('goAway', function(){
+.controller('FoodController', function($scope, $timeout){
+  $timeout(function(){
+    $scope.foods = ['apple', 'muffin', 'chips'];
+  }, 100);
+})
+.directive('goAway', function($animate){
   function link(scope, element){
     scope.$on('enter fade-down', function(){
-      element.remove();
+      $animate.leave(element);
     });
   }
   return {
@@ -81,12 +95,14 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 });
 ```
 ``` html
-<h1 go-away> This will be removed when an animation is done</h1>
-<ul ng-init="foods=['apple', 'chips', 'muffin']">
-  <li class='fx-fade-down fx-easing-bounce fx-speed-800 fx-trigger' ng-repeat="food in foods">
-    {{ food }}
-  </li>
-</ul>
+<div ng-controller="FoodController">
+  <h1 go-away class='fx-zoom-up'> This will zoom out when the fade animation is done</h1>
+  <ul>
+    <li class='fx-fade-down fx-easing-bounce fx-speed-800 fx-trigger' ng-  repeat="food in foods">
+      {{ food }}
+    </li>
+  </ul>
+</div>
 ```
 ###List of animations and ease types
 + [Animations](https://github.com/Hendrixer/ng-Fx/blob/master/animationList.txt)
