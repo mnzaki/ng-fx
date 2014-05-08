@@ -1,4 +1,4 @@
-describe('zoom normal animation', function() {
+describe('zoom down animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,

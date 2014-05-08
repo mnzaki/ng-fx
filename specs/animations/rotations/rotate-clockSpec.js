@@ -1,4 +1,4 @@
-describe('Rotate normal animation', function() {
+describe('Rotate clock animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,

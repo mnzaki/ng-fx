@@ -31,5 +31,25 @@
     };
 
     return new ZoomAnimation(effect);
+  }])
+
+  .animation('.fx-zoom-right', ['ZoomAnimation', function (ZoomAnimation){
+    var effect = {
+      start: {opacity: 0, transform: 'scale(.1) translateX(2000px)'},
+      end: {opacity: 1, transform: 'scale(1) translateX(0)'},
+      animation: 'zoom-right'
+    };
+
+    return new ZoomAnimation(effect);
+  }])
+
+  .animation('.fx-zoom-left', ['ZoomAnimation', function (ZoomAnimation){
+    var effect = {
+      start: {opacity: 0, transform: 'scale(.1) translateX(-2000px)'},
+      end: {opacity: 1, transform: 'scale(1) translateX(0)'},
+      animation: 'zoom-left'
+    };
+
+    return new ZoomAnimation(effect);
   }]);
 }(angular));

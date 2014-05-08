@@ -1,4 +1,4 @@
-describe('Rotate down left animation', function() {
+describe('Rotate clock left animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,

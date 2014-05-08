@@ -1,4 +1,4 @@
-describe('Rotate down right animation', function() {
+describe('Rotate counter right animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
