@@ -1,4 +1,4 @@
-describe('Rotate counter up animation', function() {
+describe('zoom left animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -10,9 +10,9 @@ describe('Rotate counter up animation', function() {
   beforeEach(module('ngAnimateMock'));
   beforeEach(module('fx.animations'));
 
-  it("should rotate-counterclock-up in", function(done) {
+  it("should zoom-left in", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock-up" style="background-color: blue; color: white">rotate-counterclock-up</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-left">zoom-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -27,17 +27,16 @@ describe('Rotate counter up animation', function() {
             transform = prefix;
           }
         });
-
+        expect(element.css('opacity')).to.be('1');
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('0% 100% 0px');
         done();
       },500);
     });
   });
 
-  it("should rotate-counterclock-up out", function(done) {
+  it('should zoom-left out', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock-up" style="background-color: blue; color: white">rotate-counterclock-up</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-left">zoom-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -47,22 +46,15 @@ describe('Rotate counter up animation', function() {
       $rootScope.$digest();
       $timeout.flush();
       $window.setTimeout(function(){
-        angular.forEach(prefixes, function(bool, prefix){
-          if(element.css(prefix)){
-            transform = prefix;
-          }
-        });
-
-        expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
-        expect(element.css(transform + '-origin')).to.be('0% 100% 0px');
+        expect(element.css('opacity')).to.be('0');
         done();
       },500);
     });
   });
 
-  it("should rotate-counterclock-up move", function(done) {
+  it('should zoom-left move', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock-up" style="background-color: blue; color: white">rotate-counterclock-up</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-left">zoom-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -78,15 +70,15 @@ describe('Rotate counter up animation', function() {
           }
         });
         expect(element.css('opacity')).to.be('1');
-        expect(parseInt(element.css(transform)[7])).to.be.above(0);
+        expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
       },500);
     });
   });
 
-  it('should rotate-counterclock-up removeClass', function(done){
+  it('should zoom-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock-up ng-hide" style="background-color: blue; color: white">rotate-counterclock-up</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-left ng-hide">zoom-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -104,13 +96,13 @@ describe('Rotate counter up animation', function() {
         expect(element.css('opacity')).to.be('1');
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
-      },1000);
+      },500);
     });
   });
 
-  it('should rotate-counterclock-up addClass', function(done){
+  it('should zoom-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-rotate-counterclock-up" style="background-color: blue; color: white">rotate-counterclock-up</div>')($rootScope);
+      var element = $compile('<div class="fx-zoom-left">zoom-left</div>')($rootScope);
       $rootElement.append(element);
       angular.element($document[0].body).append($rootElement);
       $rootScope.$digest();
@@ -121,7 +113,7 @@ describe('Rotate counter up animation', function() {
       $window.setTimeout(function(){
         expect(element.css('opacity')).to.be('0');
         done();
-      },1000);
+      },500);
     });
   });
 });

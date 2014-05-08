@@ -110,10 +110,9 @@
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         options.stagger = true;
-        end.ease = options.ease.easeOut;
         Assist.addTimer(options, element, done);
         var enter = new TimelineMax();
-        enter.to(element, startTime, start);
+        enter.to(element, 0.01, start);
         enter.to(element, options.duration, mid);
         enter.to(element, options.duration, third);
         enter.to(element, options.duration, end);
@@ -133,7 +132,6 @@
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         options.stagger = true;
-        start.ease = options.ease.easeIn;
         Assist.addTimer(options, element, done);
         var leave = new TimelineMax();
         leave.to(element, startTime, end);

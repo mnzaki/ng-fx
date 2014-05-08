@@ -169,10 +169,9 @@
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         options.stagger = true;
-        end.ease = options.ease.easeOut;
         Assist.addTimer(options, element, done);
         var enter = new TimelineMax();
-        enter.to(element, startTime, start);
+        enter.to(element, 0.01, start);
         enter.to(element, options.duration, mid);
         enter.to(element, options.duration, third);
         enter.to(element, options.duration, end);
@@ -192,7 +191,6 @@
         options.animation = fx_type;
         options.timeoutKey = timeoutKey;
         options.stagger = true;
-        start.ease = options.ease.easeIn;
         Assist.addTimer(options, element, done);
         var leave = new TimelineMax();
         leave.to(element, startTime, end);
@@ -768,6 +766,26 @@
       start: {opacity: 0, transform: "scale(.1) translateY(2000px)"},
       end: {opacity: 1, transform: "scale(1) translateY(0)"},
       animation: 'zoom-up'
+    };
+
+    return new ZoomAnimation(effect);
+  }])
+
+  .animation('.fx-zoom-right', ['ZoomAnimation', function (ZoomAnimation){
+    var effect = {
+      start: {opacity: 0, transform: 'scale(.1) translateX(2000px)'},
+      end: {opacity: 1, transform: 'scale(1) translateX(0)'},
+      animation: 'zoom-right'
+    };
+
+    return new ZoomAnimation(effect);
+  }])
+
+  .animation('.fx-zoom-left', ['ZoomAnimation', function (ZoomAnimation){
+    var effect = {
+      start: {opacity: 0, transform: 'scale(.1) translateX(-2000px)'},
+      end: {opacity: 1, transform: 'scale(1) translateX(0)'},
+      animation: 'zoom-left'
     };
 
     return new ZoomAnimation(effect);
