@@ -6,13 +6,14 @@
     ['fx.animations.fades',
       'fx.animations.bounces',
       'fx.animations.rotations',
-      'fx.animations.zooms',
-      'fx.events.flip']
+      'fx.animations.zooms'
+      // 'fx.events.flip'
+      ]
   );
-  angular.module('fx.directives',
-    ['fx.directives.flips']
-  );
+  // angular.module('fx.directives',
+  //   ['fx.directives.flips']
+  // );
 
-  angular.module('fx.animations', ['fx.animates', 'fx.directives']);
+  angular.module('fx.animations', ['fx.animates'/*,'fx.directives'*/]);
 }(angular));
 

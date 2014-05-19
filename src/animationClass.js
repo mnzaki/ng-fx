@@ -344,7 +344,6 @@
       this.move = this.enter;
 
       this.removeClass = function(element, className, done){
-        console.log('removeClass');
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
           options.motion = 'leave';
