@@ -10,6 +10,7 @@
       emit: function(element, animation, motion){
         var $scope = angular.element(element).scope();
         $scope.$emit(animation + ' ' +motion);
+        console.log(animation + ' ' +motion);
       },
 
       parseClassList: function(element){
@@ -39,6 +40,7 @@
           if(options.trigger){
             self.emit(element, options.animation, options.motion);
           }
+          console.log(options);
           end();
         }, time);
         element.data(options.timeoutKey, timer);
@@ -112,7 +114,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -133,7 +135,7 @@
       this.removeClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'removeClass';
+          options.motion = 'leave';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           TweenMax.set(element, outEffect);
@@ -212,7 +214,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -237,7 +239,7 @@
       this.removeClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'removeClass';
+          options.motion = 'leave';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           var rc = new TimelineMax();
@@ -312,7 +314,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -334,7 +336,7 @@
        this.removeClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -403,9 +405,10 @@
       this.move = this.enter;
 
       this.removeClass = function(element, className, done){
+        console.log('removeClass');
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'leave';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -427,7 +430,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -441,6 +444,41 @@
               }
             }
           };
+        } else {
+          done();
+        }
+      };
+    };
+  }])
+  .factory('Flip3d', ['$window', function ($window){
+    return function (effect){
+      var axis = effect.axis;
+      var flipType = 'fx-flip'+axis;
+      this.addClass = function(el, className, done){
+        var wrapper = angular.element(el.children()[0]);
+        var myDone = function(){
+          console.log('done');
+          return done();
+        };
+        if(className === flipType){
+          effect.transform.ease = $window.Bounce.easeOut;
+          effect.transform.onComplete = myDone;
+          TweenMax.to(wrapper, effect.duration, effect.transform);
+        } else {
+          done();
+        }
+      };
+
+      this.removeClass = function(el, className, done){
+        var wrapper = angular.element(el.children()[0]);
+        var myDone = function(){
+          console.log('done');
+          return done();
+        };
+        if(className === flipType){
+          effect.reset.ease = $window.Bounce.easeOut;
+          effect.reset.onComplete = myDone;
+          TweenMax.to(wrapper, effect.duration, effect.reset);
         } else {
           done();
         }
@@ -791,15 +829,101 @@
     return new ZoomAnimation(effect);
   }]);
 }(angular));
+(function (angular) {
+  "use strict";
+  angular.module('fx.events.flip', ['fx.animations.create'])
+
+  .animation('.fx-flipY', ['Flip3d' ,function (Flip3d){
+    var effect = {
+      transform: {transform:'rotate3d(0,1,0,180deg)'},
+      reset: {transform:'rotateY(0)'},
+      axis: 'Y',
+      duration: 0.8
+    };
+    return new Flip3d(effect);
+  }])
+
+  .animation('.fx-flipX', ['Flip3d' ,function (Flip3d){
+    var effect = {
+      transform: {transform:'rotate3d(1,0,0,180deg)'},
+      reset: {transform:'rotateX(0)'},
+      axis: 'X',
+      duration: 0.8
+    };
+    return new Flip3d(effect);
+  }])
+
+  .animation('.fx-flipZ', ['Flip3d' ,function (Flip3d){
+    var effect = {
+      transform: {transform:'rotate3d(0,0,1,180deg)'},
+      reset: {transform:'rotateZ(0)'},
+      axis: 'Z',
+      duration: 0.8
+    };
+    return new Flip3d(effect);
+  }]);
+}(angular));
+(function(angular, TweenMax){
+  "use strict";
+  angular.module('fx.directives.flips', [])
+
+  .directive('fxFlip', ['$animate', function($animate){
+    function postlink(scope, el, attr){
+      var front,
+          back,
+          wrapper = angular.element(el.children()[0]),
+          events = attr.fxFlip.split(' '),
+          axis = attr.axis.toUpperCase();
+
+      angular.forEach(el.children().children(), function(child){
+        child = angular.element(child);
+        if(child.hasClass('fx-front')){front = child;}
+        if(child.hasClass('fx-back')) {back = child;}
+      });
+
+      back.css({position: 'absolute', width: '100%', height: '100%'});
+      front.css({position: 'absolute', width: '100%', height: '100%'});
+
+      TweenMax.set(el, {perspective: 800, border: 'solid 2px black'});
+      TweenMax.set(wrapper, {transformStyle: 'preserve-3d', width: '100%', height: '100%'});
+      TweenMax.set(back, {transform: 'rotate3d(0,1,0,-180deg)'});
+      TweenMax.set([back, front], {backfaceVisibility: 'hidden'});
+
+      angular.forEach(events, function(event){
+        scope.$on('next', function(){
+          if(el.hasClass('fx-flip'+axis)){
+            $animate.removeClass(el, 'fx-flip'+axis);
+          } else {
+            $animate.addClass(el, 'fx-flip'+axis);
+          }
+        });
+      });
+    }
+    return {
+      replace: true,
+      transclude: true,
+      scope: true,
+      template:
+        '<div ng-transclude></div>',
+      link: postlink
+    };
+  }]);
+}(angular, TweenMax));
 // Collect all the animations into one master module. this module is the main module
 
 (function(angular){
   "use strict";
-  angular.module('fx.animations',
+  angular.module('fx.animates',
     ['fx.animations.fades',
       'fx.animations.bounces',
       'fx.animations.rotations',
-      'fx.animations.zooms']
-      );
+      'fx.animations.zooms',
+      'fx.events.flip']
+  );
+  angular.module('fx.directives',
+    ['fx.directives.flips']
+  );
+
+  angular.module('fx.animations', ['fx.animates', 'fx.directives']);
 }(angular));
 

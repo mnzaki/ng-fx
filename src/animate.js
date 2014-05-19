@@ -2,11 +2,17 @@
 
 (function(angular){
   "use strict";
-  angular.module('fx.animations',
+  angular.module('fx.animates',
     ['fx.animations.fades',
       'fx.animations.bounces',
       'fx.animations.rotations',
-      'fx.animations.zooms']
-      );
+      'fx.animations.zooms',
+      'fx.events.flip']
+  );
+  angular.module('fx.directives',
+    ['fx.directives.flips']
+  );
+
+  angular.module('fx.animations', ['fx.animates', 'fx.directives']);
 }(angular));
 

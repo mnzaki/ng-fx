@@ -10,6 +10,7 @@
       emit: function(element, animation, motion){
         var $scope = angular.element(element).scope();
         $scope.$emit(animation + ' ' +motion);
+        console.log(animation + ' ' +motion);
       },
 
       parseClassList: function(element){
@@ -39,6 +40,7 @@
           if(options.trigger){
             self.emit(element, options.animation, options.motion);
           }
+          console.log(options);
           end();
         }, time);
         element.data(options.timeoutKey, timer);

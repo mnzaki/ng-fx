@@ -53,7 +53,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -74,7 +74,7 @@
       this.removeClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'removeClass';
+          options.motion = 'leave';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           TweenMax.set(element, outEffect);
@@ -153,7 +153,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -178,7 +178,7 @@
       this.removeClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'removeClass';
+          options.motion = 'leave';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           var rc = new TimelineMax();
@@ -253,7 +253,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -275,7 +275,7 @@
        this.removeClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -344,9 +344,10 @@
       this.move = this.enter;
 
       this.removeClass = function(element, className, done){
+        console.log('removeClass');
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'leave';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -368,7 +369,7 @@
       this.addClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
-          options.motion = 'addClass';
+          options.motion = 'enter';
           options.animation = fx_type;
           options.timeoutKey = timeoutKey;
           Assist.addTimer(options, element, done);
@@ -382,6 +383,41 @@
               }
             }
           };
+        } else {
+          done();
+        }
+      };
+    };
+  }])
+  .factory('Flip3d', ['$window', function ($window){
+    return function (effect){
+      var axis = effect.axis;
+      var flipType = 'fx-flip'+axis;
+      this.addClass = function(el, className, done){
+        var wrapper = angular.element(el.children()[0]);
+        var myDone = function(){
+          console.log('done');
+          return done();
+        };
+        if(className === flipType){
+          effect.transform.ease = $window.Bounce.easeOut;
+          effect.transform.onComplete = myDone;
+          TweenMax.to(wrapper, effect.duration, effect.transform);
+        } else {
+          done();
+        }
+      };
+
+      this.removeClass = function(el, className, done){
+        var wrapper = angular.element(el.children()[0]);
+        var myDone = function(){
+          console.log('done');
+          return done();
+        };
+        if(className === flipType){
+          effect.reset.ease = $window.Bounce.easeOut;
+          effect.reset.onComplete = myDone;
+          TweenMax.to(wrapper, effect.duration, effect.reset);
         } else {
           done();
         }
