@@ -98,7 +98,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 <div ng-controller="FoodController">
   <h1 go-away class='fx-zoom-up'> This will zoom out when the fade animation is done</h1>
   <ul>
-    <li class='fx-fade-down fx-easing-bounce fx-speed-800 fx-trigger' ng-  repeat="food in foods">
+    <li class='fx-fade-down fx-easing-bounce fx-speed-800 fx-trigger' ng-repeat="food in foods">
       {{ food }}
     </li>
   </ul>
