@@ -84,7 +84,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 })
 .directive('goAway', function($animate){
   function link(scope, element){
-    scope.$on('enter fade-down', function(){
+    scope.$on('fade-down enter', function(){
       $animate.leave(element);
     });
   }
