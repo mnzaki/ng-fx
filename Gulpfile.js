@@ -10,6 +10,8 @@ var paths = {
     './src/animationsAssist.js',
     './src/animationClass.js',
     './src/animations/*.js',
+    './src/domAnimations/*.js',
+    './src/directives/*.js',
     './src/animate.js'
   ],
   dist: './dist/'
