@@ -323,7 +323,7 @@
 
       this.leave = function(element, done){
         var options             = Assist.parseClassList(element);
-            options.motion      = 'lave';
+            options.motion      = 'leave';
             options.animation   = fx_type;
             options.timeoutKey  = timeoutKey;
 
