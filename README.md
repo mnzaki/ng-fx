@@ -75,7 +75,7 @@ angular.module('foodApp', ['ngAnimate', 'fx.animations'])
 </ul>
 ```
 ###Events
-+ Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so '[ enter or leave] + [animation name]', 'enter fade-down'. You just have to add the CSS class ```fx-trigger``` to an animated element.
++ Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so ' [animation name] + [enter or leave]', for example 'fade-down enter'. You just have to add the CSS class ```fx-trigger``` to an animated element.
 ``` javascript
 angular.module('myApp', ['ngAnimate', 'fx.animations'])
 .controller('FoodController', function($scope, $timeout){
