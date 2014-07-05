@@ -40,7 +40,6 @@
           if(options.trigger){
             self.emit(element, options.animation, options.motion);
           }
-          console.log(options);
           end();
         }, time);
         element.data(options.timeoutKey, timer);
