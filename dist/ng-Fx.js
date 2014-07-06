@@ -10,7 +10,6 @@
       emit: function(element, animation, motion){
         var $scope = angular.element(element).scope();
         $scope.$emit(animation + ' ' +motion);
-        console.log(animation + ' ' +motion);
       },
 
       parseClassList: function(element){
@@ -40,7 +39,6 @@
           if(options.trigger){
             self.emit(element, options.animation, options.motion);
           }
-          console.log(options);
           end();
         }, time);
         element.data(options.timeoutKey, timer);
@@ -405,7 +403,6 @@
       this.move = this.enter;
 
       this.removeClass = function(element, className, done){
-        console.log('removeClass');
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
           options.motion = 'leave';
@@ -457,7 +454,6 @@
       this.addClass = function(el, className, done){
         var wrapper = angular.element(el.children()[0]);
         var myDone = function(){
-          console.log('done');
           return done();
         };
         if(className === flipType){
@@ -472,7 +468,6 @@
       this.removeClass = function(el, className, done){
         var wrapper = angular.element(el.children()[0]);
         var myDone = function(){
-          console.log('done');
           return done();
         };
         if(className === flipType){

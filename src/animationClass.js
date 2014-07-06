@@ -395,7 +395,6 @@
       this.addClass = function(el, className, done){
         var wrapper = angular.element(el.children()[0]);
         var myDone = function(){
-          console.log('done');
           return done();
         };
         if(className === flipType){
@@ -410,7 +409,6 @@
       this.removeClass = function(el, className, done){
         var wrapper = angular.element(el.children()[0]);
         var myDone = function(){
-          console.log('done');
           return done();
         };
         if(className === flipType){
