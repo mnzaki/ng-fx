@@ -4,12 +4,11 @@
 
   angular.module('fx.animations.assist', [])
 
-  .factory('Assist', ['$filter', '$window', '$timeout', function ($filter, $window, $timeout){
+  .factory('Assist', ['$filter', '$window', '$timeout', '$rootScope', function ($filter, $window, $timeout, $rootScope){
     return {
 
       emit: function(element, animation, motion){
-        var $scope = angular.element(element).scope();
-        $scope.$emit(animation +':'+motion);
+        $rootScope.$broadcast(animation +':'+motion);
       },
 
       parseClassList: function(element){
