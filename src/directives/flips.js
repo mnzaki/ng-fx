@@ -24,7 +24,7 @@
       TweenMax.set(back, {transform: 'rotate3d(0,1,0,-180deg)'});
       TweenMax.set([back, front], {backfaceVisibility: 'hidden'});
 
-      angular.forEach(events, function(event){
+      angular.forEach(events, function(){
         scope.$on('next', function(){
           if(el.hasClass('fx-flip'+axis)){
             $animate.removeClass(el, 'fx-flip'+axis);

@@ -10,23 +10,19 @@ Preview the goodness at [hendrixer.github.io](https://hendrixer.github.io/).
 
 ## Dependencies
 + Angular.js (1.2+)
-+ ng-Animate
-+ [GSAP.js](http://www.greensock.com/gsap-js/)
 
 ## Downloading
 1. The best way to install ng-Fx is to use bower
-    + ```bower install ng-Fx --save```
+    + ```bower install ngFx --save```
 2. Or, from this repo
-  + you'll need the main file in ```dist/ng-Fx.js```
-  + [TweenMax](https://github.com/greensock/GreenSock-JS/) library from GSAP
-  + [ng-Animate](http://google.com)
+  + you'll need the main file in ```dist/ngFx.js```
 
 ## Installing
-1. Include ```angular-animate.js``` and ```ng-fx.js``` and ```TweenMax.js``` into your html with script tags. 
-  + __Note: ```TweenMax.js``` must come before ```ng-fx.js``` in your HTML script tags.__
-2. Include the dependencies into your angular app,  ```fx.animations```
+1. Include ```ngFx.js``` into your html. 
+  + __Note:__ ```ngFx``` bundles ```ngAnimate``` and ```GSAP``` into one file
+2. Include the dependencies into your angular app,  ```ngFx```
 ```javascript
-angular.module('myApp', ['ngAnimate', 'fx.animations'])
+angular.module('myApp', ['ngFx'])
 ```
 ##Using
 ###Animations
@@ -42,14 +38,14 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
 + Adding the animations are as simple as adding a css class. ng-Fx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ng-repeat will not trigger animations upon page load, the collection you are iterating over must be empty at first then populated, you can achieve this with a simple timeout or some other async operation.__
 
 ```javascript
-angular.module('foodApp', ['ngAnimate', 'fx.animations'])
+angular.module('foodApp', ['ngAnimate', 'ngFx'])
 .controller('FoodController', function($scope, $timeout){
   $timeout(function(){
     $scope.foods = ['apple', 'muffin', 'chips'];
   }, 100);
 });
 ```
-``` html
+```html
 <ul ng-controller="FoodController">
   <li class='fx-fade-down' ng-repeat="food in foods">
     {{ food }}
@@ -58,7 +54,7 @@ angular.module('foodApp', ['ngAnimate', 'fx.animations'])
 ```
 ###Easings
 + You can also add a different easing to any animation you want. It is as easy as adding an animation, just use a CSS class. Building on the previous example, you can just add ```fx-easing-your easing here```
-``` html
+```html
 <ul ng-controller="FoodController">
   <li class='fx-fade-down fx-easing-bounce' ng-repeat="food in foods">
     {{ food }}
@@ -67,7 +63,7 @@ angular.module('foodApp', ['ngAnimate', 'fx.animations'])
 ```
 ###Speed
 + Adjusting the speed in the ng-fx is a snap too! Your animations speeds on which they enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined classes for speeds__. Any speed (in ms) can be accepted.
-``` html
+```html
 <ul ng-controller="FoodController">
   <li class='fx-fade-down fx-easing-bounce fx-speed-800' ng-repeat="food in foods">
     {{ food }}
@@ -76,8 +72,8 @@ angular.module('foodApp', ['ngAnimate', 'fx.animations'])
 ```
 ###Events
 + Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so ' [animation name] + [enter or leave]', for example 'fade-down enter'. You just have to add the CSS class ```fx-trigger``` to an animated element.
-``` javascript
-angular.module('myApp', ['ngAnimate', 'fx.animations'])
+```javascript
+angular.module('myApp', ['ngFx'])
 .controller('FoodController', function($scope, $timeout){
   $timeout(function(){
     $scope.foods = ['apple', 'muffin', 'chips'];
@@ -95,7 +91,7 @@ angular.module('myApp', ['ngAnimate', 'fx.animations'])
   };
 });
 ```
-``` html
+```html
 <div ng-controller="FoodController">
   <h1 go-away class='fx-zoom-up'> This will zoom out when the fade animation is done</h1>
   <ul>

@@ -16,11 +16,21 @@ var paths = {
     './src/directives/*.js',
     './src/animate.js'
   ],
+
+  source: [
+    './src/animationsAssist.js',
+    './src/animationClass.js',
+    './src/animations/*.js',
+    './src/domAnimations/*.js',
+    './src/directives/*.js',
+    './src/animate.js'
+  ],
+
   dist: './dist/'
 };
 
 gulp.task('lint', function(){
-  return gulp.src(paths.scripts)
+  return gulp.src(paths.source)
     .pipe(jshint({
       globals: {
         'TweenMax': true,
