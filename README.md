@@ -132,7 +132,7 @@ angular.module('myApp', ['ngFx'])
 ###Testing
 + ngFx uses Karma + Jasmine + Travis for unit and ci
 + Make sure you didn't break anything
-  + run ```karma start``` or ```npm test```
+  + run ```karma start``` to test in Chrome with karma
 + Features will not be accepted without specs created for them
 + Run ```gulp``` and all the source files will be watched and concatenated
 + Open the ```index.html``` and use the test app as a playground
