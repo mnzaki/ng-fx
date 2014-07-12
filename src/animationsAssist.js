@@ -9,7 +9,7 @@
 
       emit: function(element, animation, motion){
         var $scope = angular.element(element).scope();
-        $scope.$emit(animation + ' ' +motion);
+        $scope.$emit(animation +':'+motion);
       },
 
       parseClassList: function(element){
@@ -20,7 +20,7 @@
         angular.forEach(list, function (className){
           if(className.slice(0,9) === 'fx-easing'){
             ease = className.slice(10);
-            results.ease = $window[$filter('cap')(ease)] ? $window[$filter('cap')(ease)] : $window.Elastic;
+            results.ease = $window[$filter('cap')(ease)] || $window.Elastic;
           }
           if(className === 'fx-trigger'){
             results.trigger = true;

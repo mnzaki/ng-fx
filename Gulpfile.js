@@ -73,7 +73,7 @@ gulp.task('uglify', ['preMin'],function(){
 gulp.task('build', ['lint', 'concat','uglify']);
 
 gulp.task('watch', function(){
-  gulp.watch(paths.animations, ['build']);
+  gulp.watch(paths.source, ['build']);
 });
 
 gulp.task('default', ['build' ,'watch']);

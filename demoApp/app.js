@@ -1,6 +1,14 @@
 var app = angular.module('app', ['ngFx' ,'ui.bootstrap']);
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
+  $scope.$on('fade-normal:enter', function () {
+    console.log('fade enter');
+  });
+
+  $scope.$on('fade-normal:leave', function () {
+    console.log('fade-leave');
+  });
+
   var cleanOut;
   var playTime;
   $scope.demo = {};

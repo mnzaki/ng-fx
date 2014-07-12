@@ -35,7 +35,7 @@ angular.module('myApp', ['ngFx'])
   + ng-switch
   + ng-class
   + ng-repeat
-+ Adding the animations are as simple as adding a css class. ng-Fx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ng-repeat will not trigger animations upon page load, the collection you are iterating over must be empty at first then populated, you can achieve this with a simple timeout or some other async operation.__
++ Adding the animations are as simple as adding a css class. ngFx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ng-repeat will not trigger animations upon page load, the collection you are iterating over must be empty at first then populated, you can achieve this with a simple timeout or some other async operation.__
 
 ```javascript
 angular.module('foodApp', ['ngAnimate', 'ngFx'])
@@ -119,7 +119,7 @@ angular.module('myApp', ['ngFx'])
 5. Make test and check test
 6. Build it, run ```gulp``` and the files will be linted, concatenated, and minified
 7. Push to new branch on your forked repo
-8. Pull request from your branch to ng-Fx master
+8. Pull request from your branch to ngFx master
 
 ###Format for pull request
 + Pretty standard
@@ -127,10 +127,12 @@ angular.module('myApp', ['ngFx'])
     + ```(bug) killed that bug, closes #45```
   + if you're submitting new animations:
     + ```(new fx) added 3d rotation animation ```
-+ Submit issues as you see them. There are probably better, faster, easier ways to achieve what ng-Fx is designed to do so.
++ Submit issues as you see them. There are probably better, faster, easier ways to achieve what ngFx is designed to do so.
 
 ###Testing
-+ ng-Fx uses Karma + Jasmine + Travis for unit and ci
++ ngFx uses Karma + Jasmine + Travis for unit and ci
 + Make sure you didn't break anything
   + run ```karma start``` or ```npm test```
-+ Features will not be accepted without specs created for them.
++ Features will not be accepted without specs created for them
++ Run ```gulp``` and all the source files will be watched and concatenated
++ Open the ```index.html``` and use the test app as a playground

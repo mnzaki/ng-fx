@@ -8313,7 +8313,7 @@ angular.module('ngAnimate', ['ng'])
 
       emit: function(element, animation, motion){
         var $scope = angular.element(element).scope();
-        $scope.$emit(animation + ' ' +motion);
+        $scope.$emit(animation +':'+motion);
       },
 
       parseClassList: function(element){
@@ -8324,7 +8324,7 @@ angular.module('ngAnimate', ['ng'])
         angular.forEach(list, function (className){
           if(className.slice(0,9) === 'fx-easing'){
             ease = className.slice(10);
-            results.ease = $window[$filter('cap')(ease)] ? $window[$filter('cap')(ease)] : $window.Elastic;
+            results.ease = $window[$filter('cap')(ease)] || $window.Elastic;
           }
           if(className === 'fx-trigger'){
             results.trigger = true;
@@ -8361,6 +8361,7 @@ angular.module('ngAnimate', ['ng'])
     };
   }]);
 }(angular));
+
 (function(angular, TweenMax, TimelineMax){
   "use strict";
   var timeoutKey = '$$fxTimer';
@@ -9209,7 +9210,7 @@ angular.module('ngAnimate', ['ng'])
       TweenMax.set(back, {transform: 'rotate3d(0,1,0,-180deg)'});
       TweenMax.set([back, front], {backfaceVisibility: 'hidden'});
 
-      angular.forEach(events, function(event){
+      angular.forEach(events, function(){
         scope.$on('next', function(){
           if(el.hasClass('fx-flip'+axis)){
             $animate.removeClass(el, 'fx-flip'+axis);
@@ -9229,6 +9230,7 @@ angular.module('ngAnimate', ['ng'])
     };
   }]);
 }(angular, TweenMax));
+
 /*!
  * ngFx.js is a concatenation of:
  * angular-animate.js and TweenMax.js
