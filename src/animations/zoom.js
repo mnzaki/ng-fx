@@ -1,3 +1,22 @@
+/*
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Using Angular's '.animate', all fade animations are created with javaScript.
+
+    @RotateAnimation
+      Constructor function that returns a new animation object that has all
+      required methods for ngAnimate ex: this.enter(), this.leave(), etc
+
+    @effect
+      The actual animation that will be applied to the element, staggered
+       first: the style to applied to the element 1/4 through the animtion
+       mid: style to be applied to to the element 2/4 through the animation
+       third: style to be applied to the element 3/4 through the animation
+       end: style to be applied to the element when it's complete
+       animation: the name of the animtion for the eventing system
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+*/
+
 (function(angular){
   "use strict";
 

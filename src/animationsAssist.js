@@ -4,12 +4,11 @@
 
   angular.module('fx.animations.assist', [])
 
-  .factory('Assist', ['$filter', '$window', '$timeout', function ($filter, $window, $timeout){
+  .factory('Assist', ['$filter', '$window', '$timeout', '$rootScope', function ($filter, $window, $timeout, $rootScope){
     return {
 
       emit: function(element, animation, motion){
-        var $scope = angular.element(element).scope();
-        $scope.$emit(animation + ' ' +motion);
+        $rootScope.$broadcast(animation +':'+motion);
       },
 
       parseClassList: function(element){
@@ -20,7 +19,7 @@
         angular.forEach(list, function (className){
           if(className.slice(0,9) === 'fx-easing'){
             ease = className.slice(10);
-            results.ease = $window[$filter('cap')(ease)] ? $window[$filter('cap')(ease)] : $window.Elastic;
+            results.ease = $window[$filter('cap')(ease)] || $window.Elastic;
           }
           if(className === 'fx-trigger'){
             results.trigger = true;
