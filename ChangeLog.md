@@ -7,6 +7,7 @@
     * Add demoApp to visually inspect animations for development
 + ### Features
     * Concat ```ngAnimate``` and ```TweenMax``` into one file
+    * Support for IonicFramework
 + ### Breaking changes
     * You no longer use ```fx.animations``` in your modules, you must now use ```ngFx```, so ... ```angular.module("app", ["ngFx"])```
     * You no longer have to include ```ngAnimate``` or ```GSAP```
