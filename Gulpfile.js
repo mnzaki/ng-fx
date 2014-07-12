@@ -6,7 +6,9 @@ var gulp    = require('gulp'),
     jshint  = require('gulp-jshint');
 
 var paths = {
-  animations: [
+  scripts: [
+    './bower_components/gsap/src/uncompressed/TweenMax.js',
+    './bower_components/angular-animate/angular-animate.js',
     './src/animationsAssist.js',
     './src/animationClass.js',
     './src/animations/*.js',
@@ -18,7 +20,7 @@ var paths = {
 };
 
 gulp.task('lint', function(){
-  return gulp.src(paths.animations)
+  return gulp.src(paths.scripts)
     .pipe(jshint({
       globals: {
         'TweenMax': true,
@@ -31,27 +33,27 @@ gulp.task('lint', function(){
 });
 
 gulp.task('concat', function(){
-  return gulp.src(paths.animations)
-    .pipe(concat('ng-Fx.js'))
+  return gulp.src(paths.scripts)
+    .pipe(concat('ngFx.js'))
     .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('minify', function(){
-  return gulp.src(paths.animations)
-    .pipe(concat('ng-Fx.min.js'))
+  return gulp.src(paths.scripts)
+    .pipe(concat('ngFx.min.js'))
     .pipe(gulp.dest(paths.dist));
 });
 
 
 gulp.task('preMin', ['minify'],function(){
-  return gulp.src('./dist/ng-Fx.min.js')
+  return gulp.src('./dist/ngFx.min.js')
     .pipe(min())
     .pipe(gulp.dest(paths.dist))
     .pipe(notify({message: 'Min done'}));
 });
 
 gulp.task('uglify', ['preMin'],function(){
-  return gulp.src('./dist/ng-fx.min.js')
+  return gulp.src('./dist/ngFx.min.js')
    .pipe(uglify())
    .pipe(gulp.dest(paths.dist))
    .pipe(notify({message: 'Build Done'}));

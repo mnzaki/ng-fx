@@ -20,6 +20,8 @@
     "bower_components",
     "src",
     "README.md",
+    "demoApp",
+    "index.html",
     "animationList.txt",
     "easingList.txt",
     "Gulpfile.js",
@@ -33,7 +35,8 @@
   "dependencies": {
     "angular-animate": "~1.2.16",
     "angular": "*",
-    "gsap": "~1.11.6"
+    "gsap": "~1.11.6",
+    "angular-bootstrap": "~0.11.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.16"

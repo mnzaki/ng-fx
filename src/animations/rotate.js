@@ -3,7 +3,7 @@
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Using Angular's '.animate', all fade animations are created with javaScript.
 
-    @BounceAnimation
+    @RotateAnimation
       Constructor function that returns a new animation object that has all
       required methods for ngAnimate ex: this.enter(), this.leave(), etc
 
