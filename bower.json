@@ -34,7 +34,7 @@
     "specs"
   ],
   "dependencies": {
-    "angular": "*",
+    "angular": "*"
   },
   "devDependencies": {
     "gsap": "~1.11.6",
