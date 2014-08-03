@@ -1,6 +1,6 @@
 {
   "name": "ngAnimations.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://hendrixer.github.io",
   "authors": [
     "Hendrixer"
@@ -34,12 +34,11 @@
     "specs"
   ],
   "dependencies": {
-    "angular-animate": "~1.2.16",
     "angular": "*",
-    "gsap": "~1.11.6"
-
   },
   "devDependencies": {
+    "gsap": "~1.11.6",
+    "angular-animate": "~1.2.16",
     "angular-mocks": "~1.2.16",
     "angular-bootstrap": "~0.11.0"
   }
