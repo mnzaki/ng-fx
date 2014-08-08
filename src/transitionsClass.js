@@ -17,8 +17,6 @@
           effect.from.ease = customs.ease.easeInOut;
           effect.duration = customs.speed;
 
-          console.log(customs);
-
           TransAssist.addTimer(el, effect.duration, done);
 
           slide = new TLM();
