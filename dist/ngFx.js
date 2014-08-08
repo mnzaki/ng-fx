@@ -9249,7 +9249,6 @@ angular.module('ngAnimate', ['ng'])
   .factory('TransAssist', function ($timeout) {
     function addTimer (el, time, done) {
       var timer = $timeout(function () {
-        console.log('in timer');
         done();
       }, (time*1000) + 50);
       el.data(timeoutKey, timer);
@@ -9270,6 +9269,7 @@ angular.module('ngAnimate', ['ng'])
     };
   });
 }(angular));
+
 (function (angular, TLM) {
   "use strict";
 
@@ -9286,9 +9286,10 @@ angular.module('ngAnimate', ['ng'])
           cssMixin(el);
 
           customs = Assist.parseClassList(el, true);
-
           effect.from.ease = customs.ease.easeInOut;
           effect.duration = customs.speed;
+
+          console.log(customs);
 
           TransAssist.addTimer(el, effect.duration, done);
 
@@ -9355,7 +9356,6 @@ angular.module('ngAnimate', ['ng'])
         css3D(wrapper, el);
 
         angular.element(wrapper).append(el[0].outerHTML);
-        console.log(wrapper, el);
         customs = Assist.parseClassList(el, true);
 
         effect.from.ease = customs.ease.easeOut;
@@ -9409,11 +9409,12 @@ angular.module('ngAnimate', ['ng'])
   }
 
   function calcTime  (duration, perc) {
-    console.log(duration);
+
     return (duration * (perc/100));
   }
 
 }(angular, TimelineMax));
+
 (function (angular) {
   "use strict";
 
@@ -9623,6 +9624,7 @@ angular.module('ngAnimate', ['ng'])
     return new SlideTransition(effect);
   }]);
 }(angular));
+
 (function  (angular, TLM) {
   "use strict";
 
@@ -9652,34 +9654,6 @@ angular.module('ngAnimate', ['ng'])
  * ngFx.js is a concatenation of:
  * angular-animate.js and TweenMax.js
  */
-
-/*!
- * Copyright 2014 Scott Moss
- * http://www.scottymoss.com
- *
- * Ionic, v1.0.0-beta.9
- * A simple, beautiful animation library for angular
- * http://hendrixer.github.io
- *
- * By @Hendrixer
- *
- * Licensed under the MIT license.
- *
- */
-
-// (function(angular){
-//   "use strict";
-//   angular.module('fx.animations',
-//     ['fx.animations.fades',
-//       'fx.animations.bounces',
-//       'fx.animations.rotations',
-//       'fx.animations.zooms'
-//       ]
-//   );
-
-//   angular.module('ngFx', ['fx.animations', 'ngAnimate']);
-// }(angular));
-
 /*!
  * ngFx.js is a concatenation of:
  * angular-animate.js and TweenMax.js
@@ -9689,7 +9663,6 @@ angular.module('ngAnimate', ['ng'])
  * Copyright 2014 Scott Moss
  * http://www.scottymoss.com
  *
- * Ionic, v1.0.0-beta.9
  * A simple, beautiful animation library for angular
  * http://hendrixer.github.io
  *
@@ -9727,7 +9700,7 @@ angular.module('ngAnimate', ['ng'])
   );
 
   if (routers.ngRoute) {
-    angular.module('ngFx', ['fx.animations', 'ngRoute', 'ngAnimate'])
+    angular.module('ngFx', ['fx.animations', 'fx.transitions', 'ngRoute', 'ngAnimate'])
       .config(['$provide', function ($provide) {
         $provide.decorator('ngViewDirective', function ($delegate, $route, $animate, $anchorScroll) {
           var ngView;
@@ -9807,7 +9780,7 @@ angular.module('ngAnimate', ['ng'])
         });
     }]);
   } else if (routers['ui.router']) {
-    angular.module('ngFx', ['fx.animations',  'ui.router', 'ngAnimate'])
+    angular.module('ngFx', ['fx.animations',  'fx.transitions', 'ui.router', 'ngAnimate'])
       .config(['$provide', function ($provide) {
         $provide.decorator('uiViewDirective', function ($delegate, $injector, $state, $uiViewScroll) {
           function getService() {
@@ -9903,7 +9876,6 @@ angular.module('ngAnimate', ['ng'])
                     speed           = $state.$current && $state.$current.animation && $state.$current.animation.speed;
 
                 if (!firstTime && previousLocals === latestLocals) {return;} // nothing to do
-
                 var clone = $transclude(newScope, function(clone) {
                   clone.addClass(enter);
                   clone.addClass(leave);

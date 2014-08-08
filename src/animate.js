@@ -2,34 +2,6 @@
  * ngFx.js is a concatenation of:
  * angular-animate.js and TweenMax.js
  */
-
-/*!
- * Copyright 2014 Scott Moss
- * http://www.scottymoss.com
- *
- * Ionic, v1.0.0-beta.9
- * A simple, beautiful animation library for angular
- * http://hendrixer.github.io
- *
- * By @Hendrixer
- *
- * Licensed under the MIT license.
- *
- */
-
-// (function(angular){
-//   "use strict";
-//   angular.module('fx.animations',
-//     ['fx.animations.fades',
-//       'fx.animations.bounces',
-//       'fx.animations.rotations',
-//       'fx.animations.zooms'
-//       ]
-//   );
-
-//   angular.module('ngFx', ['fx.animations', 'ngAnimate']);
-// }(angular));
-
 /*!
  * ngFx.js is a concatenation of:
  * angular-animate.js and TweenMax.js
@@ -39,7 +11,6 @@
  * Copyright 2014 Scott Moss
  * http://www.scottymoss.com
  *
- * Ionic, v1.0.0-beta.9
  * A simple, beautiful animation library for angular
  * http://hendrixer.github.io
  *
@@ -77,7 +48,7 @@
   );
 
   if (routers.ngRoute) {
-    angular.module('ngFx', ['fx.animations', 'ngRoute', 'ngAnimate'])
+    angular.module('ngFx', ['fx.animations', 'fx.transitions', 'ngRoute', 'ngAnimate'])
       .config(['$provide', function ($provide) {
         $provide.decorator('ngViewDirective', function ($delegate, $route, $animate, $anchorScroll) {
           var ngView;
@@ -157,7 +128,7 @@
         });
     }]);
   } else if (routers['ui.router']) {
-    angular.module('ngFx', ['fx.animations',  'ui.router', 'ngAnimate'])
+    angular.module('ngFx', ['fx.animations',  'fx.transitions', 'ui.router', 'ngAnimate'])
       .config(['$provide', function ($provide) {
         $provide.decorator('uiViewDirective', function ($delegate, $injector, $state, $uiViewScroll) {
           function getService() {
@@ -253,7 +224,6 @@
                     speed           = $state.$current && $state.$current.animation && $state.$current.animation.speed;
 
                 if (!firstTime && previousLocals === latestLocals) {return;} // nothing to do
-
                 var clone = $transclude(newScope, function(clone) {
                   clone.addClass(enter);
                   clone.addClass(leave);

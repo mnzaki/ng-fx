@@ -6,7 +6,6 @@
   .factory('TransAssist', function ($timeout) {
     function addTimer (el, time, done) {
       var timer = $timeout(function () {
-        console.log('in timer');
         done();
       }, (time*1000) + 50);
       el.data(timeoutKey, timer);

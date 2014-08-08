@@ -1,4 +1,30 @@
-var app = angular.module('app', ['ngFx' ,'ui.bootstrap']);
+var app = angular.module('app', ['ngFx' ,'ui.bootstrap', 'ui.router']);
+
+app.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      templateUrl: 'templates/home.tpl.html',
+      animation: {
+        enter: 'slide-in-left',
+        leave: 'slide-out-left',
+        ease: 'back',
+        speed: 500
+      }
+    })
+    .state('view', {
+      url: '/view',
+      templateUrl: 'templates/view.tpl.html',
+      animation: {
+        enter: 'slide-in-left',
+        leave: 'slide-out-left',
+        ease: 'back',
+        speed: 500
+      }
+    });
+
+    $urlRouterProvider.otherwise('/home');
+});
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
   $scope.$on('fade-normal:enter', function () {
@@ -155,9 +181,9 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     $timeout.cancel(playTime);
   };
 
-  $timeout(function(){
-    $scope.demo.play(0);
-  }, 1500);
+  // $timeout(function(){
+  //   $scope.demo.play(0);
+  // }, 1500);
 
   function shuffle (obj) {
     var rand;

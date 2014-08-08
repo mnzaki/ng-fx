@@ -34,7 +34,8 @@
     "specs"
   ],
   "dependencies": {
-    "angular": "*"
+    "angular": "*",
+    "angular-ui-router": "~0.2.10"
   },
   "devDependencies": {
     "gsap": "~1.11.6",

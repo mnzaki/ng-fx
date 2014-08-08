@@ -14,9 +14,10 @@
           cssMixin(el);
 
           customs = Assist.parseClassList(el, true);
-
           effect.from.ease = customs.ease.easeInOut;
           effect.duration = customs.speed;
+
+          console.log(customs);
 
           TransAssist.addTimer(el, effect.duration, done);
 
@@ -83,7 +84,6 @@
         css3D(wrapper, el);
 
         angular.element(wrapper).append(el[0].outerHTML);
-        console.log(wrapper, el);
         customs = Assist.parseClassList(el, true);
 
         effect.from.ease = customs.ease.easeOut;
@@ -137,7 +137,7 @@
   }
 
   function calcTime  (duration, perc) {
-    console.log(duration);
+
     return (duration * (perc/100));
   }
 
