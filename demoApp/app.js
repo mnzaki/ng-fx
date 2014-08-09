@@ -1,14 +1,19 @@
-var app = angular.module('app', ['ngFx' ,'ui.bootstrap', 'ui.router']);
+var app = angular.module('app', ['ngFx' ,'ui.bootstrap', 'ngRoute', 'ui.router']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+// app.config(function($stateProvider, $urlRouterProvider) {
+
+// });
+
+
+app.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
       templateUrl: 'templates/home.tpl.html',
       controller: 'viewCTRL',
       animation: {
-        enter: 'slide-in-left',
-        leave: 'slide-out-left',
+        enter: 'slide-in-left-fade',
+        leave: 'slide-out-right-fade',
         ease: 'back',
         speed: 500
       }
@@ -18,14 +23,40 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/view.tpl.html',
       controller: 'viewCTRL',
       animation: {
-        enter: 'slide-in-left',
-        leave: 'slide-out-left',
+        enter: 'slide-in-right-fade',
+        leave: 'slide-out-left-fade',
         ease: 'back',
         speed: 500
       }
     });
 
-    $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/home');
+
+  // $routeProvider
+  //   .when('/home', {
+  //     templateUrl: 'templates/home.tpl.html',
+  //     controller: 'viewCTRL',
+  //     animation: {
+  //       enter: 'slide-in-left',
+  //       leave: 'slide-out-left',
+  //       ease: 'back',
+  //       speed: 500
+  //     }
+  //   })
+  //   .when('/view', {
+  //     templateUrl: 'templates/view.tpl.html',
+  //     controller: 'viewCTRL',
+  //     animation: {
+  //       enter: 'slide-in-left',
+  //       leave: 'slide-out-left',
+  //       ease: 'back',
+  //       speed: 500
+  //     }
+  //   });
+
+  //   $routeProvider.otherwise({
+  //     redirectTo: '/home'
+  //   });
 });
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
@@ -183,9 +214,9 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     $timeout.cancel(playTime);
   };
 
-  // $timeout(function(){
-  //   $scope.demo.play(0);
-  // }, 1500);
+  $timeout(function(){
+    $scope.demo.play(0);
+  }, 1500);
 
   function shuffle (obj) {
     var rand;
@@ -226,8 +257,7 @@ app.directive('card', function(){
 });
 
 
-app.controller('viewCTRL', function($state) {
-  console.log($state.current);
+app.controller('viewCTRL', function($route) {
 });
 
 app.directive('anchor', function(){
@@ -260,15 +290,8 @@ app.directive('fx', function($injector) {
     link: function($scope, $ele) {
 
       var $state, $route;
-      try {
-        $state = $injector.get('$state');
-        $route = $injector.get('$route');
-      } catch (err) {
 
-      }
-
-      if ($state) {
-        var animations = $state.current.animation;
+      function addAnimations(animations, ele) {
         angular.forEach(animations, function(animation, type) {
           if (type === 'ease') {
             animation = 'fx-easing-' + animation;
@@ -277,13 +300,39 @@ app.directive('fx', function($injector) {
           if (type === 'speed') {
             animation = 'fx-speed-' + animation;
           }
-
-          console.log(animation);
-          $ele.addClass(animation);
+          ele.addClass(animation);
         });
       }
+
+      try {
+        $state = $injector.get('$state');
+      } catch (err) {
+      }
+
+      try {
+        $route = $injector.get('$route');
+      } catch (err) {
+
+      }
+
+      var animations;
+      if ($state && $state.current.animation && $route && $route.current){
+          if ($route.current.$$route && $route.current.$$route.animation){
+            throw new Error('You can only add animations on either $state or $route');
+          }
+      }
+
+      if ($state) {
+        animations = $state.current.animation;
+      }
+
+      if ($route && $route.current) {
+        animations = $route.current.$$route.animation;
+      }
+
+      addAnimations(animations, $ele);
     }
   };
-})
+});
 
 

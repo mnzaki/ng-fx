@@ -35,7 +35,8 @@
       'fx.transitions.slides',
       'fx.transitions.scales',
       'fx.transitions.rotations',
-      'fx.transitions.specials'
+      'fx.transitions.specials',
+      'fx.transitions.view'
     ]
   );
   angular.module('ngFx', ['fx.animations', 'fx.transitions', 'ngAnimate']);
