@@ -9081,8 +9081,20 @@ angular.module('ngAnimate', ['ng'])
     };
 
     return new FadeAnimation(effect);
+  }])
+
+  .animation('.fx-fade-overlay', ['FadeAnimation', function(FadeAnimation) {
+    var effect = {
+      enter: {opacity: 0.7},
+      leave: {opacity: 0},
+      inverse: {opacity: 0},
+      animation: 'fade-overlay'
+    };
+
+    return new FadeAnimation(effect);
   }]);
 }(angular));
+
 
 /*
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
