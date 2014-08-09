@@ -1,4 +1,63 @@
-var app = angular.module('app', ['ngFx' ,'ui.bootstrap']);
+var app = angular.module('app', ['ngFx' ,'ui.bootstrap', 'ngRoute', 'ui.router']);
+
+// app.config(function($stateProvider, $urlRouterProvider) {
+
+// });
+
+
+app.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      templateUrl: 'templates/home.tpl.html',
+      controller: 'viewCTRL',
+      animation: {
+        enter: 'shrink-in',
+        leave: 'grow-out',
+        ease: 'back',
+        speed: 800
+      }
+    })
+    .state('view', {
+      url: '/view',
+      templateUrl: 'templates/view.tpl.html',
+      controller: 'viewCTRL',
+      animation: {
+        enter: 'grow-in',
+        leave: 'shrink-out',
+        ease: 'back',
+        speed: 800
+      }
+    });
+
+  $urlRouterProvider.otherwise('/home');
+
+  // $routeProvider
+  //   .when('/home', {
+  //     templateUrl: 'templates/home.tpl.html',
+  //     controller: 'viewCTRL',
+  //     animation: {
+  //       enter: 'slide-in-left',
+  //       leave: 'slide-out-left',
+  //       ease: 'back',
+  //       speed: 500
+  //     }
+  //   })
+  //   .when('/view', {
+  //     templateUrl: 'templates/view.tpl.html',
+  //     controller: 'viewCTRL',
+  //     animation: {
+  //       enter: 'slide-in-left',
+  //       leave: 'slide-out-left',
+  //       ease: 'back',
+  //       speed: 500
+  //     }
+  //   });
+
+  //   $routeProvider.otherwise({
+  //     redirectTo: '/home'
+  //   });
+});
 
 app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $timeout, $q){
   $scope.$on('fade-normal:enter', function () {
@@ -155,9 +214,12 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     $timeout.cancel(playTime);
   };
 
-  $timeout(function(){
-    $scope.demo.play(0);
-  }, 1500);
+  /*
+    Uncomment below to enable auto play of the cards and animations
+  */
+  // $timeout(function(){
+  //   $scope.demo.play(0);
+  // }, 1500);
 
   function shuffle (obj) {
     var rand;
@@ -197,6 +259,10 @@ app.directive('card', function(){
   };
 });
 
+
+app.controller('viewCTRL', function($route) {
+});
+
 app.directive('anchor', function(){
   return function ($scope){
 
@@ -218,6 +284,57 @@ app.directive('scroll', function(){
         el.prop('scrollTop', scrollWindow - to);
       }
     });
+  };
+});
+
+app.directive('fx', function($injector) {
+  return {
+    // priority: 1000,
+    link: function($scope, $ele) {
+
+      var $state, $route;
+
+      function addAnimations(animations, ele) {
+        angular.forEach(animations, function(animation, type) {
+          if (type === 'ease') {
+            animation = 'fx-easing-' + animation;
+          }
+
+          if (type === 'speed') {
+            animation = 'fx-speed-' + animation;
+          }
+          ele.addClass(animation);
+        });
+      }
+
+      try {
+        $state = $injector.get('$state');
+      } catch (err) {
+      }
+
+      try {
+        $route = $injector.get('$route');
+      } catch (err) {
+
+      }
+
+      var animations;
+      if ($state && $state.current.animation && $route && $route.current){
+          if ($route.current.$$route && $route.current.$$route.animation){
+            throw new Error('You can only add animations on either $state or $route');
+          }
+      }
+
+      if ($state) {
+        animations = $state.current.animation;
+      }
+
+      if ($route && $route.current) {
+        animations = $route.current.$$route.animation;
+      }
+
+      addAnimations(animations, $ele);
+    }
   };
 });
 

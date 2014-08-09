@@ -12,6 +12,10 @@ var paths = {
     './src/animationsAssist.js',
     './src/animationClass.js',
     './src/animations/*.js',
+
+    './src/transitionsAssist.js',
+    './src/transitionsClass.js',
+    './src/transitions/*.js',
     './src/domAnimations/*.js',
     './src/directives/*.js',
     './src/animate.js'
@@ -21,6 +25,9 @@ var paths = {
     './src/animationsAssist.js',
     './src/animationClass.js',
     './src/animations/*.js',
+    './src/transitionsAssist.js',
+    './src/transitionsClass.js',
+    './src/transitions/*.js',
     './src/domAnimations/*.js',
     './src/directives/*.js',
     './src/animate.js'

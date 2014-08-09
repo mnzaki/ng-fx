@@ -1,14 +1,14 @@
 /*!
- * VERSION: 1.11.6
- * DATE: 2014-03-26
+ * VERSION: 1.11.8
+ * DATE: 2014-05-13
  * UPDATES AND DOCS AT: http://www.greensock.com
- *
+ * 
  * Includes all of the following: TweenLite, TweenMax, TimelineLite, TimelineMax, EasePack, CSSPlugin, RoundPropsPlugin, BezierPlugin, AttrPlugin, DirectionalRotationPlugin
  *
  * @license Copyright (c) 2008-2014, GreenSock. All rights reserved.
  * This work is subject to the terms at http://www.greensock.com/terms_of_use.html or for
  * Club GreenSock members, the software agreement that was issued with your membership.
- *
+ * 
  * @author: Jack Doyle, jack@greensock.com
  **/
 
@@ -17,7 +17,7 @@
 	"use strict";
 
 	window._gsDefine("TweenMax", ["core.Animation","core.SimpleTimeline","TweenLite"], function(Animation, SimpleTimeline, TweenLite) {
-
+		
 		var _slice = [].slice,
 			TweenMax = function(target, duration, vars) {
 				TweenLite.call(this, target, duration, vars);
@@ -34,13 +34,13 @@
 			p = TweenMax.prototype = TweenLite.to({}, 0.1, {}),
 			_blankArray = [];
 
-		TweenMax.version = "1.11.6";
+		TweenMax.version = "1.11.8";
 		p.constructor = TweenMax;
 		p.kill()._gc = false;
 		TweenMax.killTweensOf = TweenMax.killDelayedCallsTo = TweenLite.killTweensOf;
 		TweenMax.getTweensOf = TweenLite.getTweensOf;
 		TweenMax.ticker = TweenLite.ticker;
-
+	
 		p.invalidate = function() {
 			this._yoyo = (this.vars.yoyo === true);
 			this._repeat = this.vars.repeat || 0;
@@ -48,7 +48,7 @@
 			this._uncache(true);
 			return TweenLite.prototype.invalidate.call(this);
 		};
-
+		
 		p.updateTo = function(vars, resetDuration) {
 			var curRatio = this.ratio, p;
 			if (resetDuration && this._startTime < this._timeline._time) {
@@ -73,7 +73,7 @@
 					if (this._notifyPluginsOfEnabled && this._firstPT) {
 						TweenLite._onPluginEvent("_onDisable", this); //in case a plugin like MotionBlur must perform some cleanup tasks
 					}
-					if (this._time / this._duration > 0.998) { //if the tween has finished (or come extremely close to finishing), we just need to rewind it to 0 and then render it again at the end which forces it to re-initialize (parsing the new vars). We allow tweens that are close to finishing (but haven't quite finished) to work this way too because otherwise, the values are so small when determining where to project the starting values that binary math issues creep in and can make the tween appear to render incorrectly when run backwards.
+					if (this._time / this._duration > 0.998) { //if the tween has finished (or come extremely close to finishing), we just need to rewind it to 0 and then render it again at the end which forces it to re-initialize (parsing the new vars). We allow tweens that are close to finishing (but haven't quite finished) to work this way too because otherwise, the values are so small when determining where to project the starting values that binary math issues creep in and can make the tween appear to render incorrectly when run backwards. 
 						var prevTime = this._time;
 						this.render(0, true, false);
 						this._initted = false;
@@ -84,7 +84,7 @@
 						var inv = 1 / (1 - curRatio),
 							pt = this._firstPT, endValue;
 						while (pt) {
-							endValue = pt.s + pt.c;
+							endValue = pt.s + pt.c; 
 							pt.c *= inv;
 							pt.s = endValue - pt.c;
 							pt = pt._next;
@@ -94,14 +94,14 @@
 			}
 			return this;
 		};
-
+				
 		p.render = function(time, suppressEvents, force) {
 			if (!this._initted) if (this._duration === 0 && this.vars.repeat) { //zero duration tweens that render immediately have render() called from TweenLite's constructor, before TweenMax's constructor has finished setting _repeat, _repeatDelay, and _yoyo which are critical in determining totalDuration() so we need to call invalidate() which is a low-kb way to get those set properly.
 				this.invalidate();
 			}
 			var totalDur = (!this._dirty) ? this._totalDuration : this.totalDuration(),
 				prevTime = this._time,
-				prevTotalTime = this._totalTime,
+				prevTotalTime = this._totalTime, 
 				prevCycle = this._cycle,
 				duration = this._duration,
 				isComplete, callback, pt, cycleDuration, r, type, pow, rawPrevTime;
@@ -132,7 +132,7 @@
 					}
 					this._rawPrevTime = rawPrevTime = (!suppressEvents || time || this._rawPrevTime === time) ? time : _tinyNum; //when the playhead arrives at EXACTLY time 0 (right on top) of a zero-duration tween, we need to discern if events are suppressed so that when the playhead moves again (next time), it'll trigger the callback. If events are NOT suppressed, obviously the callback would be triggered in this render. Basically, the callback should fire either when the playhead ARRIVES or LEAVES this exact spot, not both. Imagine doing a timeline.seek(0) and there's a callback that sits at 0. Since events are suppressed on that seek() by default, nothing will fire, but when the playhead moves off of that position, the callback should fire. This behavior is what people intuitively expect. We set the _rawPrevTime to be a precise tiny number to indicate this scenario rather than using another property/variable which would increase memory usage. This technique is less readable, but more efficient.
 				}
-
+				
 			} else if (time < 0.0000001) { //to work around occasional floating point math artifacts, round super small values to 0.
 				this._totalTime = this._time = this._cycle = 0;
 				this.ratio = this._ease._calcEnd ? this._ease.getRatio(0) : 0;
@@ -153,7 +153,7 @@
 				}
 			} else {
 				this._totalTime = this._time = time;
-
+				
 				if (this._repeat !== 0) {
 					cycleDuration = duration + this._repeatDelay;
 					this._cycle = (this._totalTime / cycleDuration) >> 0; //originally _totalTime % cycleDuration but floating point errors caused problems, so I normalized it. (4 % 0.8 should be 0 but Flash reports it as 0.79999999!)
@@ -170,7 +170,7 @@
 						this._time = 0;
 					}
 				}
-
+				
 				if (this._easeType) {
 					r = this._time / duration;
 					type = this._easeType;
@@ -190,7 +190,7 @@
 					} else if (pow === 4) {
 						r *= r * r * r * r;
 					}
-
+					
 					if (type === 1) {
 						this.ratio = 1 - r;
 					} else if (type === 2) {
@@ -200,13 +200,13 @@
 					} else {
 						this.ratio = 1 - (r / 2);
 					}
-
+					
 				} else {
 					this.ratio = this._ease.getRatio(this._time / duration);
 				}
-
+				
 			}
-
+				
 			if (prevTime === this._time && !force && prevCycle === this._cycle) {
 				if (prevTotalTime !== this._totalTime) if (this._onUpdate) if (!suppressEvents) { //so that onUpdate fires even during the repeatDelay - as long as the totalTime changed, we should trigger onUpdate.
 					this._onUpdate.apply(this.vars.onUpdateScope || this, this.vars.onUpdateParams || _blankArray);
@@ -224,7 +224,7 @@
 					this.ratio = this._ease.getRatio((this._time === 0) ? 0 : 1);
 				}
 			}
-
+			
 			if (!this._active) if (!this._paused && this._time !== prevTime && time >= 0) {
 				this._active = true; //so that if the user renders a tween (as opposed to the timeline rendering it), the timeline is forced to re-render and align it with the proper time/frame on the next rendering cycle. Maybe the tween already finished but the user manually re-renders it as halfway done.
 			}
@@ -240,7 +240,7 @@
 					this.vars.onStart.apply(this.vars.onStartScope || this, this.vars.onStartParams || _blankArray);
 				}
 			}
-
+			
 			pt = this._firstPT;
 			while (pt) {
 				if (pt.f) {
@@ -250,7 +250,7 @@
 				}
 				pt = pt._next;
 			}
-
+			
 			if (this._onUpdate) {
 				if (time < 0) if (this._startAt && this._startTime) { //if the tween is positioned at the VERY beginning (_startTime 0) of its parent timeline, it's illegal for the playhead to go back further, so we should not render the recorded startAt values.
 					this._startAt.render(time, suppressEvents, force); //note: for performance reasons, we tuck this conditional logic inside less traveled areas (most tweens don't have an onUpdate). We'd just have it at the end before the onComplete, but the values should be updated before any onUpdate is called, so we ALSO put it here and then if it's not called, we do so later near the onComplete.
@@ -280,25 +280,25 @@
 				}
 			}
 		};
-
+		
 //---- STATIC FUNCTIONS -----------------------------------------------------------------------------------------------------------
-
+		
 		TweenMax.to = function(target, duration, vars) {
 			return new TweenMax(target, duration, vars);
 		};
-
+		
 		TweenMax.from = function(target, duration, vars) {
 			vars.runBackwards = true;
 			vars.immediateRender = (vars.immediateRender != false);
 			return new TweenMax(target, duration, vars);
 		};
-
+		
 		TweenMax.fromTo = function(target, duration, fromVars, toVars) {
 			toVars.startAt = fromVars;
 			toVars.immediateRender = (toVars.immediateRender != false && fromVars.immediateRender != false);
 			return new TweenMax(target, duration, toVars);
 		};
-
+		
 		TweenMax.staggerTo = TweenMax.allTo = function(targets, duration, vars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope) {
 			stagger = stagger || 0;
 			var delay = vars.delay || 0,
@@ -333,31 +333,31 @@
 			}
 			return a;
 		};
-
+		
 		TweenMax.staggerFrom = TweenMax.allFrom = function(targets, duration, vars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope) {
 			vars.runBackwards = true;
 			vars.immediateRender = (vars.immediateRender != false);
 			return TweenMax.staggerTo(targets, duration, vars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope);
 		};
-
+		
 		TweenMax.staggerFromTo = TweenMax.allFromTo = function(targets, duration, fromVars, toVars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope) {
 			toVars.startAt = fromVars;
 			toVars.immediateRender = (toVars.immediateRender != false && fromVars.immediateRender != false);
 			return TweenMax.staggerTo(targets, duration, toVars, stagger, onCompleteAll, onCompleteAllParams, onCompleteAllScope);
 		};
-
+				
 		TweenMax.delayedCall = function(delay, callback, params, scope, useFrames) {
 			return new TweenMax(callback, 0, {delay:delay, onComplete:callback, onCompleteParams:params, onCompleteScope:scope, onReverseComplete:callback, onReverseCompleteParams:params, onReverseCompleteScope:scope, immediateRender:false, useFrames:useFrames, overwrite:0});
 		};
-
+		
 		TweenMax.set = function(target, vars) {
 			return new TweenMax(target, 0, vars);
 		};
-
+		
 		TweenMax.isTweening = function(target) {
 			return (TweenLite.getTweensOf(target, true).length > 0);
 		};
-
+		
 		var _getChildrenOf = function(timeline, includeTimelines) {
 				var a = [],
 					cnt = 0,
@@ -375,11 +375,11 @@
 					tween = tween._next;
 				}
 				return a;
-			},
+			}, 
 			getAllTweens = TweenMax.getAllTweens = function(includeTimelines) {
 				return _getChildrenOf(Animation._rootTimeline, includeTimelines).concat( _getChildrenOf(Animation._rootFramesTimeline, includeTimelines) );
 			};
-
+		
 		TweenMax.killAll = function(complete, tweens, delayedCalls, timelines) {
 			if (tweens == null) {
 				tweens = true;
@@ -402,7 +402,7 @@
 				}
 			}
 		};
-
+		
 		TweenMax.killChildTweensOf = function(parent, complete) {
 			if (parent == null) {
 				return;
@@ -456,11 +456,11 @@
 				}
 			}
 		};
-
+		
 		TweenMax.pauseAll = function(tweens, delayedCalls, timelines) {
 			_changePause(true, tweens, delayedCalls, timelines);
 		};
-
+		
 		TweenMax.resumeAll = function(tweens, delayedCalls, timelines) {
 			_changePause(false, tweens, delayedCalls, timelines);
 		};
@@ -479,18 +479,18 @@
 			tl._timeScale = Animation._rootTimeline._timeScale = value;
 			return value;
 		};
-
-
+		
+	
 //---- GETTERS / SETTERS ----------------------------------------------------------------------------------------------------------
-
+		
 		p.progress = function(value) {
 			return (!arguments.length) ? this._time / this.duration() : this.totalTime( this.duration() * ((this._yoyo && (this._cycle & 1) !== 0) ? 1 - value : value) + (this._cycle * (this._duration + this._repeatDelay)), false);
 		};
-
+		
 		p.totalProgress = function(value) {
 			return (!arguments.length) ? this._totalTime / this.totalDuration() : this.totalTime( this.totalDuration() * value, false);
 		};
-
+		
 		p.time = function(value, suppressEvents) {
 			if (!arguments.length) {
 				return this._time;
@@ -527,7 +527,7 @@
 			}
 			return (this._repeat === -1) ? this : this.duration( (value - (this._repeat * this._repeatDelay)) / (this._repeat + 1) );
 		};
-
+		
 		p.repeat = function(value) {
 			if (!arguments.length) {
 				return this._repeat;
@@ -535,7 +535,7 @@
 			this._repeat = value;
 			return this._uncache(true);
 		};
-
+		
 		p.repeatDelay = function(value) {
 			if (!arguments.length) {
 				return this._repeatDelay;
@@ -543,7 +543,7 @@
 			this._repeatDelay = value;
 			return this._uncache(true);
 		};
-
+		
 		p.yoyo = function(value) {
 			if (!arguments.length) {
 				return this._yoyo;
@@ -551,10 +551,10 @@
 			this._yoyo = value;
 			return this;
 		};
-
-
+		
+		
 		return TweenMax;
-
+		
 	}, true);
 
 
@@ -594,6 +594,7 @@
 			_isSelector = TweenLite._internals.isSelector,
 			_isArray = TweenLite._internals.isArray,
 			_blankArray = [],
+			_globals = window._gsDefine.globals,
 			_copy = function(vars) {
 				var copy = {}, p;
 				for (p in vars) {
@@ -610,20 +611,22 @@
 			_slice = _blankArray.slice,
 			p = TimelineLite.prototype = new SimpleTimeline();
 
-		TimelineLite.version = "1.11.6";
+		TimelineLite.version = "1.11.8";
 		p.constructor = TimelineLite;
 		p.kill()._gc = false;
 
 		p.to = function(target, duration, vars, position) {
-			return duration ? this.add( new TweenLite(target, duration, vars), position) : this.set(target, vars, position);
+			var Engine = (vars.repeat && _globals.TweenMax) || TweenLite;
+			return duration ? this.add( new Engine(target, duration, vars), position) : this.set(target, vars, position);
 		};
 
 		p.from = function(target, duration, vars, position) {
-			return this.add( TweenLite.from(target, duration, vars), position);
+			return this.add( ((vars.repeat && _globals.TweenMax) || TweenLite).from(target, duration, vars), position);
 		};
 
 		p.fromTo = function(target, duration, fromVars, toVars, position) {
-			return duration ? this.add( TweenLite.fromTo(target, duration, fromVars, toVars), position) : this.set(target, toVars, position);
+			var Engine = (toVars.repeat && _globals.TweenMax) || TweenLite;
+			return duration ? this.add( Engine.fromTo(target, duration, fromVars, toVars), position) : this.set(target, toVars, position);
 		};
 
 		p.staggerTo = function(targets, duration, vars, stagger, position, onCompleteAll, onCompleteAllParams, onCompleteAllScope) {
@@ -1172,6 +1175,7 @@
 		return TimelineLite;
 
 	}, true);
+	
 
 
 
@@ -1179,12 +1183,11 @@
 
 
 
-
-
-
-
-
-
+	
+	
+	
+	
+	
 /*
  * ----------------------------------------------------------------
  * TimelineMax
@@ -1207,7 +1210,7 @@
 
 		p.constructor = TimelineMax;
 		p.kill()._gc = false;
-		TimelineMax.version = "1.11.6";
+		TimelineMax.version = "1.11.8";
 
 		p.invalidate = function() {
 			this._yoyo = (this.vars.yoyo === true);
@@ -1241,7 +1244,7 @@
 
 		p.tweenTo = function(position, vars) {
 			vars = vars || {};
-			var copy = {ease:_easeNone, overwrite:2, useFrames:this.usesFrames(), immediateRender:false},
+			var copy = {ease:_easeNone, overwrite:(vars.delay ? 2 : 1), useFrames:this.usesFrames(), immediateRender:false},//note: set overwrite to 1 (true/all) by default unless there's a delay so that we avoid a racing situation that could happen if, for example, an onmousemove creates the same tweenTo() over and over again.
 				duration, p, t;
 			for (p in vars) {
 				copy[p] = vars[p];
@@ -1616,18 +1619,18 @@
 		return TimelineMax;
 
 	}, true);
+	
 
 
 
 
-
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
 /*
  * ----------------------------------------------------------------
  * BezierPlugin
@@ -1928,7 +1931,7 @@
 			BezierPlugin = window._gsDefine.plugin({
 					propName: "bezier",
 					priority: -1,
-					version: "1.3.1",
+					version: "1.3.2",
 					API: 2,
 					global:true,
 
@@ -2063,7 +2066,7 @@
 							b = this._beziers[p][curIndex];
 							val = (t * t * b.da + 3 * inv * (t * b.ca + inv * b.ba)) * t + b.a;
 							if (this._round[p]) {
-								val = (val + ((val > 0) ? 0.5 : -0.5)) >> 0;
+								val = Math.round(val);
 							}
 							if (func[p]) {
 								target[p](val);
@@ -2206,14 +2209,14 @@
 
 
 
-
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
 /*
  * ----------------------------------------------------------------
  * CSSPlugin
@@ -2235,7 +2238,7 @@
 			p = CSSPlugin.prototype = new TweenPlugin("css");
 
 		p.constructor = CSSPlugin;
-		CSSPlugin.version = "1.11.6";
+		CSSPlugin.version = "1.11.8";
 		CSSPlugin.API = 2;
 		CSSPlugin.defaultTransformPerspective = 0;
 		CSSPlugin.defaultSkewType = "compensated";
@@ -2343,8 +2346,7 @@
 				if (!calc && t.style[p]) {
 					rv = t.style[p];
 				} else if ((cs = cs || _getComputedStyle(t, null))) {
-					t = cs.getPropertyValue(p.replace(_capsExp, "-$1").toLowerCase());
-					rv = (t || cs.length) ? t : cs[p]; //Opera behaves VERY strangely - length is usually 0 and cs[p] is the only way to get accurate results EXCEPT when checking for -o-transform which only works with cs.getPropertyValue()!
+					rv = cs[p] || cs.getPropertyValue(p) || cs.getPropertyValue(p.replace(_capsExp, "-$1").toLowerCase());
 				} else if (t.currentStyle) {
 					rv = t.currentStyle[p];
 				}
@@ -2367,7 +2369,7 @@
 					node = t,
 					style = _tempDiv.style,
 					neg = (v < 0),
-					pix;
+					pix, cache, time;
 				if (neg) {
 					v = -v;
 				}
@@ -2377,6 +2379,11 @@
 					style.cssText = "border:0 solid red;position:" + _getStyle(t, "position") + ";line-height:0;";
 					if (sfx === "%" || !node.appendChild) {
 						node = t.parentNode || _doc.body;
+						cache = node._gsCache;
+						time = TweenLite.ticker.frame;
+						if (cache && horiz && cache.time === time) { //performance optimization: we record the width of elements along with the ticker frame so that we can quickly get it again on the same tick (seems relatively safe to assume it wouldn't change on the same tick)
+							return cache.width * v / 100;
+						}
 						style[(horiz ? "width" : "height")] = v + sfx;
 					} else {
 						style[(horiz ? "borderLeftWidth" : "borderTopWidth")] = v + sfx;
@@ -2384,6 +2391,11 @@
 					node.appendChild(_tempDiv);
 					pix = parseFloat(_tempDiv[(horiz ? "offsetWidth" : "offsetHeight")]);
 					node.removeChild(_tempDiv);
+					if (horiz && sfx === "%" && CSSPlugin.cacheWidths !== false) {
+						cache = node._gsCache = node._gsCache || {};
+						cache.time = time;
+						cache.width = pix / v * 100;
+					}
 					if (pix === 0 && !recurse) {
 						pix = _convertToPixels(t, p, v, sfx, true);
 					}
@@ -2759,7 +2771,7 @@
 				while (mpt) {
 					val = proxy[mpt.v];
 					if (mpt.r) {
-						val = (val > 0) ? (val + 0.5) | 0 : (val - 0.5) | 0;
+						val = Math.round(val);
 					} else if (val < min && val > -min) {
 						val = 0;
 					}
@@ -3244,7 +3256,7 @@
 
 
 		//transform-related methods and properties
-		var _transformProps = ("scaleX,scaleY,scaleZ,x,y,z,skewX,rotation,rotationX,rotationY,perspective").split(","),
+		var _transformProps = ("scaleX,scaleY,scaleZ,x,y,z,skewX,skewY,rotation,rotationX,rotationY,perspective").split(","),
 			_transformProp = _checkPropPrefix("transform"), //the Javascript (camelCase) transform property, like msTransform, WebkitTransform, MozTransform, or OTransform.
 			_transformPropCSS = _prefixCSS + "transform",
 			_transformOriginProp = _checkPropPrefix("transformOrigin"),
@@ -3653,7 +3665,6 @@
 				v = vars,
 				endRotations = {},
 				m2, skewY, copy, orig, has3D, hasChange, dr;
-
 			if (typeof(v.transform) === "string" && _transformProp) { //for values like transform:"rotate(60deg) scale(0.5, 0.8)"
 				copy = style.cssText;
 				style[_transformProp] = v.transform;
@@ -3938,6 +3949,9 @@
 		var _removeProp = function(s, p) {
 				if (p) {
 					if (s.removeProperty) {
+						if (p.substr(0,2) === "ms") { //Microsoft browsers don't conform to the standard of capping the first prefix character, so we adjust so that when we prefix the caps with a dash, it's correct (otherwise it'd be "ms-transform" instead of "-ms-transform" for IE9, for example)
+							p = "M" + p.substr(1);
+						}
 						s.removeProperty(p.replace(_capsExp, "-$1").toLowerCase());
 					} else { //note: old versions of IE use "removeAttribute()" instead of "removeProperty()"
 						s.removeAttribute(p);
@@ -4210,7 +4224,7 @@
 						es = (en || en === 0) ? (rel ? en + bn : en) + esfx : vars[p]; //ensures that any += or -= prefixes are taken care of. Record the end value before normalizing the suffix because we always want to end the tween on exactly what they intended even if it doesn't match the beginning value's suffix.
 
 						//if the beginning/ending suffixes don't match, normalize them...
-						if (bsfx !== esfx) if (esfx !== "") if (en || en === 0) if (bn || bn === 0) {
+						if (bsfx !== esfx) if (esfx !== "") if (en || en === 0) if (bn) { //note: if the beginning value (bn) is 0, we don't need to convert units!
 							bn = _convertToPixels(target, p, bn, bsfx);
 							if (esfx === "%") {
 								bn /= _convertToPixels(target, p, 100, "%") / 100;
@@ -4222,7 +4236,7 @@
 								bn /= _convertToPixels(target, p, 1, "em");
 
 							//otherwise convert to pixels.
-							} else {
+							} else if (esfx !== "px") {
 								en = _convertToPixels(target, p, en, esfx);
 								esfx = "px"; //we don't use bsfx after this, so we don't need to set it to px too.
 							}
@@ -4277,7 +4291,7 @@
 				while (pt) {
 					val = pt.c * v + pt.s;
 					if (pt.r) {
-						val = (val > 0) ? (val + 0.5) | 0 : (val - 0.5) | 0;
+						val = Math.round(val);
 					} else if (val < min) if (val > -min) {
 						val = 0;
 					}
@@ -4476,16 +4490,16 @@
 
 	}, true);
 
-
-
-
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 /*
  * ----------------------------------------------------------------
  * RoundPropsPlugin
@@ -4569,20 +4583,24 @@
 	window._gsDefine.plugin({
 		propName: "attr",
 		API: 2,
-		version: "0.2.0",
+		version: "0.3.0",
 
 		//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
 		init: function(target, value, tween) {
-			var p;
+			var p, start, end;
 			if (typeof(target.setAttribute) !== "function") {
 				return false;
 			}
 			this._target = target;
 			this._proxy = {};
+			this._start = {}; // we record start and end values exactly as they are in case they're strings (not numbers) - we need to be able to revert to them cleanly.
+			this._end = {};
+			this._endRatio = tween.vars.runBackwards ? 0 : 1;
 			for (p in value) {
-				if ( this._addTween(this._proxy, p, parseFloat(target.getAttribute(p)), value[p], p) ) {
-					this._overwriteProps.push(p);
-				}
+				this._start[p] = this._proxy[p] = start = target.getAttribute(p);
+				this._end[p] = end = value[p];
+				this._addTween(this._proxy, p, parseFloat(start), end, p);
+				this._overwriteProps.push(p);
 			}
 			return true;
 		},
@@ -4592,14 +4610,15 @@
 			this._super.setRatio.call(this, ratio);
 			var props = this._overwriteProps,
 				i = props.length,
+				lookup = (ratio !== 0 && ratio !== 1) ? this._proxy : (ratio === this._endRatio) ? this._end : this._start,
 				p;
 			while (--i > -1) {
 				p = props[i];
-				this._target.setAttribute(p, this._proxy[p] + "");
+				this._target.setAttribute(p, lookup[p] + "");
 			}
 		}
 
-	});
+	})
 
 
 
@@ -4685,17 +4704,17 @@
 
 
 
-
-
-
-
+	
+	
+	
+	
 /*
  * ----------------------------------------------------------------
  * EasePack
  * ----------------------------------------------------------------
  */
 	window._gsDefine("easing.Back", ["easing.Ease"], function(Ease) {
-
+		
 		var w = (window.GreenSockGlobals || window),
 			gs = w.com.greensock,
 			_2PI = Math.PI * 2,
@@ -5018,11 +5037,11 @@
 		_easeReg(SteppedEase, "SteppedEase", "ease,");
 
 		return Back;
-
+		
 	}, true);
 
 
-});
+}); 
 
 
 
@@ -5902,7 +5921,7 @@
 		p._firstPT = p._targets = p._overwrittenProps = p._startAt = null;
 		p._notifyPluginsOfEnabled = false;
 
-		TweenLite.version = "1.11.6";
+		TweenLite.version = "1.11.8";
 		TweenLite.defaultEase = p._ease = new Ease(null, null, 1, 1);
 		TweenLite.defaultOverwrite = "auto";
 		TweenLite.ticker = _ticker;
@@ -6126,7 +6145,7 @@
 		};
 
 		p._initProps = function(target, propLookup, siblings, overwrittenProps) {
-			var p, i, initPlugins, plugin, a, pt, v;
+			var p, i, initPlugins, plugin, pt, v;
 			if (target == null) {
 				return false;
 			}
@@ -6544,7 +6563,7 @@
 			while (pt) {
 				val = pt.c * v + pt.s;
 				if (pt.r) {
-					val = (val + ((val > 0) ? 0.5 : -0.5)) | 0; //about 4x faster than Math.round()
+					val = Math.round(val);
 				} else if (val < min) if (val > -min) { //prevents issues with converting very small numbers to strings in the browser
 					val = 0;
 				}
@@ -6686,7 +6705,7 @@
 
 })(window);
 /**
- * @license AngularJS v1.2.16
+ * @license AngularJS v1.2.21
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -6739,9 +6758,9 @@
  * }
  *
  * .slide.ng-enter { }        /&#42; starting animations for enter &#42;/
- * .slide.ng-enter-active { } /&#42; terminal animations for enter &#42;/
+ * .slide.ng-enter.ng-enter-active { } /&#42; terminal animations for enter &#42;/
  * .slide.ng-leave { }        /&#42; starting animations for leave &#42;/
- * .slide.ng-leave-active { } /&#42; terminal animations for leave &#42;/
+ * .slide.ng-leave.ng-leave-active { } /&#42; terminal animations for leave &#42;/
  * </style>
  *
  * <!--
@@ -6751,8 +6770,22 @@
  * <ANY class="slide" ng-include="..."></ANY>
  * ```
  *
- * Keep in mind that if an animation is running, any child elements cannot be animated until the parent element's
- * animation has completed.
+ * Keep in mind that, by default, if an animation is running, any child elements cannot be animated
+ * until the parent element's animation has completed. This blocking feature can be overridden by
+ * placing the `ng-animate-children` attribute on a parent container tag.
+ *
+ * ```html
+ * <div class="slide-animation" ng-if="on" ng-animate-children>
+ *   <div class="fade-animation" ng-if="on">
+ *     <div class="explode-animation" ng-if="on">
+ *        ...
+ *     </div>
+ *   </div>
+ * </div>
+ * ```
+ *
+ * When the `on` expression value changes and an animation is triggered then each of the elements within
+ * will all animate without the block being applied to child elements.
  *
  * <h2>CSS-defined Animations</h2>
  * The animate service will automatically apply two CSS classes to the animated element and these two CSS classes
@@ -6942,6 +6975,19 @@ angular.module('ngAnimate', ['ng'])
    * Please visit the {@link ngAnimate `ngAnimate`} module overview page learn more about how to use animations in your application.
    *
    */
+  .directive('ngAnimateChildren', function() {
+    var NG_ANIMATE_CHILDREN = '$$ngAnimateChildren';
+    return function(scope, element, attrs) {
+      var val = attrs.ngAnimateChildren;
+      if(angular.isString(val) && val.length === 0) { //empty attribute
+        element.data(NG_ANIMATE_CHILDREN, true);
+      } else {
+        scope.$watch(val, function(value) {
+          element.data(NG_ANIMATE_CHILDREN, !!value);
+        });
+      }
+    };
+  })
 
   //this private service is only used within CSS-enabled animations
   //IE8 + IE9 do not support rAF natively, but that is fine since they
@@ -6970,6 +7016,7 @@ angular.module('ngAnimate', ['ng'])
 
     var ELEMENT_NODE = 1;
     var NG_ANIMATE_STATE = '$$ngAnimateState';
+    var NG_ANIMATE_CHILDREN = '$$ngAnimateChildren';
     var NG_ANIMATE_CLASS_NAME = 'ng-animate';
     var rootAnimateState = {running: true};
 
@@ -6980,6 +7027,10 @@ angular.module('ngAnimate', ['ng'])
           return elm;
         }
       }
+    }
+
+    function prepareElement(element) {
+      return element && angular.element(element);
     }
 
     function stripCommentsFromElement(element) {
@@ -7014,6 +7065,12 @@ angular.module('ngAnimate', ['ng'])
               : function(className) {
                 return classNameFilter.test(className);
               };
+
+      function blockElementAnimations(element) {
+        var data = element.data(NG_ANIMATE_STATE) || {};
+        data.running = true;
+        element.data(NG_ANIMATE_STATE, data);
+      }
 
       function lookup(name) {
         if (name) {
@@ -7190,7 +7247,7 @@ angular.module('ngAnimate', ['ng'])
       /**
        * @ngdoc service
        * @name $animate
-       * @function
+       * @kind function
        *
        * @description
        * The `$animate` service provides animation detection support while performing DOM operations (enter, leave and move) as well as during addClass and removeClass operations.
@@ -7210,7 +7267,7 @@ angular.module('ngAnimate', ['ng'])
         /**
          * @ngdoc method
          * @name $animate#enter
-         * @function
+         * @kind function
          *
          * @description
          * Appends the element to the parentElement element that resides in the document and then runs the enter animation. Once
@@ -7237,7 +7294,11 @@ angular.module('ngAnimate', ['ng'])
          * @param {function()=} doneCallback the callback function that will be called once the animation is complete
         */
         enter : function(element, parentElement, afterElement, doneCallback) {
-          this.enabled(false, element);
+          element = angular.element(element);
+          parentElement = prepareElement(parentElement);
+          afterElement = prepareElement(afterElement);
+
+          blockElementAnimations(element);
           $delegate.enter(element, parentElement, afterElement);
           $rootScope.$$postDigest(function() {
             element = stripCommentsFromElement(element);
@@ -7248,7 +7309,7 @@ angular.module('ngAnimate', ['ng'])
         /**
          * @ngdoc method
          * @name $animate#leave
-         * @function
+         * @kind function
          *
          * @description
          * Runs the leave animation operation and, upon completion, removes the element from the DOM. Once
@@ -7273,8 +7334,9 @@ angular.module('ngAnimate', ['ng'])
          * @param {function()=} doneCallback the callback function that will be called once the animation is complete
         */
         leave : function(element, doneCallback) {
+          element = angular.element(element);
           cancelChildAnimations(element);
-          this.enabled(false, element);
+          blockElementAnimations(element);
           $rootScope.$$postDigest(function() {
             performAnimation('leave', 'ng-leave', stripCommentsFromElement(element), null, null, function() {
               $delegate.leave(element);
@@ -7285,7 +7347,7 @@ angular.module('ngAnimate', ['ng'])
         /**
          * @ngdoc method
          * @name $animate#move
-         * @function
+         * @kind function
          *
          * @description
          * Fires the move DOM operation. Just before the animation starts, the animate service will either append it into the parentElement container or
@@ -7313,8 +7375,12 @@ angular.module('ngAnimate', ['ng'])
          * @param {function()=} doneCallback the callback function that will be called once the animation is complete
         */
         move : function(element, parentElement, afterElement, doneCallback) {
+          element = angular.element(element);
+          parentElement = prepareElement(parentElement);
+          afterElement = prepareElement(afterElement);
+
           cancelChildAnimations(element);
-          this.enabled(false, element);
+          blockElementAnimations(element);
           $delegate.move(element, parentElement, afterElement);
           $rootScope.$$postDigest(function() {
             element = stripCommentsFromElement(element);
@@ -7352,6 +7418,7 @@ angular.module('ngAnimate', ['ng'])
          * @param {function()=} doneCallback the callback function that will be called once the animation is complete
         */
         addClass : function(element, className, doneCallback) {
+          element = angular.element(element);
           element = stripCommentsFromElement(element);
           performAnimation('addClass', className, element, null, null, function() {
             $delegate.addClass(element, className);
@@ -7388,6 +7455,7 @@ angular.module('ngAnimate', ['ng'])
          * @param {function()=} doneCallback the callback function that will be called once the animation is complete
         */
         removeClass : function(element, className, doneCallback) {
+          element = angular.element(element);
           element = stripCommentsFromElement(element);
           performAnimation('removeClass', className, element, null, null, function() {
             $delegate.removeClass(element, className);
@@ -7401,7 +7469,7 @@ angular.module('ngAnimate', ['ng'])
            * @function
            * @description Adds and/or removes the given CSS classes to and from the element.
            * Once complete, the done() callback will be fired (if provided).
-           * @param {DOMElement} element the element which will it's CSS classes changed
+           * @param {DOMElement} element the element which will its CSS classes changed
            *   removed from it
            * @param {string} add the CSS classes which will be added to the element
            * @param {string} remove the CSS class which will be removed from the element
@@ -7409,6 +7477,7 @@ angular.module('ngAnimate', ['ng'])
            *   CSS classes have been set on the element
            */
         setClass : function(element, add, remove, doneCallback) {
+          element = angular.element(element);
           element = stripCommentsFromElement(element);
           performAnimation('setClass', [add, remove], element, null, null, function() {
             $delegate.setClass(element, add, remove);
@@ -7418,7 +7487,7 @@ angular.module('ngAnimate', ['ng'])
         /**
          * @ngdoc method
          * @name $animate#enabled
-         * @function
+         * @kind function
          *
          * @param {boolean=} value If provided then set the animation on or off.
          * @param {DOMElement=} element If provided then the element will be used to represent the enable/disable operation
@@ -7485,9 +7554,12 @@ angular.module('ngAnimate', ['ng'])
 
         //only allow animations if the currently running animation is not structural
         //or if there is no animation running at all
-        var skipAnimations = runner.isClassBased ?
-          ngAnimateState.disabled || (lastAnimation && !lastAnimation.isClassBased) :
-          false;
+        var skipAnimations;
+        if (runner.isClassBased) {
+          skipAnimations = ngAnimateState.running ||
+                           ngAnimateState.disabled ||
+                           (lastAnimation && !lastAnimation.isClassBased);
+        }
 
         //skip the animation if animations are disabled, a parent is already being animated,
         //the element is not currently attached to the document body or then completely close
@@ -7542,6 +7614,7 @@ angular.module('ngAnimate', ['ng'])
         }
 
         if(skipAnimation) {
+          fireDOMOperation();
           fireBeforeCallbackAsync();
           fireAfterCallbackAsync();
           fireDoneCallbackAsync();
@@ -7703,30 +7776,49 @@ angular.module('ngAnimate', ['ng'])
       }
 
       function animationsDisabled(element, parentElement) {
-        if (rootAnimateState.disabled) return true;
-
-        if(isMatchingElement(element, $rootElement)) {
-          return rootAnimateState.disabled || rootAnimateState.running;
+        if (rootAnimateState.disabled) {
+          return true;
         }
 
+        if (isMatchingElement(element, $rootElement)) {
+          return rootAnimateState.running;
+        }
+
+        var allowChildAnimations, parentRunningAnimation, hasParent;
         do {
           //the element did not reach the root element which means that it
           //is not apart of the DOM. Therefore there is no reason to do
           //any animations on it
-          if(parentElement.length === 0) break;
+          if (parentElement.length === 0) break;
 
           var isRoot = isMatchingElement(parentElement, $rootElement);
-          var state = isRoot ? rootAnimateState : parentElement.data(NG_ANIMATE_STATE);
-          var result = state && (!!state.disabled || state.running || state.totalActive > 0);
-          if(isRoot || result) {
-            return result;
+          var state = isRoot ? rootAnimateState : (parentElement.data(NG_ANIMATE_STATE) || {});
+          if (state.disabled) {
+            return true;
           }
 
-          if(isRoot) return true;
+          //no matter what, for an animation to work it must reach the root element
+          //this implies that the element is attached to the DOM when the animation is run
+          if (isRoot) {
+            hasParent = true;
+          }
+
+          //once a flag is found that is strictly false then everything before
+          //it will be discarded and all child animations will be restricted
+          if (allowChildAnimations !== false) {
+            var animateChildrenFlag = parentElement.data(NG_ANIMATE_CHILDREN);
+            if(angular.isDefined(animateChildrenFlag)) {
+              allowChildAnimations = animateChildrenFlag;
+            }
+          }
+
+          parentRunningAnimation = parentRunningAnimation ||
+                                   state.running ||
+                                   (state.last && !state.last.isClassBased);
         }
         while(parentElement = parentElement.parent());
 
-        return true;
+        return !hasParent || (!allowChildAnimations && parentRunningAnimation);
       }
     }]);
 
@@ -8060,7 +8152,7 @@ angular.module('ngAnimate', ['ng'])
           //the jqLite object, so we're safe to use a single variable to house
           //the styles since there is always only one element being animated
           var oldStyle = node.getAttribute('style') || '';
-          node.setAttribute('style', oldStyle + ' ' + style);
+          node.setAttribute('style', oldStyle + '; ' + style);
         }
 
         element.on(css3AnimationEvents, onAnimationProgress);
@@ -8302,7 +8394,6 @@ angular.module('ngAnimate', ['ng'])
 
 })(window, window.angular);
 
-
 (function(angular){
   "use strict";
 
@@ -8315,7 +8406,7 @@ angular.module('ngAnimate', ['ng'])
         $rootScope.$broadcast(animation +':'+motion);
       },
 
-      parseClassList: function(element){
+      parseClassList: function(element, option){
         var ease,
             list    = element[0].classList,
             results = {trigger: false, duration: 0.3, ease: $window.Back};
@@ -8332,7 +8423,8 @@ angular.module('ngAnimate', ['ng'])
             results.duration = parseInt(className.slice(9))/1000;
           }
         });
-        return results;
+
+        return option ? {ease: results.ease, speed: results.duration} : results;
       },
 
       addTimer: function(options, element, end){
@@ -9149,6 +9241,472 @@ angular.module('ngAnimate', ['ng'])
   }]);
 }(angular));
 
+(function (angular) {
+  "use strict";
+  var timeoutKey = '$$fxtimer';
+  angular.module('fx.transitions.assist', [])
+
+  .factory('TransAssist', function ($timeout) {
+    function addTimer (el, time, done) {
+      var timer = $timeout(function () {
+        done();
+      }, (time*1000) + 50);
+      el.data(timeoutKey, timer);
+    }
+
+    function removeTimer (el) {
+      var timer = el.data(timeoutKey);
+      if (timer) {
+        el.css('z-index', '-1');
+        $timeout.cancel(timer);
+        el.removeData(timeoutKey);
+      }
+    }
+
+    return {
+      addTimer: addTimer,
+      removeTimer: removeTimer
+    };
+  });
+}(angular));
+
+(function (angular, TLM) {
+  "use strict";
+
+  angular.module('fx.transitions.create', ['fx.transitions.assist', 'fx.animations.assist'])
+
+  .factory('SlideTransition', ['TransAssist', 'Assist', function (TransAssist, Assist) {
+    var slide;
+
+    return function (effect) {
+
+      if (effect.from) {
+        this.enter = function (el, done) {
+          var customs;
+          cssMixin(el);
+
+          customs = Assist.parseClassList(el, true);
+          effect.from.ease = customs.ease.easeInOut;
+          effect.duration = customs.speed;
+
+          TransAssist.addTimer(el, effect.duration, done);
+
+          slide = new TLM();
+
+          slide.from(el, effect.duration, effect.from);
+          return function (cancel) {
+            if(cancel) {
+              TransAssist.removeTimer(el);
+            }
+          };
+        };
+
+      } else if (!effect.from && effect.to) {
+        this.leave = function (el, done) {
+          var customs;
+          cssMixin(el);
+
+          customs = Assist.parseClassList(el, true);
+
+          effect.to.ease = customs.ease.easeInOut;
+          effect.duration = customs.speed;
+          TransAssist.addTimer(el, effect.duration, done);
+
+
+          slide = new TLM();
+
+          slide.to(el, effect.duration, effect.to);
+
+          return function (cancel) {
+            if(cancel) {
+              TransAssist.removeTimer(el);
+            }
+          };
+          // el.css('position', 'absolute');
+          // el.css('z-index', '9999');
+
+          // slide = new TLM({onComplete: finish(done)});
+
+          // slide.from(el, effect.duration, effect.from)
+          //      .to(el, effect.duration, effect.to);
+
+          // el.css('z-index', '9999');
+          // var page = new TLM({onComplete: finish(done)});
+          // page.to(el, {transform: 'rotateZ(0deg)'})
+          //     .to(el, 0.2, {transform: 'rotateZ(10deg)'})
+          //     .to(el, 0.2, {transform: 'rotateZ(17deg)'})
+          //     .to(el, 0.4, {transform: 'rotateZ(15deg)'})
+          //     .to(el, 0.2, {transform: 'translateY(100%) rotateZ(17deg)'});
+        };
+      }
+    };
+  }])
+  .factory('RotationTransition', ['TransAssist', 'Assist','$compile', function (TransAssist, Assist, $compile) {
+    var rotate;
+    return function (effect) {
+      this[effect.when] = function (el, done) {
+        var customs, wrapper;
+
+        wrapper = $compile('<div></div>')(el.scope());
+
+        cssMixin(el);
+
+        css3D(wrapper, el);
+
+        angular.element(wrapper).append(el[0].outerHTML);
+        customs = Assist.parseClassList(el, true);
+
+        effect.from.ease = customs.ease.easeOut;
+        effect.duration = customs.duration;
+        TransAssist.addTimer(el, effect.duration, done);
+        rotate = new TLM();
+
+        rotate.from(el, 1, effect.from)
+              .to(el, 1, effect.to);
+
+        return function (cancel) {
+          if(cancel) {
+            TransAssist.removeTimer(el);
+          }
+        };
+      };
+    };
+  }]);
+
+  function cssMixin (el, z) {
+    el.css('position', 'absolute');
+    z ? z === 'leave' ?
+      el.css('z-index', '9999') : el.css('z-index', '8888') : function(){};
+  }
+
+  function css3D (parent, view) {
+    var preservve = {
+      'position': 'relative',
+      width: '100%',
+      height: '100%',
+      '-webkit-perspective': '500px',
+      '-moz-perspective': '500px',
+      '-o-perspective': '500px',
+      'perspective': '500px',
+    };
+
+    var trans = {
+      overflow: 'hidden',
+      '-webkit-backface-visibility': 'hidden',
+      '-moz-backface-visibility': 'hidden',
+      'backface-visibility': 'hidden',
+      '-webkit-transform': 'translate3d(0, 0, 0)',
+      '-moz-transform': 'translate3d(0, 0, 0)',
+      'transform': 'translate3d(0, 0, 0),',
+     ' -webkit-transform-style': 'preserve-3d',
+      '-moz-transform-style': 'preserve-3d',
+      'transform-style': 'preserve-3d'
+    };
+    parent.css(preservve);
+    view.css(trans);
+  }
+
+  function calcTime  (duration, perc) {
+
+    return (duration * (perc/100));
+  }
+
+}(angular, TimelineMax));
+
+(function(){
+  'use strict';
+
+  angular.module('fx.transitions.view', [])
+
+  .directive('fxAnimate', function($injector) {
+    return {
+      // priority: 1000,
+      link: function($scope, $ele) {
+
+        var $state, $route;
+
+        function addAnimations(animations, ele) {
+          angular.forEach(animations, function(animation, type) {
+            if (type === 'ease') {
+              animation = 'fx-easing-' + animation;
+            }
+
+            if (type === 'speed') {
+              animation = 'fx-speed-' + animation;
+            }
+            ele.addClass(animation);
+          });
+        }
+
+        if ($injector.has('$state')) {
+          $state = $injector.get('$state');
+        }
+
+        if ($injector.has('$route')) {
+          $route = $injector.get('$route');
+        }
+
+
+        var animations;
+        if ($state && $state.current.animation && $route && $route.current){
+            if ($route.current.$$route && $route.current.$$route.animation){
+              throw new Error('You can only add animations on either $state or $route');
+            }
+        }
+
+        if ($state) {
+          animations = $state.current.animation;
+        }
+
+        if ($route && $route.current) {
+          animations = $route.current.$$route.animation;
+        }
+
+        addAnimations(animations, $ele);
+      }
+    };
+  });
+}());
+
+(function (angular) {
+  "use strict";
+
+  angular.module('fx.transitions.rotations', ['fx.transitions.create'])
+
+  .animation('.rotate-out-right', ['RotationTransition', function (RotationTransition) {
+    var effect = {
+      from: {transform: 'rotateY(15deg)', opacity: '.8'},
+      to: {transform: 'scale(0.8) translateZ(-200px)', opacity: '0'},
+      when: 'leave',
+      duration: 0.5
+    };
+
+    return new RotationTransition(effect);
+  }]);
+}(angular));
+(function (angular) {
+  "use strict";
+
+  angular.module('fx.transitions.scales', ['fx.transitions.create'])
+
+  .animation('.shrink-in', ['SlideTransition', function (SlideTransition) {
+    var effect = {
+      from: {opacity: '0', transform: 'translateZ(0) scale(1.2)'},
+      duration: 0.5
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.shrink-out', ['SlideTransition', function (SlideTransition) {
+    var effect = {
+      to: {opacity: '0', transform: 'translateZ(0) scale(.8)'},
+      duration: 0.5
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.grow-in', ['SlideTransition', function (SlideTransition) {
+    var effect = {
+      from: {opacity: '0', transform: 'translateZ(0) scale(.8)'},
+      duration: 0.5
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.grow-out', ['SlideTransition', function (SlideTransition) {
+    var effect = {
+      to: {opacity: '0', transform: 'translateZ(0) scale(1.2)'},
+      duration: 0.5
+    };
+
+    return new SlideTransition(effect);
+  }]);
+}(angular));
+(function (angular) {
+  "use strict";
+
+  angular.module('fx.transitions.slides', ['fx.transitions.create'])
+
+  .animation('.slide-in-left', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { transform: 'translateZ(0) translateX(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-out-left', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { transform: 'translateZ(0) translateX(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-in-right', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { transform: 'translateZ(0) translateX(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+
+  }])
+  .animation('.slide-out-right', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { transform: 'translateZ(0) translateX(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-in-down', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { transform: 'translateZ(0) translateY(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-out-down', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { transform: 'translateZ(0) translateY(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-in-up', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { transform: 'translateZ(0) translateY(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-out-up', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { transform: 'translateZ(0) translateY(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+
+
+
+  .animation('.slide-in-left-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { opacity: '0.3', transform: 'translateZ(0) translateX(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-out-left-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { opacity: '0.3', transform: 'translateZ(0) translateX(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-in-right-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { opacity: '0.3', transform: 'translateZ(0) translateX(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+
+  }])
+  .animation('.slide-out-right-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { opacity: '0.3', transform: 'translateZ(0) translateX(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-in-down-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { opacity: '0.3', transform: 'translateZ(0) translateY(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-out-down-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { opacity: '0.3', transform: 'translateZ(0) translateY(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-in-up-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      from: { opacity: '0.3', transform: 'translateZ(0) translateY(100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }])
+  .animation('.slide-out-up-fade', ['SlideTransition', function (SlideTransition) {
+
+    var effect = {
+      to: { opacity: '0.3', transform: 'translateZ(0) translateY(-100%)'},
+      duration: 2
+    };
+
+    return new SlideTransition(effect);
+  }]);
+}(angular));
+
+(function  (angular, TLM) {
+  "use strict";
+
+  angular.module('fx.transitions.specials', [])
+
+  .animation('.fx-fall-out', function () {
+    // var effect = {
+    //   from: {}
+    // };
+
+
+    return {
+      leave: function (el, done) {
+        el.css('z-index', '9999');
+        var page = new TLM({onComplete: done});
+        page.to(el, {transform: 'rotateZ(0deg)'})
+            .to(el, 0.1, {transform: 'rotateZ(10deg)'})
+            .to(el, 0.3, {transform: 'rotateZ(17deg)'})
+            .to(el, 0.5, {transform: 'rotateZ(15deg)'})
+            .to(el, 0.2, {transform: 'translateY(100%) rotateZ(17deg)'});
+      }
+    };
+    // return new SlideTransition(effect);
+  });
+}(angular, TimelineMax));
+/*!
+ * ngFx.js is a concatenation of:
+ * angular-animate.js and TweenMax.js
+ */
 /*!
  * ngFx.js is a concatenation of:
  * angular-animate.js and TweenMax.js
@@ -9158,7 +9716,6 @@ angular.module('ngAnimate', ['ng'])
  * Copyright 2014 Scott Moss
  * http://www.scottymoss.com
  *
- * Ionic, v1.0.0-beta.9
  * A simple, beautiful animation library for angular
  * http://hendrixer.github.io
  *
@@ -9170,6 +9727,7 @@ angular.module('ngAnimate', ['ng'])
 
 (function(angular){
   "use strict";
+
   angular.module('fx.animations',
     ['fx.animations.fades',
       'fx.animations.bounces',
@@ -9177,7 +9735,17 @@ angular.module('ngAnimate', ['ng'])
       'fx.animations.zooms'
       ]
   );
-
-  angular.module('ngFx', ['fx.animations', 'ngAnimate']);
+  angular.module('fx.transitions',
+    [
+      'fx.transitions.slides',
+      'fx.transitions.scales',
+      'fx.transitions.rotations',
+      'fx.transitions.specials',
+      'fx.transitions.view'
+    ]
+  );
+  angular.module('ngFx', ['fx.animations', 'fx.transitions', 'ngAnimate']);
 }(angular));
+
+
 

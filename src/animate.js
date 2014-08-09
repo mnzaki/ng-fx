@@ -2,12 +2,15 @@
  * ngFx.js is a concatenation of:
  * angular-animate.js and TweenMax.js
  */
+/*!
+ * ngFx.js is a concatenation of:
+ * angular-animate.js and TweenMax.js
+ */
 
 /*!
  * Copyright 2014 Scott Moss
  * http://www.scottymoss.com
  *
- * Ionic, v1.0.0-beta.9
  * A simple, beautiful animation library for angular
  * http://hendrixer.github.io
  *
@@ -19,6 +22,7 @@
 
 (function(angular){
   "use strict";
+
   angular.module('fx.animations',
     ['fx.animations.fades',
       'fx.animations.bounces',
@@ -26,7 +30,17 @@
       'fx.animations.zooms'
       ]
   );
-
-  angular.module('ngFx', ['fx.animations', 'ngAnimate']);
+  angular.module('fx.transitions',
+    [
+      'fx.transitions.slides',
+      'fx.transitions.scales',
+      'fx.transitions.rotations',
+      'fx.transitions.specials',
+      'fx.transitions.view'
+    ]
+  );
+  angular.module('ngFx', ['fx.animations', 'fx.transitions', 'ngAnimate']);
 }(angular));
+
+
 
