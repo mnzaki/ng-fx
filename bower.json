@@ -1,6 +1,6 @@
 {
   "name": "ngAnimations.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://hendrixer.github.io",
   "authors": [
     "Hendrixer"
@@ -34,7 +34,8 @@
     "specs"
   ],
   "dependencies": {
-    "angular": "*"
+    "angular": "*",
+    "angular-ui-router": "~0.2.10"
   },
   "devDependencies": {
     "gsap": "~1.11.6",

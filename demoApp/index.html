@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+
+    <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap-css-only/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <meta charset='UTF-8'>
+    <title>ng-Fx</title>
+  </head>
+  <body>
+    <div ng-controller='MainController'>
+      <div id="wrapper">
+        <div id="sidebar-wrapper">
+          <h2 class="side-bar-header">Animations</h2>
+          <div scroll id='side-bar-scroll'>
+            <div anchor ng-repeat='animation in demo.animations' ng-click='demo.clear(animation)' ng-class="{'animation-link': true,'active': animation === demo.mainAnimation}">
+              <a id='{{ animation }}'href >{{ animation }}</a>
+            </div>
+          </div>
+          <h2 class="side-bar-header name">Scott Moss</h2>
+          <a href="https://github.com/hendrixer/ng-Effects"><img src="src/assets/GitHub-Mark/PNG/GitHub-Mark-Light-64px.png" /></a>
+        </div>
+        <div>
+
+        <div ui-view fx-animate></div>
+
+        </div>
+      </div>
+    </div>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../dist/ngFx.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
