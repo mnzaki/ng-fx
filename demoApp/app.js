@@ -5,6 +5,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('home', {
       url: '/home',
       templateUrl: 'templates/home.tpl.html',
+      controller: 'viewCTRL',
       animation: {
         enter: 'slide-in-left',
         leave: 'slide-out-left',
@@ -15,6 +16,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('view', {
       url: '/view',
       templateUrl: 'templates/view.tpl.html',
+      controller: 'viewCTRL',
       animation: {
         enter: 'slide-in-left',
         leave: 'slide-out-left',
@@ -223,6 +225,11 @@ app.directive('card', function(){
   };
 });
 
+
+app.controller('viewCTRL', function($state) {
+  console.log($state.current);
+});
+
 app.directive('anchor', function(){
   return function ($scope){
 
@@ -246,5 +253,37 @@ app.directive('scroll', function(){
     });
   };
 });
+
+app.directive('fx', function($injector) {
+  return {
+    // priority: 1000,
+    link: function($scope, $ele) {
+
+      var $state, $route;
+      try {
+        $state = $injector.get('$state');
+        $route = $injector.get('$route');
+      } catch (err) {
+
+      }
+
+      if ($state) {
+        var animations = $state.current.animation;
+        angular.forEach(animations, function(animation, type) {
+          if (type === 'ease') {
+            animation = 'fx-easing-' + animation;
+          }
+
+          if (type === 'speed') {
+            animation = 'fx-speed-' + animation;
+          }
+
+          console.log(animation);
+          $ele.addClass(animation);
+        });
+      }
+    }
+  };
+})
 
 
