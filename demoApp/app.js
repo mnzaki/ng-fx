@@ -12,10 +12,10 @@ app.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/home.tpl.html',
       controller: 'viewCTRL',
       animation: {
-        enter: 'slide-in-left-fade',
-        leave: 'slide-out-right-fade',
+        enter: 'shrink-in',
+        leave: 'grow-out',
         ease: 'back',
-        speed: 500
+        speed: 800
       }
     })
     .state('view', {
@@ -23,10 +23,10 @@ app.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/view.tpl.html',
       controller: 'viewCTRL',
       animation: {
-        enter: 'slide-in-right-fade',
-        leave: 'slide-out-left-fade',
+        enter: 'grow-in',
+        leave: 'shrink-out',
         ease: 'back',
-        speed: 500
+        speed: 800
       }
     });
 
@@ -214,9 +214,12 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     $timeout.cancel(playTime);
   };
 
-  $timeout(function(){
-    $scope.demo.play(0);
-  }, 1500);
+  /*
+    Uncomment below to enable auto play of the cards and animations
+  */
+  // $timeout(function(){
+  //   $scope.demo.play(0);
+  // }, 1500);
 
   function shuffle (obj) {
     var rand;
