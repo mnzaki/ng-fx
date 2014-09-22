@@ -6705,7 +6705,7 @@
 
 })(window);
 /**
- * @license AngularJS v1.2.21
+ * @license AngularJS v1.2.24
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -9399,7 +9399,7 @@ angular.module('ngAnimate', ['ng'])
       '-webkit-perspective': '500px',
       '-moz-perspective': '500px',
       '-o-perspective': '500px',
-      'perspective': '500px',
+      'perspective': '500px'
     };
 
     var trans = {
