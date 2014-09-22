@@ -62,7 +62,7 @@ angular.module('foodApp', ['ngFx'])
 </ul>
 ```
 ###Speed
-+ Adjusting the speed in the ng-fx is a snap too! Your animations speeds on which they enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined classes for speeds__. Any speed (in ms) can be accepted.
++ Adjusting the speed in the ng-fx is a snap too! The speeds at which your animations enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined classes for speeds__. Any speed (in ms) can be accepted.
 ```html
 <ul ng-controller="FoodController">
   <li class='fx-fade-down fx-easing-bounce fx-speed-800' ng-repeat="food in foods">
