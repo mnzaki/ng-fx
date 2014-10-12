@@ -9,24 +9,24 @@ app.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: 'templates/home.tpl.html',
-      controller: 'viewCTRL',
+      templateUrl: 'home.html',
+      controller: 'ViewCtrl',
       animation: {
-        enter: 'shrink-in',
+        enter: 'slide-in-left-fade',
         leave: 'grow-out',
-        ease: 'back',
-        speed: 800
+        ease: 'sine',
+        speed: 1200
       }
     })
     .state('view', {
       url: '/view',
-      templateUrl: 'templates/view.tpl.html',
-      controller: 'viewCTRL',
+      templateUrl: 'view.html',
+      controller: 'ViewCtrl',
       animation: {
         enter: 'grow-in',
-        leave: 'shrink-out',
-        ease: 'back',
-        speed: 800
+        leave: 'slide-out-left-fade',
+        ease: 'sine',
+        speed: 1200
       }
     });
 
@@ -260,7 +260,7 @@ app.directive('card', function(){
 });
 
 
-app.controller('viewCTRL', function($route) {
+app.controller('ViewCtrl', function($route) {
 });
 
 app.directive('anchor', function(){
