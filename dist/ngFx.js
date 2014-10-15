@@ -8929,7 +8929,6 @@ angular.module('ngAnimate', ['ng'])
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        console.log('add class!!!');
         if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
@@ -9030,8 +9029,6 @@ angular.module('ngAnimate', ['ng'])
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        console.log('add class!!!');
-
         if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
@@ -9057,8 +9054,6 @@ angular.module('ngAnimate', ['ng'])
       };
 
       this.removeClass = function(element, className, done){
-        console.log('in remove!!!!!');
-
         if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'leave';
