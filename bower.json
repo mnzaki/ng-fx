@@ -34,13 +34,16 @@
     "specs"
   ],
   "dependencies": {
-    "angular": "*",
-    "angular-ui-router": "~0.2.10"
+    "angular": "~1.3.0"
   },
   "devDependencies": {
+    "angular-mocks": "~1.3.0",
+    "angular-animate": "~1.3.0",
     "gsap": "~1.11.6",
-    "angular-animate": "~1.2.16",
-    "angular-mocks": "~1.2.16",
-    "angular-bootstrap": "~0.11.0"
+    "angular-bootstrap": "~0.11.0",
+    "angular-ui-router": "~0.2.10"
+  },
+  "resolutions": {
+    "angular": "~1.3.0"
   }
 }
