@@ -1,9 +1,9 @@
-ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ng-Fx.svg?branch=master)](https://travis-ci.org/Hendrixer/ng-Fx)   <img src="http://img.shields.io/badge/Built%20with-Gulp-red.svg" />
+ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ngFx.svg?branch=master)](https://travis-ci.org/Hendrixer/ng-Fx)   <img src="http://img.shields.io/badge/Built%20with-Gulp-red.svg" />
 ===============
 
 ### A simple way to add beautiful animations to your angular apps. Animations based off [animate.css](http://daneden.github.io/animate.css/). All animations are built in JavaScript.
 
-#### ng-Fx does not rely on CSS for animations. This allows it to be dynamic and able to adjust on the fly. The only predefined CSS classes are the animations and the easings. ng-Animate allows ng-Fx to create JavaScript based animations, so the classes do not correspond to a style in a CSS file.
+#### ng-Fx does not rely on CSS for animations. This allows it to be dynamic and able to adjust on the fly. The only predefined CSS classes are the animations and the easings. ngAnimate allows ngFx to create JavaScript based animations, so the classes do not correspond to a style in a CSS file.
 
 ## Interactive Demo
 Preview the goodness at [hendrixer.github.io](https://hendrixer.github.io/).
@@ -26,7 +26,7 @@ angular.module('myApp', ['ngFx'])
 ```
 ##Using
 ###Animations
-+ All animations are used with ng-animate. So you can apply them to...
++ All animations are used with ngAnimate. So you can apply them to...
   + ng-hide / ng-show
   + ng-include
   + ng-if
@@ -38,7 +38,7 @@ angular.module('myApp', ['ngFx'])
 + Adding the animations are as simple as adding a css class. ngFx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ng-repeat will not trigger animations upon page load, the collection you are iterating over must be empty at first then populated, you can achieve this with a simple timeout or some other async operation.__
 
 ```javascript
-angular.module('foodApp', ['ngAnimate', 'ngFx'])
+angular.module('foodApp', ['ngFx'])
 .controller('FoodController', function($scope, $timeout){
   $timeout(function(){
     $scope.foods = ['apple', 'muffin', 'chips'];
@@ -62,7 +62,7 @@ angular.module('foodApp', ['ngAnimate', 'ngFx'])
 </ul>
 ```
 ###Speed
-+ Adjusting the speed in the ng-fx is a snap too! Your animations speeds on which they enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined classes for speeds__. Any speed (in ms) can be accepted.
++ Adjusting the speed in the ng-fx is a snap too! The speeds at which your animations enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined classes for speeds__. Any speed (in ms) can be accepted.
 ```html
 <ul ng-controller="FoodController">
   <li class='fx-fade-down fx-easing-bounce fx-speed-800' ng-repeat="food in foods">
@@ -71,7 +71,7 @@ angular.module('foodApp', ['ngAnimate', 'ngFx'])
 </ul>
 ```
 ###Events
-+ Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so ' [animation name] + [enter or leave]', for example 'fade-down enter'. You just have to add the CSS class ```fx-trigger``` to an animated element.
++ Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so ' [animation name] :[enter or leave]', for example 'fade-down:enter' or 'zoom-up:leave'. You just have to add the CSS class ```fx-trigger``` to an animated element.
 ```javascript
 angular.module('myApp', ['ngFx'])
 .controller('FoodController', function($scope, $timeout){
@@ -81,7 +81,7 @@ angular.module('myApp', ['ngFx'])
 })
 .directive('goAway', function($animate){
   function link(scope, element){
-    scope.$on('fade-down enter', function(){
+    scope.$on('fade-down:enter', function(){
       $animate.leave(element);
     });
   }

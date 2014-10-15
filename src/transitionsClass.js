@@ -118,7 +118,7 @@
       '-webkit-perspective': '500px',
       '-moz-perspective': '500px',
       '-o-perspective': '500px',
-      'perspective': '500px',
+      'perspective': '500px'
     };
 
     var trans = {
