@@ -34,6 +34,7 @@
         </ul>
       </div>
   </div>
+
   <div class="cards row">
     <card class='col-xs-6 col-md-1 {{ "fx-"+demo.mainAnimation }} fx-speed-{{ demo.speed || 500 }} fx-trigger fx-easing-{{ demo.ease }}' ng-repeat='card in demo.cards | filter:search' ng-click='demo.removeCard($index)'title='{{ card.header }}'>
       <div class='card-content'>

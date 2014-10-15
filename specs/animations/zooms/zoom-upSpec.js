@@ -76,7 +76,7 @@ describe('zoom up animation', function() {
     });
   });
 
-  it('should zoom-up removeClass', function(done){
+  xit('should zoom-up removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-up ng-hide">zoom-up</div>')($rootScope);
       $rootElement.append(element);
@@ -100,7 +100,7 @@ describe('zoom up animation', function() {
     });
   });
 
-  it('should zoom-up addClass', function(done){
+  xit('should zoom-up addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-up">zoom-up</div>')($rootScope);
       $rootElement.append(element);

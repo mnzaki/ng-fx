@@ -168,6 +168,8 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     }
   };
 
+  $scope.show = {show: true};
+
   $scope.demo.removeCard = function(index){
     $scope.demo.cards.splice(index, 1);
   };
@@ -336,6 +338,25 @@ app.directive('fx', function($injector) {
       addAnimations(animations, $ele);
     }
   };
+})
+.animation('.lame', function() {
+  return {
+    addClass: function(ele, no, done) {
+      console.log(ele, no)
+      done();
+    }
+  }
+})
+.directive('try', function($animate) {
+  return function(scope, ele) {
+    ele.on('click', function() {
+      $animate.removeClass(ele, 'fx-bounce-up')
+      .then(function() {
+        console.log('here');
+      });
+      scope.$apply();
+    });
+  }
 });
 
 

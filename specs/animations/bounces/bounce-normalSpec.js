@@ -76,7 +76,7 @@ describe('Bounce normal animation', function() {
     });
   });
 
-  it('should bounce-normal removeClass', function(done){
+  xit('should bounce-normal removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-normal ng-hide">bounce-normal</div>')($rootScope);
       $rootElement.append(element);
@@ -100,7 +100,7 @@ describe('Bounce normal animation', function() {
     });
   });
 
-  it('should bounce-normal addClass', function(done){
+  xit('should bounce-normal addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-normal">bounce-normal</div>')($rootScope);
       $rootElement.append(element);

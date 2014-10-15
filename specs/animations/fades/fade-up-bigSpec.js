@@ -58,7 +58,7 @@ describe('Fade up big animation', function() {
     });
   });
 
-  it("should fade-up-big out", function(done) {
+  it("should fade-up-big move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-up-big">fade-up-big</div>')($rootScope);
       $rootElement.append(element);
@@ -82,7 +82,7 @@ describe('Fade up big animation', function() {
     });
   });
 
-  it('should fade-up-big removeClass', function(done){
+  xit('should fade-up-big removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-up-big ng-hide">fade-up-big</div>')($rootScope);
       $rootElement.append(element);
@@ -106,7 +106,7 @@ describe('Fade up big animation', function() {
     });
   });
 
-  it('should fade-up-big addClass', function(done){
+  xit('should fade-up-big addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-up-big">fade-up-big</div>')($rootScope);
       $rootElement.append(element);

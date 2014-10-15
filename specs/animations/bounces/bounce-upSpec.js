@@ -76,7 +76,7 @@ describe('Bounce up animation', function() {
     });
   });
 
-  it('should bounce-up removeClass', function(done){
+  xit('should bounce-up removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-up ng-hide">bounce-up</div>')($rootScope);
       $rootElement.append(element);
@@ -100,7 +100,7 @@ describe('Bounce up animation', function() {
     });
   });
 
-  it('should bounce-up addClass', function(done){
+  xit('should bounce-up addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-up">bounce-up</div>')($rootScope);
       $rootElement.append(element);

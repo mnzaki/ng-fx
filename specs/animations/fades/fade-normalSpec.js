@@ -58,7 +58,7 @@ describe('Fade normal animation', function() {
     });
   });
 
-  it('should fade-normal removeClass', function(done){
+  xit('should fade-normal removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-normal ng-hide">fade-normal</div>')($rootScope);
       $rootElement.append(element);
@@ -76,7 +76,7 @@ describe('Fade normal animation', function() {
     });
   });
 
-  it('should fade-normal addClass', function(done){
+  xit('should fade-normal addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-normal">fade-normal</div>')($rootScope);
       $rootElement.append(element);

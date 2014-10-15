@@ -82,7 +82,7 @@ describe('Fade down animation', function() {
     });
   });
 
-  it('should fade-down removeClass', function(done){
+  xit('should fade-down removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-down ng-hide">fade-down</div>')($rootScope);
       $rootElement.append(element);
@@ -106,7 +106,7 @@ describe('Fade down animation', function() {
     });
   });
 
-  it('should fade-down addClass', function(done){
+  xit('should fade-down addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-down">fade-down</div>')($rootScope);
       $rootElement.append(element);

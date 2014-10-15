@@ -77,7 +77,7 @@ describe('Bounce left animation', function() {
     });
   });
 
-  it('should bounce-left removeClass', function(done){
+  xit('should bounce-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-left ng-hide">bounce-left</div>')($rootScope);
       $rootElement.append(element);
@@ -101,7 +101,7 @@ describe('Bounce left animation', function() {
     });
   });
 
-  it('should bounce-left addClass', function(done){
+  xit('should bounce-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-left">bounce-left</div>')($rootScope);
       $rootElement.append(element);

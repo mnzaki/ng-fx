@@ -58,7 +58,7 @@ describe('Fade left animation', function() {
     });
   });
 
-  it("should fade-left out", function(done) {
+  it("should fade-left move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left">fade-left</div>')($rootScope);
       $rootElement.append(element);
@@ -82,7 +82,7 @@ describe('Fade left animation', function() {
     });
   });
 
-  it('should fade-left removeClass', function(done){
+  xit('should fade-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left ng-hide">fade-left</div>')($rootScope);
       $rootElement.append(element);
@@ -106,7 +106,7 @@ describe('Fade left animation', function() {
     });
   });
 
-  it('should fade-left addClass', function(done){
+  xit('should fade-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left">fade-left</div>')($rootScope);
       $rootElement.append(element);

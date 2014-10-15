@@ -82,7 +82,7 @@ describe('Fade right big animation', function() {
     });
   });
 
-  it('should fade-right-big removeClass', function(done){
+  xit('should fade-right-big removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-right-big ng-hide">fade-right-big</div>')($rootScope);
       $rootElement.append(element);
@@ -106,7 +106,7 @@ describe('Fade right big animation', function() {
     });
   });
 
-  it('should fade-right-big addClass', function(done){
+  xit('should fade-right-big addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-right-big">fade-right-big</div>')($rootScope);
       $rootElement.append(element);

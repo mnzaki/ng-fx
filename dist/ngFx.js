@@ -8929,7 +8929,8 @@ angular.module('ngAnimate', ['ng'])
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        console.log('add class!!!');
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;
@@ -8950,7 +8951,7 @@ angular.module('ngAnimate', ['ng'])
       };
 
       this.removeClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'leave';
           options.animation = fx_type;
@@ -9029,7 +9030,9 @@ angular.module('ngAnimate', ['ng'])
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        console.log('add class!!!');
+
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;
@@ -9054,7 +9057,9 @@ angular.module('ngAnimate', ['ng'])
       };
 
       this.removeClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        console.log('in remove!!!!!');
+
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'leave';
           options.animation = fx_type;
@@ -9129,7 +9134,7 @@ angular.module('ngAnimate', ['ng'])
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;
@@ -9151,7 +9156,7 @@ angular.module('ngAnimate', ['ng'])
       };
 
        this.removeClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;
