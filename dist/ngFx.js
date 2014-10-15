@@ -9810,8 +9810,11 @@ angular.module('ngAnimate', ['ng'])
 
   function cssMixin (el, z) {
     el.css('position', 'absolute');
-    z ? z === 'leave' ?
-      el.css('z-index', '9999') : el.css('z-index', '8888') : function(){};
+    if (z && z === 'leave') {
+      el.css('z-index', '9999px');
+    } else {
+      el.css('z-index', '1000px');
+    }
   }
 
   function css3D (parent, view) {
@@ -9841,10 +9844,10 @@ angular.module('ngAnimate', ['ng'])
     view.css(trans);
   }
 
-  function calcTime  (duration, perc) {
+  // function calcTime  (duration, perc) {
 
-    return (duration * (perc/100));
-  }
+  //   return (duration * (perc/100));
+  // }
 
 }(angular, TimelineMax));
 
