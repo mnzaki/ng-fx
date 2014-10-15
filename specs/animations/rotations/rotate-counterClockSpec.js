@@ -1,4 +1,4 @@
-describe('Rotate counter animation', function() {
+xdescribe('Rotate counter animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -84,7 +84,7 @@ describe('Rotate counter animation', function() {
     });
   });
 
-  it('should rotate-counterclock removeClass', function(done){
+  xit('should rotate-counterclock removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-counterclock ng-hide" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);
@@ -108,7 +108,7 @@ describe('Rotate counter animation', function() {
     });
   });
 
-  it('should rotate-counterclock addClass', function(done){
+  xit('should rotate-counterclock addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-counterclock" style="background-color: blue; color: white">rotate-counterclock</div>')($rootScope);
       $rootElement.append(element);

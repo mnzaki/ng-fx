@@ -1,4 +1,4 @@
-describe('Rotate clock left animation', function() {
+xdescribe('Rotate clock left animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -84,7 +84,7 @@ describe('Rotate clock left animation', function() {
     });
   });
 
-  it('should rotate-clock-left removeClass', function(done){
+  xit('should rotate-clock-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-clock-left ng-hide" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);
@@ -108,7 +108,7 @@ describe('Rotate clock left animation', function() {
     });
   });
 
-  it('should rotate-clock-left addClass', function(done){
+  xit('should rotate-clock-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-clock-left" style="background-color: blue; color: white">rotate-clock-left</div>')($rootScope);
       $rootElement.append(element);

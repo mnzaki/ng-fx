@@ -82,7 +82,7 @@ describe('Fade right animation', function() {
     });
   });
 
-  it('should fade-right removeClass', function(done){
+  xit('should fade-right removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-right ng-hide">fade-right</div>')($rootScope);
       $rootElement.append(element);
@@ -106,7 +106,7 @@ describe('Fade right animation', function() {
     });
   });
 
-  it('should fade-right addClass', function(done){
+  xit('should fade-right addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-right">fade-right</div>')($rootScope);
       $rootElement.append(element);

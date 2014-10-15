@@ -76,7 +76,7 @@ describe('zoom down animation', function() {
     });
   });
 
-  it('should zoom-down removeClass', function(done){
+  xit('should zoom-down removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-down ng-hide">zoom-down</div>')($rootScope);
       $rootElement.append(element);
@@ -100,7 +100,7 @@ describe('zoom down animation', function() {
     });
   });
 
-  it('should zoom-down addClass', function(done){
+  xit('should zoom-down addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-down">zoom-down</div>')($rootScope);
       $rootElement.append(element);

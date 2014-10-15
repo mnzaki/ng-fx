@@ -51,7 +51,7 @@
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;
@@ -72,7 +72,7 @@
       };
 
       this.removeClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'leave';
           options.animation = fx_type;
@@ -151,7 +151,7 @@
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;
@@ -176,7 +176,7 @@
       };
 
       this.removeClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'leave';
           options.animation = fx_type;
@@ -251,7 +251,7 @@
       this.move = this.enter;
 
       this.addClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;
@@ -273,7 +273,7 @@
       };
 
        this.removeClass = function(element, className, done){
-        if(className === 'ng-hide'){
+        if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
           options.animation = fx_type;

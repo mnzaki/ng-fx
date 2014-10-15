@@ -76,7 +76,7 @@ describe('zoom right animation', function() {
     });
   });
 
-  it('should zoom-right removeClass', function(done){
+  xit('should zoom-right removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-right ng-hide">zoom-right</div>')($rootScope);
       $rootElement.append(element);
@@ -100,7 +100,7 @@ describe('zoom right animation', function() {
     });
   });
 
-  it('should zoom-right addClass', function(done){
+  xit('should zoom-right addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-right">zoom-right</div>')($rootScope);
       $rootElement.append(element);

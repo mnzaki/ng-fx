@@ -1,4 +1,4 @@
-describe('Rotate clock up animation', function() {
+xdescribe('Rotate clock up animation', function() {
   var prefixes = {
     '-webkit-transform': true,
     '-moz-transform': true,
@@ -84,7 +84,7 @@ describe('Rotate clock up animation', function() {
     });
   });
 
-  it('should rotate-clock-up removeClass', function(done){
+  xit('should rotate-clock-up removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-clock-up ng-hide" style="background-color: blue; color: white">rotate-clock-up</div>')($rootScope);
       $rootElement.append(element);
@@ -108,7 +108,7 @@ describe('Rotate clock up animation', function() {
     });
   });
 
-  it('should rotate-clock-up addClass', function(done){
+  xit('should rotate-clock-up addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-rotate-clock-up" style="background-color: blue; color: white">rotate-clock-up</div>')($rootScope);
       $rootElement.append(element);

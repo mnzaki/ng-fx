@@ -34,7 +34,7 @@ describe('Fade left big animation', function() {
     });
   });
 
-  it("should fade-left-big move", function(done) {
+  it("should fade-left-big leave", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left-big">fade-left-big</div>')($rootScope);
       $rootElement.append(element);
@@ -58,7 +58,7 @@ describe('Fade left big animation', function() {
     });
   });
 
-  it("should fade-left-big in", function(done) {
+  it("should fade-left-big move", function(done) {
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left-big">fade-left-big</div>')($rootScope);
       $rootElement.append(element);
@@ -82,7 +82,7 @@ describe('Fade left big animation', function() {
     });
   });
 
-  it('should fade-left-big removeClass', function(done){
+  xit('should fade-left-big removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left-big ng-hide">fade-left-big</div>')($rootScope);
       $rootElement.append(element);
@@ -106,7 +106,7 @@ describe('Fade left big animation', function() {
     });
   });
 
-  it('should fade-left-big addClass', function(done){
+  xit('should fade-left-big addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-fade-left-big">fade-left-big</div>')($rootScope);
       $rootElement.append(element);

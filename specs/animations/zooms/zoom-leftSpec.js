@@ -76,7 +76,7 @@ describe('zoom left animation', function() {
     });
   });
 
-  it('should zoom-left removeClass', function(done){
+  xit('should zoom-left removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-left ng-hide">zoom-left</div>')($rootScope);
       $rootElement.append(element);
@@ -100,7 +100,7 @@ describe('zoom left animation', function() {
     });
   });
 
-  it('should zoom-left addClass', function(done){
+  xit('should zoom-left addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-zoom-left">zoom-left</div>')($rootScope);
       $rootElement.append(element);

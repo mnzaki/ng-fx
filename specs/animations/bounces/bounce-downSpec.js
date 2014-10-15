@@ -77,15 +77,17 @@ describe('Bounce down animation', function() {
     });
   });
 
-  it('should bounce-down removeClass', function(done){
+  xit('should bounce-down removeClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
-      var element = $compile('<div class="fx-bounce-down ng-hide">bounce-down</div>')($rootScope);
-      $rootElement.append(element);
-      angular.element($document[0].body).append($rootElement);
-      $rootScope.$digest();
+      var element = angular.element('<button style="opacity: 0;" class="fx-bounce-down">bounce-down</button>');
+      var body = angular.element($document[0].body);
+      $rootElement.prepend(element);
+      angular.element(body).append($rootElement);
+      // $rootScope.$digest();
 
+      element = angular.element(body.find('button'));
       $animate.enabled(true);
-      $animate.removeClass(element, 'ng-hide');
+      $animate.removeClass(element, 'fx-bounce-down');
       $rootScope.$digest();
 
       $window.setTimeout(function(){
@@ -94,6 +96,8 @@ describe('Bounce down animation', function() {
             transform = prefix;
           }
         });
+      console.log(element);
+
         expect(element.css('opacity')).to.be('1');
         expect(element.css(transform)).to.be('matrix(1, 0, 0, 1, 0, 0)');
         done();
@@ -101,7 +105,7 @@ describe('Bounce down animation', function() {
     });
   });
 
-  it('should bounce-down addClass', function(done){
+  xit('should bounce-down addClass', function(done){
     inject(function($animate, $compile, $document, $rootScope, $rootElement, $window, $timeout) {
       var element = $compile('<div class="fx-bounce-down">bounce-down</div>')($rootScope);
       $rootElement.append(element);

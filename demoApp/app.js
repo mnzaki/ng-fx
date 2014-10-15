@@ -9,24 +9,24 @@ app.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: 'templates/home.tpl.html',
-      controller: 'viewCTRL',
+      templateUrl: 'home.html',
+      controller: 'ViewCtrl',
       animation: {
-        enter: 'shrink-in',
+        enter: 'slide-in-left-fade',
         leave: 'grow-out',
-        ease: 'back',
-        speed: 800
+        ease: 'sine',
+        speed: 1200
       }
     })
     .state('view', {
       url: '/view',
-      templateUrl: 'templates/view.tpl.html',
-      controller: 'viewCTRL',
+      templateUrl: 'view.html',
+      controller: 'ViewCtrl',
       animation: {
         enter: 'grow-in',
-        leave: 'shrink-out',
-        ease: 'back',
-        speed: 800
+        leave: 'slide-out-left-fade',
+        ease: 'sine',
+        speed: 1200
       }
     });
 
@@ -168,6 +168,8 @@ app.controller('MainController', ['$scope', '$timeout', '$q', function($scope, $
     }
   };
 
+  $scope.show = {show: true};
+
   $scope.demo.removeCard = function(index){
     $scope.demo.cards.splice(index, 1);
   };
@@ -260,7 +262,7 @@ app.directive('card', function(){
 });
 
 
-app.controller('viewCTRL', function($route) {
+app.controller('ViewCtrl', function($route) {
 });
 
 app.directive('anchor', function(){
@@ -336,6 +338,25 @@ app.directive('fx', function($injector) {
       addAnimations(animations, $ele);
     }
   };
+})
+.animation('.lame', function() {
+  return {
+    addClass: function(ele, no, done) {
+      console.log(ele, no)
+      done();
+    }
+  }
+})
+.directive('try', function($animate) {
+  return function(scope, ele) {
+    ele.on('click', function() {
+      $animate.removeClass(ele, 'fx-bounce-up')
+      .then(function() {
+        console.log('here');
+      });
+      scope.$apply();
+    });
+  }
 });
 
 
