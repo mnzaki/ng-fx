@@ -7,7 +7,7 @@
     return {
 
       emit: function(element, animation, motion){
-        $rootScope.$broadcast(animation +':'+motion);
+        $rootScope.$broadcast(animation + ':' + motion);
       },
 
       parseClassList: function(element, option){
