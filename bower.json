@@ -1,6 +1,6 @@
 {
   "name": "ngFx",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "homepage": "https://hendrixer.github.io",
   "authors": [
     "Hendrixer"
@@ -34,14 +34,15 @@
     "specs"
   ],
   "dependencies": {
-    "angular": "~1.3.0"
+    "angular": "~1.3.0",
+    "angular-animate": "~1.3.0",
+    "gsap": "~1.11.6"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",
-    "angular-animate": "~1.3.0",
-    "gsap": "~1.11.6",
     "angular-bootstrap": "~0.11.0",
-    "angular-ui-router": "~0.2.10"
+    "angular-ui-router": "~0.2.10",
+    "angular-route": "~1.3.14"
   },
   "resolutions": {
     "angular": "~1.3.0"

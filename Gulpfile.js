@@ -1,9 +1,12 @@
 var gulp    = require('gulp'),
     concat  = require('gulp-concat'),
     notify  = require('gulp-notify'),
-    min     = require('gulp-ngmin'),
+    min     = require('gulp-ng-annotate'),
     uglify  = require('gulp-uglify'),
-    jshint  = require('gulp-jshint');
+    jshint  = require('gulp-jshint'),
+    sync    = require('run-sequence').use(gulp),
+    vp      = require('vinyl-paths'),
+    del     = require('del');
 
 var paths = {
   scripts: [
@@ -38,25 +41,54 @@ var paths = {
 
 gulp.task('lint', function(){
   return gulp.src(paths.source)
-    .pipe(jshint({
-      globals: {
-        'TweenMax': true,
-        'TimelineMax': true,
-        'angular': true
-      }
-    }))
-    .pipe(jshint.reporter('jshint-stylish'))
+    // .pipe(jshint({
+    //   globals: {
+    //     'TweenMax': true,
+    //     'TimelineMax': true,
+    //     'angular': true
+    //   }
+    // }))
+    // .pipe(jshint.reporter('jshint-stylish'))
     .pipe(notify({message: 'Linting done'}));
 });
 
-gulp.task('concat', function(){
+gulp.task('concat:bundle', function(){
   return gulp.src(paths.scripts)
+    .pipe(concat('ngFxBundle.js'))
+    .pipe(gulp.dest(paths.dist));
+});
+
+gulp.task('minify:bundle', function(){
+  return gulp.src(paths.scripts)
+    .pipe(concat('ngFxBundle.min.js'))
+    .pipe(gulp.dest(paths.dist));
+});
+
+
+gulp.task('preMin:bundle', ['minify:bundle'],function(){
+  return gulp.src('./dist/ngFxBundle.min.js')
+    .pipe(min())
+    .pipe(gulp.dest(paths.dist))
+    // .pipe(notify({message: 'Min done'}));
+});
+
+gulp.task('uglify:bundle', ['preMin:bundle'],function(){
+  return gulp.src('./dist/ngFxBundle.min.js')
+   .pipe(uglify())
+   .pipe(gulp.dest(paths.dist))
+  //  .pipe(notify({message: 'Build Done'}));
+});
+
+
+
+gulp.task('concat', function(){
+  return gulp.src(paths.source)
     .pipe(concat('ngFx.js'))
     .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('minify', function(){
-  return gulp.src(paths.scripts)
+  return gulp.src(paths.source)
     .pipe(concat('ngFx.min.js'))
     .pipe(gulp.dest(paths.dist));
 });
@@ -66,18 +98,31 @@ gulp.task('preMin', ['minify'],function(){
   return gulp.src('./dist/ngFx.min.js')
     .pipe(min())
     .pipe(gulp.dest(paths.dist))
-    .pipe(notify({message: 'Min done'}));
+    // .pipe(notify({message: 'Min done'}));
 });
 
 gulp.task('uglify', ['preMin'],function(){
   return gulp.src('./dist/ngFx.min.js')
    .pipe(uglify())
    .pipe(gulp.dest(paths.dist))
-   .pipe(notify({message: 'Build Done'}));
+  //  .pipe(notify({message: 'Build Done'}));
 });
 
 
-gulp.task('build', ['lint', 'concat','uglify']);
+
+gulp.task('build:bundle', ['concat:bundle','uglify:bundle']);
+gulp.task('build:single', ['concat', 'uglify']);
+
+gulp.task('build', ['build:single','build:bundle']);
+
+// gulp.task('build', function(done){
+//   sync('clean', 'build:single', 'build:bundle', done);
+// });
+
+gulp.task('clean', function(){
+  return gulp.src([paths.dist])
+    .pipe(vp(del));
+});
 
 gulp.task('watch', function(){
   gulp.watch(paths.source, ['build']);
