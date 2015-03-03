@@ -3,7 +3,7 @@
   var timeoutKey = '$$fxtimer';
   angular.module('fx.transitions.assist', [])
 
-  .factory('TransAssist', function ($timeout) {
+  .factory('TransAssist', ['$timeout', function ($timeout) {
     function addTimer (el, time, done) {
       var timer = $timeout(function () {
         done();
@@ -24,5 +24,5 @@
       addTimer: addTimer,
       removeTimer: removeTimer
     };
-  });
+  }]);
 }(angular));
