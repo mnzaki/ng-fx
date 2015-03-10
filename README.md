@@ -18,9 +18,11 @@ Preview the goodness at [hendrixer.github.io](https://hendrixer.github.io/).
   + you'll need the main file in ```dist/ngFx.js```
 
 ## Installing
-1. Include ```ngFx.js``` into your html. 
-  + __Note:__ ```ngFx``` bundles ```ngAnimate``` and ```GSAP``` into one file
+1. Include ```ngFxBundle.js``` into your html. 
+  + __Note:__ ```ngFxBundle.js``` bundles ```ngAnimate``` and ```GSAP``` into one file
 2. Include the dependencies into your angular app,  ```ngFx```
+3. If you prefer not to have them bundled, use `ngFx.js`, just make sure to include `ngAnimate` and `GSAP/Timelinemax` as well as script tags before `ngFx.js`
+
 ```javascript
 angular.module('myApp', ['ngFx'])
 ```
