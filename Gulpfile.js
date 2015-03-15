@@ -6,7 +6,23 @@ var gulp    = require('gulp'),
     jshint  = require('gulp-jshint'),
     sync    = require('run-sequence').use(gulp),
     vp      = require('vinyl-paths'),
-    del     = require('del');
+    del     = require('del'),
+    changelog = require('conventional-changelog'),
+    fs      = require('fs'),
+    bump    = require('gulp-bump'),
+    yargs   = require('yargs');
+    
+
+var argv = yargs.argv,
+    validBumpTypes = "major|minor|patch|prerelease".split("|"),
+    Bump = (argv.bump || 'patch').toLowerCase();
+
+if(validBumpTypes.indexOf(Bump) === -1) {
+  throw new Error('Unrecognized bump "' + Bump + '".');
+}
+
+var args = { bump: Bump };
+
 
 var paths = {
   scripts: [
@@ -38,6 +54,40 @@ var paths = {
 
   dist: './dist/'
 };
+
+gulp.task('del:change', function() {
+  return gulp.src('./CHANGELOG.md')
+    .pipe(vp(del));
+});
+
+gulp.task('bump-version', function(){
+  return gulp.src(['./package.json', './bower.json'])
+    .pipe(bump({type:args.bump })) //major|minor|patch|prerelease
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('changelog', function(callback) {
+  var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+
+  return changelog({
+    repository: pkg.repository.url,
+    version: pkg.version,
+    file: './CHANGELOG.md',
+    subtitle: argv.codename || ''
+  }, function(err, log) {
+    fs.writeFileSync('./CHANGELOG.md', log);
+  });
+});
+
+gulp.task('release', function(done){
+  return sync(
+    'build',
+    'bump-version',
+    'del:change',
+    'changelog',
+    done
+  );
+});
 
 gulp.task('lint', function(){
   return gulp.src(paths.source)

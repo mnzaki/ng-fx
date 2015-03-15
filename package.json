@@ -1,16 +1,19 @@
 {
   "name": "ng-Fx",
-  "version": "0.0.0",
+  "version": "1.0.6",
   "description": "ng-Fx",
-  "main": "Gulpfile.js",
+  "main": "index.js",
   "dependencies": {
+    "angular": "^1.3.14",
+    "angular-animate": "^1.3.14",
+    "gsap": "^1.16.1"
+  },
+  "devDependencies": {
     "gulp": "^3.6.2",
     "gulp-concat": "~2.2.0",
     "gulp-ngmin": "~0.2.0",
     "gulp-notify": "~1.2.5",
-    "gulp-uglify": "~0.2.1"
-  },
-  "devDependencies": {
+    "gulp-uglify": "~0.2.1",
     "del": "^1.1.1",
     "expect.js": "^0.3.1",
     "gulp-jshint": "^1.5.3",
@@ -33,8 +36,8 @@
     "type": "git",
     "url": "https://github.com/Hendrixer/ng-Fx.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Scott Moss <willscottmoss@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Hendrixer/ng-Fx/issues"
   },
