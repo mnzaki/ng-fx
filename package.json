@@ -1,23 +1,26 @@
 {
   "name": "ng-Fx",
   "version": "1.0.6",
-  "description": "ng-Fx",
-  "main": "index.js",
+  "description": "ngFx",
+  "main": "dist/ngFx.js",
   "dependencies": {
     "angular": "^1.3.14",
     "angular-animate": "^1.3.14",
     "gsap": "^1.16.1"
   },
   "devDependencies": {
+    "conventional-changelog": "0.0.16",
+    "del": "^1.1.1",
+    "expect.js": "^0.3.1",
     "gulp": "^3.6.2",
+    "gulp-bump": "^0.3.0",
     "gulp-concat": "~2.2.0",
+    "gulp-jshint": "^1.5.3",
+    "gulp-ng-annotate": "^0.5.2",
     "gulp-ngmin": "~0.2.0",
     "gulp-notify": "~1.2.5",
     "gulp-uglify": "~0.2.1",
-    "del": "^1.1.1",
-    "expect.js": "^0.3.1",
-    "gulp-jshint": "^1.5.3",
-    "gulp-ng-annotate": "^0.5.2",
+    "gulp-webpack": "^1.3.0",
     "jshint-stylish": "^0.1.5",
     "karma": "^0.12.9",
     "karma-chrome-launcher": "^0.1.3",
@@ -27,7 +30,8 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-unicorn-reporter": "^0.1.4",
     "mocha": "^1.18.2",
-    "vinyl-paths": "^1.0.0"
+    "vinyl-paths": "^1.0.0",
+    "yargs": "^3.6.0"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=PhantomJS"

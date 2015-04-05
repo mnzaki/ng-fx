@@ -10,7 +10,8 @@ var gulp    = require('gulp'),
     changelog = require('conventional-changelog'),
     fs      = require('fs'),
     bump    = require('gulp-bump'),
-    yargs   = require('yargs');
+    yargs   = require('yargs'),
+    webpack = require('gulp-webpack');
     
 
 var argv = yargs.argv,
@@ -164,6 +165,25 @@ gulp.task('build:bundle', ['concat:bundle','uglify:bundle']);
 gulp.task('build:single', ['concat', 'uglify']);
 
 gulp.task('build', ['build:single','build:bundle']);
+gulp.task('pack', function(){
+  return gulp.src(paths.dist + 'ngFx.js')
+    .pipe(webpack({
+      output: {
+        filename: 'index.js',
+        libraryTarget: 'umd'
+      }
+    }))
+    .pipe(gulp.dest(__dirname));
+});
+
+gulp.task('remove-index', function(){
+  return gulp.src('./index.js')
+    .pipe(vp(del));
+});
+
+gulp.task('dist', function(){
+  sync('build', 'remove-index', 'pack');
+});
 
 // gulp.task('build', function(done){
 //   sync('clean', 'build:single', 'build:bundle', done);
