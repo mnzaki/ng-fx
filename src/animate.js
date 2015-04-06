@@ -20,15 +20,6 @@
 *
 */
 
-
-angular.module('fx.animations',
-  [
-    'fx.animations.fades',
-    'fx.animations.bounces',
-    'fx.animations.rotations',
-    'fx.animations.zooms'
-  ]
-);
 angular.module('fx.transitions',
   [
     'fx.transitions.slides',

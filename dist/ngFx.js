@@ -25,15 +25,6 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 *
 */
 
-
-angular.module('fx.animations',
-  [
-    'fx.animations.fades',
-    'fx.animations.bounces',
-    'fx.animations.rotations',
-    'fx.animations.zooms'
-  ]
-);
 angular.module('fx.transitions',
   [
     'fx.transitions.slides',
@@ -48,6 +39,283 @@ angular.module('ngFx', ['fx.animations', 'fx.transitions']);
 
 
 
+
+angular.module('fx.animations', [
+  'fx.animations.fades',
+  'fx.animations.bounces',
+  'fx.animations.zooms',
+  'fx.animations.rotations',
+  'fx.animations.tada',
+  'fx.animations.pulse'
+]);
+
+// angular.module('fx.animations.create', ['fx.animations.assist'])
+
+
+//   .factory('Flip3d', ['$window', function ($window){
+//     return function (effect){
+//       var axis = effect.axis;
+//       var flipType = 'fx-flip'+axis;
+//       this.addClass = function(el, className, done){
+//         var wrapper = angular.element(el.children()[0]);
+//         var myDone = function(){
+//           return done();
+//         };
+//         if(className === flipType){
+//           effect.transform.ease = $window.Bounce.easeOut;
+//           effect.transform.onComplete = myDone;
+//           TweenMax.to(wrapper, effect.duration, effect.transform);
+//         } else {
+//           done();
+//         }
+//       };
+
+//       this.removeClass = function(el, className, done){
+//         var wrapper = angular.element(el.children()[0]);
+//         var myDone = function(){
+//           return done();
+//         };
+//         if(className === flipType){
+//           effect.reset.ease = $window.Bounce.easeOut;
+//           effect.reset.onComplete = myDone;
+//           TweenMax.to(wrapper, effect.duration, effect.reset);
+//         } else {
+//           done();
+//         }
+//       };
+//     };
+//   }]);
+
+
+
+
+angular.module('fx.animations.assist', [])
+
+.factory('Assist', ['$filter', '$window', '$timeout', '$rootScope', function ($filter, $window, $timeout, $rootScope){
+  return {
+
+    emit: function(element, animation, motion){
+      $rootScope.$broadcast(animation +':'+motion);
+    },
+
+    parseClassList: function(element, option){
+      var ease,
+          list    = element[0].classList,
+          results = {trigger: false, duration: 0.3, ease: $window.Back};
+
+      angular.forEach(list, function (className){
+        if(className.slice(0,9) === 'fx-easing'){
+          ease = className.slice(10);
+          results.ease = $window[$filter('cap')(ease)] || $window.Elastic;
+        }
+        if(className === 'fx-trigger'){
+          results.trigger = true;
+        }
+        if(className.slice(0,8) === 'fx-speed'){
+          results.duration = parseInt(className.slice(9))/1000;
+        }
+      });
+
+      return option ? {ease: results.ease, speed: results.duration} : results;
+    },
+
+    addTimer: function(options, element, end){
+      var self = this;
+      var time = options.stagger ? (options.duration * 3) * 1000 : options.duration * 1000;
+      var timer = $timeout(function(){
+        if(options.trigger){
+          self.emit(element, options.animation, options.motion);
+        }
+        end();
+      }, time);
+      element.data(options.timeoutKey, timer);
+    },
+
+    removeTimer: function(element, timeoutKey, timer){
+      $timeout.cancel(timer);
+      element.removeData(timeoutKey);
+    },
+
+    timeoutKey: '$$fxTimer'
+  };
+}])
+
+.filter('cap', [function(){
+  return function (input){
+    return input.charAt(0).toUpperCase() + input.slice(1);
+  };
+}]);
+
+
+
+var timeoutKey = '$$fxtimer';
+angular.module('fx.transitions.assist', [])
+
+.factory('TransAssist', ["$timeout", function ($timeout) {
+  function addTimer (el, time, done) {
+    var timer = $timeout(function () {
+      done();
+    }, (time*1000) + 50);
+    el.data(timeoutKey, timer);
+  }
+
+  function removeTimer (el) {
+    var timer = el.data(timeoutKey);
+    if (timer) {
+      el.css('z-index', '-1');
+      $timeout.cancel(timer);
+      el.removeData(timeoutKey);
+    }
+  }
+
+  return {
+    addTimer: addTimer,
+    removeTimer: removeTimer
+  };
+}]);
+
+
+
+angular.module('fx.transitions.create', ['fx.transitions.assist', 'fx.animations.assist'])
+
+.factory('SlideTransition', ['TransAssist', 'Assist', function (TransAssist, Assist) {
+  var slide;
+
+  return function (effect) {
+
+    if (effect.from) {
+      this.enter = function (el, done) {
+        var customs;
+        cssMixin(el);
+
+        customs = Assist.parseClassList(el, true);
+        effect.from.ease = customs.ease.easeInOut;
+        effect.duration = customs.speed;
+
+        TransAssist.addTimer(el, effect.duration, done);
+
+        slide = new TimelineMax();
+
+        slide.from(el, effect.duration, effect.from);
+        return function (cancel) {
+          if(cancel) {
+            TransAssist.removeTimer(el);
+          }
+        };
+      };
+
+    } else if (!effect.from && effect.to) {
+      this.leave = function (el, done) {
+        var customs;
+        cssMixin(el);
+
+        customs = Assist.parseClassList(el, true);
+
+        effect.to.ease = customs.ease.easeInOut;
+        effect.duration = customs.speed;
+        TransAssist.addTimer(el, effect.duration, done);
+
+
+        slide = new TimelineMax();
+
+        slide.to(el, effect.duration, effect.to);
+
+        return function (cancel) {
+          if(cancel) {
+            TransAssist.removeTimer(el);
+          }
+        };
+        // el.css('position', 'absolute');
+        // el.css('z-index', '9999');
+
+        // slide = new TimelineMax({onComplete: finish(done)});
+
+        // slide.from(el, effect.duration, effect.from)
+        //      .to(el, effect.duration, effect.to);
+
+        // el.css('z-index', '9999');
+        // var page = new TimelineMax({onComplete: finish(done)});
+        // page.to(el, {transform: 'rotateZ(0deg)'})
+        //     .to(el, 0.2, {transform: 'rotateZ(10deg)'})
+        //     .to(el, 0.2, {transform: 'rotateZ(17deg)'})
+        //     .to(el, 0.4, {transform: 'rotateZ(15deg)'})
+        //     .to(el, 0.2, {transform: 'translateY(100%) rotateZ(17deg)'});
+      };
+    }
+  };
+}])
+.factory('RotationTransition', ['TransAssist', 'Assist','$compile', function (TransAssist, Assist, $compile) {
+  var rotate;
+  return function (effect) {
+    this[effect.when] = function (el, done) {
+      var customs, wrapper;
+
+      wrapper = $compile('<div></div>')(el.scope());
+
+      cssMixin(el);
+
+      css3D(wrapper, el);
+
+      angular.element(wrapper).append(el[0].outerHTML);
+      customs = Assist.parseClassList(el, true);
+
+      effect.from.ease = customs.ease.easeOut;
+      effect.duration = customs.duration;
+      TransAssist.addTimer(el, effect.duration, done);
+      rotate = new TimelineMax();
+
+      rotate.from(el, 1, effect.from)
+            .to(el, 1, effect.to);
+
+      return function (cancel) {
+        if(cancel) {
+          TransAssist.removeTimer(el);
+        }
+      };
+    };
+  };
+}]);
+
+function cssMixin (el, z) {
+  el.css('position', 'absolute');
+  if (z && z === 'leave') {
+    el.css('z-index', '9999px');
+  } else {
+    el.css('z-index', '1000px');
+  }
+}
+
+function css3D (parent, view) {
+  var preservve = {
+    'position': 'relative',
+    width: '100%',
+    height: '100%',
+    '-webkit-perspective': '500px',
+    '-moz-perspective': '500px',
+    '-o-perspective': '500px',
+    'perspective': '500px'
+  };
+
+  var trans = {
+    overflow: 'hidden',
+    '-webkit-backface-visibility': 'hidden',
+    '-moz-backface-visibility': 'hidden',
+    'backface-visibility': 'hidden',
+    '-webkit-transform': 'translate3d(0, 0, 0)',
+    '-moz-transform': 'translate3d(0, 0, 0)',
+    'transform': 'translate3d(0, 0, 0),',
+   ' -webkit-transform-style': 'preserve-3d',
+    '-moz-transform-style': 'preserve-3d',
+    'transform-style': 'preserve-3d'
+  };
+  parent.css(preservve);
+  view.css(trans);
+}
+
+// function calcTime  (duration, perc) {
+
+//   return (duration * (perc/100));
+// }
 
 
 angular.module('fx.transitions.view', [])
@@ -327,273 +595,86 @@ angular.module('fx.transitions.specials', [])
     // return new SlideTransition(effect);
   });
 
-// angular.module('fx.animations.create', ['fx.animations.assist'])
 
+angular.module('fx.animations.pulse', ['fx.animations.assist'])
+  .animation('.fx-pulse', ['Assist', function(Assist){
+    return {
+      animate: function(element, className, to, from, done){
+        var effect = [
 
-//   .factory('Flip3d', ['$window', function ($window){
-//     return function (effect){
-//       var axis = effect.axis;
-//       var flipType = 'fx-flip'+axis;
-//       this.addClass = function(el, className, done){
-//         var wrapper = angular.element(el.children()[0]);
-//         var myDone = function(){
-//           return done();
-//         };
-//         if(className === flipType){
-//           effect.transform.ease = $window.Bounce.easeOut;
-//           effect.transform.onComplete = myDone;
-//           TweenMax.to(wrapper, effect.duration, effect.transform);
-//         } else {
-//           done();
-//         }
-//       };
+          { effect: { transform: 'scale3d(1,1,1)' }},
+          { effect: { transform: 'scale3d(1.05, 1.05, 1.05)' }},
+          { effect: { transform: 'scale3d(1, 1, 1)' }}
 
-//       this.removeClass = function(el, className, done){
-//         var wrapper = angular.element(el.children()[0]);
-//         var myDone = function(){
-//           return done();
-//         };
-//         if(className === flipType){
-//           effect.reset.ease = $window.Bounce.easeOut;
-//           effect.reset.onComplete = myDone;
-//           TweenMax.to(wrapper, effect.duration, effect.reset);
-//         } else {
-//           done();
-//         }
-//       };
-//     };
-//   }]);
+        ];
 
+        var options = Assist.parseClassList(element);
+        options.motion = 'addClass';
+        options.animation = 'pulse';
 
+        var eachTime = (options.duration / effect.length);
 
+        Assist.addTimer(options, element, done);
 
-angular.module('fx.animations.assist', [])
+        var pulse = new TimelineMax();
+        angular.forEach(effect, function(step, pos){
+          step.easing = options.ease.easeInOut;
 
-.factory('Assist', ['$filter', '$window', '$timeout', '$rootScope', function ($filter, $window, $timeout, $rootScope){
-  return {
-
-    emit: function(element, animation, motion){
-      $rootScope.$broadcast(animation +':'+motion);
-    },
-
-    parseClassList: function(element, option){
-      var ease,
-          list    = element[0].classList,
-          results = {trigger: false, duration: 0.3, ease: $window.Back};
-
-      angular.forEach(list, function (className){
-        if(className.slice(0,9) === 'fx-easing'){
-          ease = className.slice(10);
-          results.ease = $window[$filter('cap')(ease)] || $window.Elastic;
-        }
-        if(className === 'fx-trigger'){
-          results.trigger = true;
-        }
-        if(className.slice(0,8) === 'fx-speed'){
-          results.duration = parseInt(className.slice(9))/1000;
-        }
-      });
-
-      return option ? {ease: results.ease, speed: results.duration} : results;
-    },
-
-    addTimer: function(options, element, end){
-      var self = this;
-      var time = options.stagger ? (options.duration * 3) * 1000 : options.duration * 1000;
-      var timer = $timeout(function(){
-        if(options.trigger){
-          self.emit(element, options.animation, options.motion);
-        }
-        end();
-      }, time);
-      element.data(options.timeoutKey, timer);
-    },
-
-    removeTimer: function(element, timeoutKey, timer){
-      $timeout.cancel(timer);
-      element.removeData(timeoutKey);
-    },
-
-    timeoutKey: '$$fxTimer'
-  };
-}])
-
-.filter('cap', [function(){
-  return function (input){
-    return input.charAt(0).toUpperCase() + input.slice(1);
-  };
-}]);
-
-
-
-var timeoutKey = '$$fxtimer';
-angular.module('fx.transitions.assist', [])
-
-.factory('TransAssist', ["$timeout", function ($timeout) {
-  function addTimer (el, time, done) {
-    var timer = $timeout(function () {
-      done();
-    }, (time*1000) + 50);
-    el.data(timeoutKey, timer);
-  }
-
-  function removeTimer (el) {
-    var timer = el.data(timeoutKey);
-    if (timer) {
-      el.css('z-index', '-1');
-      $timeout.cancel(timer);
-      el.removeData(timeoutKey);
-    }
-  }
-
-  return {
-    addTimer: addTimer,
-    removeTimer: removeTimer
-  };
-}]);
-
-
-
-angular.module('fx.transitions.create', ['fx.transitions.assist', 'fx.animations.assist'])
-
-.factory('SlideTransition', ['TransAssist', 'Assist', function (TransAssist, Assist) {
-  var slide;
-
-  return function (effect) {
-
-    if (effect.from) {
-      this.enter = function (el, done) {
-        var customs;
-        cssMixin(el);
-
-        customs = Assist.parseClassList(el, true);
-        effect.from.ease = customs.ease.easeInOut;
-        effect.duration = customs.speed;
-
-        TransAssist.addTimer(el, effect.duration, done);
-
-        slide = new TimelineMax();
-
-        slide.from(el, effect.duration, effect.from);
-        return function (cancel) {
-          if(cancel) {
-            TransAssist.removeTimer(el);
-          }
-        };
-      };
-
-    } else if (!effect.from && effect.to) {
-      this.leave = function (el, done) {
-        var customs;
-        cssMixin(el);
-
-        customs = Assist.parseClassList(el, true);
-
-        effect.to.ease = customs.ease.easeInOut;
-        effect.duration = customs.speed;
-        TransAssist.addTimer(el, effect.duration, done);
-
-
-        slide = new TimelineMax();
-
-        slide.to(el, effect.duration, effect.to);
-
-        return function (cancel) {
-          if(cancel) {
-            TransAssist.removeTimer(el);
-          }
-        };
-        // el.css('position', 'absolute');
-        // el.css('z-index', '9999');
-
-        // slide = new TimelineMax({onComplete: finish(done)});
-
-        // slide.from(el, effect.duration, effect.from)
-        //      .to(el, effect.duration, effect.to);
-
-        // el.css('z-index', '9999');
-        // var page = new TimelineMax({onComplete: finish(done)});
-        // page.to(el, {transform: 'rotateZ(0deg)'})
-        //     .to(el, 0.2, {transform: 'rotateZ(10deg)'})
-        //     .to(el, 0.2, {transform: 'rotateZ(17deg)'})
-        //     .to(el, 0.4, {transform: 'rotateZ(15deg)'})
-        //     .to(el, 0.2, {transform: 'translateY(100%) rotateZ(17deg)'});
-      };
-    }
-  };
-}])
-.factory('RotationTransition', ['TransAssist', 'Assist','$compile', function (TransAssist, Assist, $compile) {
-  var rotate;
-  return function (effect) {
-    this[effect.when] = function (el, done) {
-      var customs, wrapper;
-
-      wrapper = $compile('<div></div>')(el.scope());
-
-      cssMixin(el);
-
-      css3D(wrapper, el);
-
-      angular.element(wrapper).append(el[0].outerHTML);
-      customs = Assist.parseClassList(el, true);
-
-      effect.from.ease = customs.ease.easeOut;
-      effect.duration = customs.duration;
-      TransAssist.addTimer(el, effect.duration, done);
-      rotate = new TimelineMax();
-
-      rotate.from(el, 1, effect.from)
-            .to(el, 1, effect.to);
-
-      return function (cancel) {
-        if(cancel) {
-          TransAssist.removeTimer(el);
-        }
-      };
+          pulse = pulse.to(element, eachTime, step.effect);
+        });
+      }
     };
-  };
-}]);
+  }]);
 
-function cssMixin (el, z) {
-  el.css('position', 'absolute');
-  if (z && z === 'leave') {
-    el.css('z-index', '9999px');
-  } else {
-    el.css('z-index', '1000px');
-  }
-}
 
-function css3D (parent, view) {
-  var preservve = {
-    'position': 'relative',
-    width: '100%',
-    height: '100%',
-    '-webkit-perspective': '500px',
-    '-moz-perspective': '500px',
-    '-o-perspective': '500px',
-    'perspective': '500px'
-  };
 
-  var trans = {
-    overflow: 'hidden',
-    '-webkit-backface-visibility': 'hidden',
-    '-moz-backface-visibility': 'hidden',
-    'backface-visibility': 'hidden',
-    '-webkit-transform': 'translate3d(0, 0, 0)',
-    '-moz-transform': 'translate3d(0, 0, 0)',
-    'transform': 'translate3d(0, 0, 0),',
-   ' -webkit-transform-style': 'preserve-3d',
-    '-moz-transform-style': 'preserve-3d',
-    'transform-style': 'preserve-3d'
-  };
-  parent.css(preservve);
-  view.css(trans);
-}
+angular.module('fx.animations.tada', ['fx.animations.assist'])
+  .animation('.fx-tada', ['Assist', function(Assist){
+    return {
+      animate: function(element, classname, done){
+        var effect = [
+          // 0
+          { effect: { transform: 'scale3d(1,1,1)' } },
+          // 10
+          { effect: { transform: 'scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg)' } },
+          // 20
+          { effect: { transform: 'scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg)' } },
+          // 30
+          { effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
+          // 40
+          { effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)' } },
+          // 50
+          { effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
+          // 60
+          { effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)' } },
+          // 70
+          { effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
+          // 80
+          { effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)' } },
+          // 90
+          { effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
+          // 100
+          { effect: { transform: ' scale3d(1, 1, 1)' } }
+        ];
 
-// function calcTime  (duration, perc) {
+        var options = Assist.parseClassList(element);
+        options.motion = 'addClass';
+        options.animation = 'tada';
 
-//   return (duration * (perc/100));
-// }
+        var eachTime = (options.duration / effect.length);
+
+        Assist.addTimer(options, element, done);
+
+        var tada = new TimelineMax();
+        angular.forEach(effect, function(step, pos){
+          step.easing = options.ease.easeInOut;
+
+          tada = tada.to(element, eachTime, step.effect);
+        });
+      }
+    };
+  }]);
+
 
 
 /*
@@ -1003,80 +1084,6 @@ angular.module('fx.animations.fades.factory', ['fx.animations.assist'])
     };
   };
 }]);
-
-/*
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  Using Angular's '.animate', all fade animations are created with javaScript.
-
-  @BounceAnimation
-    Constructor function that returns a new animation object that has all
-    required methods for ngAnimate ex: this.enter(), this.leave(), etc
-
-  @effect
-    The actual animation that will be applied to the element, staggered
-     first: the style to applied to the element 1/4 through the animtion
-     mid: style to be applied to to the element 2/4 through the animation
-     third: style to be applied to the element 3/4 through the animation
-     end: style to be applied to the element when it's complete
-     animation: the name of the animtion for the eventing system
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-*/
-
-angular.module('fx.animations.attentions', ['fx.animations.assist'])
-.animation('.fx-tada', ['Assist', function(Assist){
-  return {
-    addClass: function(element, classname, done){
-
-      var effect = [
-        // 0
-        { time: 0.01, effect: { transform: 'scale3d(1,1,1)' } },
-        // 10
-        { time: 0.1, effect: { transform: 'scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg)' } },
-        // 20
-        { time: 0.1, effect: { transform: 'scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg)' } },
-        // 30
-        { time: 0.1, effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
-        // 40
-        { time: 0.1, effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)' } },
-        // 50
-        { time: 0.1, effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
-        // 60
-        { time: 0.1, effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)' } },
-        // 70
-        { time: 0.1, effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
-        // 80
-        { time: 0.1, effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)' } },
-        // 90
-        { time: 0.01, effect: { transform: 'scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)' } },
-        // 100
-        { time: 0.01, effect: { transform: ' scale3d(1, 1, 1)' } }
-      ];
-
-      var options = Assist.parseClassList(element);
-      options.motion = 'addClass';
-      options.animation = 'tada';
-      // options.stagger = true;
-      var eachTime = (options.duration / effect.length);
-      console.log(eachTime);
-      Assist.addTimer(options, element, done);
-
-      var tada = new TimelineMax();
-      //
-      angular.forEach(effect, function(step, pos){
-        step.easing = options.ease.easeInOut;
-        if (pos !== 0 || effect[pos+1]) {
-          step.time = eachTime;
-        }
-        tada = tada.to(element, step.time, step.effect);
-      });
-
-      // TweenMax.set(element, { opacity: '0' });
-      // TweenMax.to(element, 3, { opacity: '1' });
-    }
-  };
-}]);
-
 
 
 /*

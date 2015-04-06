@@ -10,23 +10,31 @@ Preview the goodness at [hendrixer.github.io](https://hendrixer.github.io/).
 
 ## Dependencies
 + Angular.js (1.3+)
++ GSAP/tweenmax.js
++ ngAnimate (1.3+)
 
 ## Downloading
-1. The best way to install ng-Fx is to use bower
+1. The best way to install ng-Fx is to use bower or npm
     + ```bower install ngFx --save```
+    + ```npm i ngFx --save```
 2. Or, from this repo
   + you'll need the main file in ```dist/ngFx.js```
 
 ## Installing
-1. Include ```ngFx.js``` into your html. 
-  + __Note:__ ```ngFx``` bundles ```ngAnimate``` and ```GSAP``` into one file
-2. Include the dependencies into your angular app,  ```ngFx```
+2. Include  ```ngFx.js``` into your html. 
+  + __Note:__ ```ngFx``` depends on ```ngAnimate``` and ```GSAP - TweenMax.js```
+3. Include the dependencies into your angular app,  ```ngFx```
 ```javascript
-angular.module('myApp', ['ngFx'])
+angular.module('myApp', ['ngFx', 'ngAnimate'])
 ```
 ##Using
 ###Animations
-+ All animations are used with ngAnimate. So you can apply them to...
+There are two types of animations:
+* Dynamic
+  - Animations that will result in an element entering/leaving the page (fade-out)
+* Static
+  - Animations that will not result in an element entering/leaving the page (shake)
++ All dynamic animations tie into ngAnimate hooks. So you can apply them to...
   + ng-hide / ng-show
   + ng-include
   + ng-if
@@ -35,14 +43,16 @@ angular.module('myApp', ['ngFx'])
   + ng-switch
   + ng-class
   + ng-repeat
-+ Adding the animations are as simple as adding a css class. ngFx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ng-repeat will not trigger animations upon page load, the collection you are iterating over must be empty at first then populated, you can achieve this with a simple timeout or some other async operation.__
++ Static animations can be applied manually with `$animate`.
++ Adding the animations are as simple as adding a css class. ngFx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ngAnimate will not trigger animations upon page load, to prevent all animations firing at once.Can hack this with a delay__.
 
 ```javascript
 angular.module('foodApp', ['ngFx'])
 .controller('FoodController', function($scope, $timeout){
+  $scope.foods = [];
   $timeout(function(){
     $scope.foods = ['apple', 'muffin', 'chips'];
-  }, 100);
+  },0);
 });
 ```
 ```html
@@ -52,6 +62,27 @@ angular.module('foodApp', ['ngFx'])
   </li>
 </ul>
 ```
+
++ Here's and example of manually trigger a static animation with `$animate`
+
+```javascript
+angular.module('foodApp', ['ngFx'])
+.directive('pulseOnClick', function($animate){
+  return function(scope, elem){
+    elem.on('click', function(){
+      $animate.animate(elem, 'someclass')
+        .then(function(){
+          console.log('Done pulsing');
+        })
+      scope.$apply();
+    });
+  };
+});
+```
+```html
+<button class="fx-pulse fx-speed-1232" pulse-on-click>pulsing</button>
+```
+
 ###Easings
 + You can also add a different easing to any animation you want. It is as easy as adding an animation, just use a CSS class. Building on the previous example, you can just add ```fx-easing-your easing here```
 ```html
@@ -75,6 +106,7 @@ angular.module('foodApp', ['ngFx'])
 ```javascript
 angular.module('myApp', ['ngFx'])
 .controller('FoodController', function($scope, $timeout){
+  $scope.foods = [];
   $timeout(function(){
     $scope.foods = ['apple', 'muffin', 'chips'];
   }, 100);
@@ -117,7 +149,7 @@ angular.module('myApp', ['ngFx'])
 3. Create new branch
 4. Make changes
 5. Make test and check test
-6. Build it, run ```gulp``` and the files will be linted, concatenated, and minified
+6. Build it, run ```gulp``` and the files will be concatenated, and minified
 7. Push to new branch on your forked repo
 8. Pull request from your branch to ngFx master
 
