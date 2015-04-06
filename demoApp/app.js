@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngFx' ,'ui.bootstrap', 'ngRoute', 'ui.router']);
+var app = angular.module('app', ['ngFx','ngAnimate','ui.bootstrap', 'ngRoute', 'ui.router']);
 
 // app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -347,10 +347,10 @@ app.directive('fx', function($injector) {
     }
   }
 })
-.directive('try', function($animate) {
+.directive('pulse', function($animate) {
   return function(scope, ele) {
     ele.on('click', function() {
-      $animate.removeClass(ele, 'fx-bounce-up')
+      $animate.animate(ele, 'meme')
       .then(function() {
         console.log('here');
       });

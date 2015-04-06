@@ -1,0 +1,9 @@
+src
+demoApp/
+features/
+node_modules/
+specs/
+karma.conf.js
+bower_components/
+coverage/
+.travis.yml

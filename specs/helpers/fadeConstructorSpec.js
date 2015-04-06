@@ -1,7 +1,7 @@
 describe('FadeAnimation constructor', function(){
   var newAnimation,
       effect;
-  beforeEach(module('fx.animations.create'));
+  beforeEach(module('fx.animations.fades.factory'));
 
   beforeEach(function(){
     inject(function(FadeAnimation){
