@@ -9,7 +9,7 @@ ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ngFx.svg?branch=master
 Preview the goodness at [hendrixer.github.io](https://hendrixer.github.io/).
 
 ## Dependencies
-+ Angular.js (1.2+)
++ Angular.js (1.3+)
 
 ## Downloading
 1. The best way to install ng-Fx is to use bower
