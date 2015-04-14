@@ -55,12 +55,13 @@ angular.module('fx.animations.bounces.factory', ['fx.animations.assist'])
 
     this.move = this.enter;
 
-    this.addClass = function(element, className, done){
+    this.beforeAddClass = function(element, className, done){
       if(className){
         var options = Assist.parseClassList(element);
         options.motion = 'enter';
         options.animation = fx_type;
         options.timeoutKey = Assist.timeoutKey;
+        options.stagger = true;
         Assist.addTimer(options, element, done);
         var bac = new TimelineMax();
         bac.to(element, startTime, end);
@@ -86,6 +87,7 @@ angular.module('fx.animations.bounces.factory', ['fx.animations.assist'])
         options.motion = 'leave';
         options.animation = fx_type;
         options.timeoutKey = Assist.timeoutKey;
+        options.stagger = true;
         var rc = new TimelineMax();
         rc.to(element, startTime, start);
         rc.to(element, options.duration, mid);

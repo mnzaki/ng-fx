@@ -68,7 +68,7 @@ angular.module('fx.animations.zooms.factory', ['fx.animations.assist'])
         }
       };
 
-      this.addClass = function(element, className, done){
+      this.beforeAddClass = function(element, className, done){
         if(className === 'ng-hide'){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';

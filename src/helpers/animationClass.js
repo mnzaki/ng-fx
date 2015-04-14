@@ -5,7 +5,7 @@
 //     return function (effect){
 //       var axis = effect.axis;
 //       var flipType = 'fx-flip'+axis;
-//       this.addClass = function(el, className, done){
+//       this.beforeAddClass = function(el, className, done){
 //         var wrapper = angular.element(el.children()[0]);
 //         var myDone = function(){
 //           return done();
