@@ -19,6 +19,6 @@ describe('FadeAnimation constructor', function(){
     expect(newAnimation.leave).to.be.a('function');
     expect(newAnimation.move).to.be.a('function');
     expect(newAnimation.removeClass).to.be.a('function');
-    expect(newAnimation.addClass).to.be.a('function');
+    expect(newAnimation.beforeAddClass).to.be.a('function');
   });
 });

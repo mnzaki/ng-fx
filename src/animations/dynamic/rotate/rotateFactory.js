@@ -49,7 +49,7 @@ angular.module('fx.animations.rotations.factory', ['fx.animations.assist'])
 
       this.move = this.enter;
 
-      this.addClass = function(element, className, done){
+      this.beforeAddClass = function(element, className, done){
         if(className){
           var options = Assist.parseClassList(element);
           options.motion = 'enter';
