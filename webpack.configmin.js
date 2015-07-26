@@ -26,7 +26,8 @@ var config = {
 
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel?stage=1', exclude: [/node_modules/] }
+      { test: /\.js$/, loader: 'babel?stage=1', exclude: [/node_modules/] },
+      { test: /\.styl$/, loader: 'style!css!stylus' }
     ]
   },
 

@@ -1,57 +1,52 @@
-// Karma configuration
-// Generated on Sat Apr 19 2014 20:34:57 GMT-0700 (PDT)
-
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '.',
+    basePath: '',
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-animate/angular-animate.js',
-      'bower_components/gsap/src/uncompressed/TweenMax.js',
-
-      'src/**/*.js',
-      'specs/jasmine.conf.js',
-      'node_modules/expect.js/index.js',
-      'specs/**/*Spec.js'
+        { pattern: 'spec.bundle.js', watched: false }
     ],
 
 
     // list of files to exclude
     exclude: [
-      'karma.conf.js'
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/animations/*js': 'coverage',
-      'src/animate.js': 'coverage',
-      'src/animationsAssist.js': 'coverage',
-      'src/animationClass.js': 'coverage'
+        'spec.bundle.js': ['webpack', 'sourcemap']
+    },
+
+    webpack: {
+        devtool: 'inline-source-map',
+        module: {
+            loaders: [
+                { test: /\.js/, exclude: [/app\/lib/, /node_modules/], loader: 'babel?stage=1' },
+                { test: /\.styl$/, loader: 'style!css!stylus' },
+                { test: /\.css$/, loader: 'style!css' }
+            ]
+        }
+    },
+
+    webpackServer: {
+      noInfo: true //please don't spam the console when running in karma!
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha', 'coverage', 'unicorn'],
-
-    // coverageReporter: {
-    //   type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
-    //   dir: 'coverage/'
-    // },
+    reporters: ['mocha'],
 
 
     // web server port
