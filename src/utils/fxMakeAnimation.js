@@ -21,16 +21,13 @@ const fxMakeAnimation = ($animateCss, $$fx) => {
    * @param  {...[Object]} rest  rest of the objects for the other event type aniamtions
    * @return {[Object]}          the animation object for ngAnimate to consume
    */
-  const makeAnimation = (enter, leave, move, ...rest) => {
-
+  const create = (enter, leave, move, ...rest) => {
     let ngAnimateConsumable = $$fx.createAnimationsForSimilarEvents({enter, leave, move});
 
     return ngAnimateConsumable;
   };
 
-  return (...args)=> {
-    return makeAnimation(...args);
-  };
+  return {create};
 }
 
 fxMakeAnimation.$inject = ['$animateCss', '$$fx'];

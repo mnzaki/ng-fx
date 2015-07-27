@@ -3,48 +3,6 @@
 <head>
   <title>ngFx</title>
   <style type="text/css">
-    @keyframes bounceNormalIn {
-      0% {
-        opacity: 0;
-        transform: scale(.3);
-      }
-
-      33% {
-        opacity 1;
-        transform: scale(1.05);
-      }
-
-      66% {
-        transform: scale(.9);
-      }
-
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-    }
-
-    @keyframes bounceNormalOut {
-      100% {
-        opacity: 0;
-        transform: scale(.3);
-      }
-
-      66% {
-        opacity 1;
-        transform: scale(1.05);
-      }
-
-      33% {
-        transform: scale(.9);
-      }
-
-      0% {
-        opacity: 1;
-      }
-
-    }
 
     li {
       background-color: blue;
@@ -59,7 +17,7 @@
 <section ng-controller="App as vm">
   <input type="" ng-model="vm.search">
   <ul>
-    <li class="fx-bounce-normal fx-ease-expo-in fx-speed-1234 fx-stagger-333" ng-repeat="num in vm.nums | filter:vm.search">num</li>
+    <li class="fx-fade-normal fx-speed-1000 fx-ease-expo-in fx-stagger-233" ng-repeat="num in vm.nums | filter:vm.search">num</li>
   </ul>
 </section>
 <script src="../node_modules/angular/angular.js"></script>

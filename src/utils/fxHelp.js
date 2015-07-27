@@ -7,68 +7,84 @@ import {curves} from './easings';
  * @return {[Object]} public object of the methods to help with animations
  */
 const fxHelp = ($animateCss)=> {
-
+  // group of similar animation events
   const similarEvents = ['enter', 'leave', 'move'];
+
   const durationRegxpString = '(\\d+)';
   const durationRegxp = new RegExp(durationRegxpString);
 
+  /**
+   * takes in a fx-{option} and creates a regexp for
+   * checking against an element's classList
+   * @param  {[String]} option the fx-{option}
+   * @param  {[Boolean]} text   should the regexp loof for alphabet chars after the option
+   *                            ex: fx-ease-back
+   * @return {[Regexp]}        the composed regexp
+   */
   const makeFxOptionRegexp = (option, text)=> {
     let afterOption = text ? '[A-Za-z]' : durationRegxpString;
     return new RegExp(`fx\\-${option}\\-${afterOption}`);
   };
 
+  /**
+   * given a css classname, will check to see if it
+   * is trying to describe the duration of the animation
+   * with fx-speed-{num in ms}
+   * @param  {[String]} className a css classname
+   * @return {[Number]}           duration in seconds
+   */
   const getDuration = (className) => {
+    // default to half a second duration
     let duration = 500;
-    if (makeFxOptionRegexp('speed').test(className)) {
+    // allow usres to use fx-speed|dur|duration-{num in ms}
+    if (makeFxOptionRegexp('(speed|dur|duration)').test(className)) {
       try {
         duration = parseInt(className.match(durationRegxp)[0]);
       } catch (e) {
       }
     }
-
+    // convert ms to seconds for $animateCss to consume
     return duration / 1000;
   };
 
+  /**
+   * given a css classname, it will check to see if it
+   * trying to describe the stagger delay if any for the animation
+   * with fx-stagger-{num in ms}
+   * @param  {[String]} className css class name
+   * @return {[Number]}           number in seconds
+   */
   const getStagger = (className) => {
     if (makeFxOptionRegexp('stagger').test(className)) {
       let stagger = undefined;
       try {
         stagger = parseInt(className.match(durationRegxp)[0]);
       } catch (e) {
+        return;
       }
 
+      // convert ms to seconds for $animateCss to consume
       return stagger / 1000;
     }
   };
 
   const getEase = (className) => {
-    let ease;
-    let bezier = curves.back.inOut;
+    let bezier = '';
 
-    if (makeFxOptionRegexp('ease', true).test(className)) {
-      ease = className.slice(8);
-
-    } else {
+    if (!makeFxOptionRegexp('ease', true).test(className)) {
       return;
-    }
-
-    let [easeType='', direction='', direction2=''] = ease.split('-');
-
-    if (!easeType) {
-      return bezier;
-    }
-
-    let curve = curves[easeType.toLowerCase()];
-    // let directionRegexp = /(in|out)/i;
-
-    if ((!direction && !direction2) || (/in/i.test(direction) && /out/i.test(direction2))) {
-      bezier = curve.inOut;
-
     } else {
-      bezier = curve[direction];
+      const easeOptions = className.slice(8);
+      const [ease, dir, dir2=''] = easeOptions.split('-');
+      const curve = curves[ease];
+
+      if (!dir) {
+        return curve.inout;
+      } else {
+        const direction = `${dir}${dir2}`.trim();
+        return curve[direction];
+      }
     }
-    console.log('bezzy', bezier)
-    return bezier;
   };
 
   /*
@@ -77,23 +93,27 @@ const fxHelp = ($animateCss)=> {
   const parseClassList = (element)=> {
     let ease;
     let list = toArray(element[0].classList);
+    let classList = list.join(' ');
+    const fxRegexp = /(fx\-\w+\-(.*?)(\s|$))/g;
 
-    const results = list.reduce((ops, className)=> {
-      ops.duration = getDuration(className);
-      let ease = getEase(className);
-      if (ease) {
-        ease = ease.join();
-        console.log('ease', ease);
-        ops.easing = `cubic-bezier(${ease})`;
+    let options = classList.match(fxRegexp);
+
+    const results = options.reduce((_results, option) => {
+      if (/stagger/.test(option)) {
+
+        let stagger = getStagger(option);
+        _results.stagger = stagger ? stagger : undefined;
+      } else if (/ease/.test(option)) {
+        let ease = getEase(option);
+        if (ease) {
+
+          _results.easing = `cubic-bezier(${ease.join()})`;
+        }
+      } else if (/(speed|dur|duration)/.test(option)) {
+        _results.duration = getDuration(option);
       }
 
-      let stagger = getStagger(className);
-
-      if (stagger) {
-        ops.stagger = stagger
-      }
-
-      return ops
+      return _results;
     }, {});
 
     return results;
@@ -101,17 +121,13 @@ const fxHelp = ($animateCss)=> {
 
   const buildAnimation = (element, animation) => {
     const opts = parseClassList(element);
-
     let animateInstructions = merge(animation, opts);
-    console.log(animateInstructions)
     return $animateCss(element, animateInstructions);
   };
 
   const createAnimationsForSimilarEvents = (animationConfigs) => {
-
     return similarEvents.reduce((result, event) => {
       const animationConfig = animationConfigs[event];
-
       if (animationConfig) {
         result[event] = (element, done) => {
           return buildAnimation(element, animationConfig);
