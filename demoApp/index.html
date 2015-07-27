@@ -17,7 +17,7 @@
 <section ng-controller="App as vm">
   <input type="" ng-model="vm.search">
   <ul>
-    <li class="fx-zoom-right fx-ease-back fx-speed-900 fx-stagger-150" ng-repeat="num in vm.nums | filter:vm.search">  num {{ ::num }}
+    <li class="fx-zoom-right fx-stagger-150" ng-repeat="num in vm.nums | filter:vm.search">  num {{ ::num }}
     </li>
   </ul>
 </section>

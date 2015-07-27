@@ -91,30 +91,33 @@ const fxHelp = ($animateCss)=> {
    *
    */
   const parseClassList = (element)=> {
-    let ease;
-    let list = toArray(element[0].classList);
-    let classList = list.join(' ');
+    const list = toArray(element[0].classList);
+    const classList = list.join(' ');
+
     const fxRegexp = /(fx\-\w+\-(.*?)(\s|$))/g;
 
-    let options = classList.match(fxRegexp);
+    const options = classList.match(fxRegexp);
 
     const results = options.reduce((_results, option) => {
       if (/stagger/.test(option)) {
 
         let stagger = getStagger(option);
         _results.stagger = stagger ? stagger : undefined;
+
       } else if (/ease/.test(option)) {
         let ease = getEase(option);
+
         if (ease) {
 
           _results.easing = `cubic-bezier(${ease.join()})`;
         }
+
       } else if (/(speed|dur|duration)/.test(option)) {
         _results.duration = getDuration(option);
       }
 
       return _results;
-    }, {});
+    }, {duration: .5});
 
     return results;
   };
