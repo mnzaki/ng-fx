@@ -24,18 +24,18 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'spec.bundle.js': ['webpack', 'sourcemap']
+      'spec.bundle.js': ['webpack', 'sourcemap']
     },
 
     webpack: {
-        devtool: 'inline-source-map',
-        module: {
-            loaders: [
-                { test: /\.js/, exclude: [/app\/lib/, /node_modules/], loader: 'babel?stage=1' },
-                { test: /\.styl$/, loader: 'style!css!stylus' },
-                { test: /\.css$/, loader: 'style!css' }
-            ]
-        }
+      devtool: 'inline-source-map',
+      module: {
+        loaders: [
+          { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'babel?stage=1' },
+          { test: /\.styl$/, loader: 'style!css!stylus' },
+          { test: /\.css$/, loader: 'style!css' }
+        ]
+      }
     },
 
     webpackServer: {
