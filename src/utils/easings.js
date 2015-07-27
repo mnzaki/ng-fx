@@ -5,9 +5,9 @@ export const curves = {
     inout: [0.68, -0.55, 0.265, 1.55]
   },
   bounce: {
-    in: '',
-    out: '',
-    inout: ''
+    in: [],
+    out: [],
+    inout: []
   },
 
   expo: {

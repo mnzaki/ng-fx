@@ -19,12 +19,17 @@ describe('[ Utils ]', ()=> {
   beforeEach(window.module(utils));
 
   describe('Curves', ()=> {
-    it('should have back', ()=> {
-      testCurve('back');
-    });
-
-    it('should have expo', ()=> {
-      testCurve('expo');
+    [
+      'back',
+      'circ',
+      'expo',
+      'bounce',
+      'quint',
+      'quart'
+    ].forEach(curve => {
+      it(`should have ${curve} curve`, ()=> {
+        testCurve(curve);
+      });
     });
   });
 
