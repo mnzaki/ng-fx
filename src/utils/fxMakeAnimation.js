@@ -22,6 +22,7 @@ const fxMakeAnimation = ($animateCss, $$fx) => {
    * @return {[Object]}          the animation object for ngAnimate to consume
    */
   const create = (enter, leave, move, ...rest) => {
+    move = move || enter;
     let ngAnimateConsumable = $$fx.createAnimationsForSimilarEvents({enter, leave, move});
 
     return ngAnimateConsumable;

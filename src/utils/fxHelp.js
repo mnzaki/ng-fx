@@ -76,7 +76,7 @@ const fxHelp = ($animateCss)=> {
     } else {
       const easeOptions = className.slice(8);
       const [ease, dir, dir2=''] = easeOptions.split('-');
-      const curve = curves[ease];
+      const curve = curves[ease.trim()];
 
       if (!dir) {
         return curve.inout;

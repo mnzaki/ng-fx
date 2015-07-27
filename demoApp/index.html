@@ -17,11 +17,12 @@
 <section ng-controller="App as vm">
   <input type="" ng-model="vm.search">
   <ul>
-    <li class="fx-fade-normal fx-speed-1000 fx-ease-expo-in fx-stagger-233" ng-repeat="num in vm.nums | filter:vm.search">num</li>
+    <li class="fx-zoom-normal fx-speed-1000 fx-ease-back fx-stagger-233" ng-repeat="num in vm.nums | filter:vm.search">num {{ ::num }}</li>
   </ul>
 </section>
 <script src="../node_modules/angular/angular.js"></script>
 <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+<script src="../node_modules/lodash/index.js"></script>
 <script src="../dist/ngFx.js"></script>
 <script>
   angular.module('app', ['ngFx', 'ngAnimate'])
@@ -29,7 +30,13 @@
     this.search = '';
     $timeout(function() {
       this.nums = [1,2,3,4,5];
-    }.bind(this), 0);
+    }.bind(this), 0)
+    .then(function(){
+      $timeout(function() {
+        console.log(this.nums)
+        this.nums = _.shuffle(this.nums);
+      }.bind(this), 3000)
+    }.bind(this))
   });
 </script>
 </body>
