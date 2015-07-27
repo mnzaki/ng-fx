@@ -1,6 +1,8 @@
 import './zoom.styl';
 import {zoomNormal} from './zoomNormal';
+import {zoomDown} from './zoomDown';
 
 export const zooms = [
-  {classname: zoomNormal.classname, creator: zoomNormal.creator}
+  zoomNormal,
+  zoomDown
 ];
