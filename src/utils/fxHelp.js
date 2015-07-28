@@ -9,6 +9,7 @@ import {curves} from './easings';
 const fxHelp = ($animateCss)=> {
   // group of similar animation events
   const similarEvents = ['enter', 'leave', 'move'];
+  const classEvents = ['addClass', 'setClass', 'removeClass'];
 
   const durationRegxpString = '(\\d+)';
   const durationRegxp = new RegExp(durationRegxpString);
@@ -139,7 +140,25 @@ const fxHelp = ($animateCss)=> {
 
       return result;
     }, {});
-  }
+  };
+
+
+  const createClassAnimations = (animationConfigs) => {
+    return classEvents.reduce((result, event) => {
+      const animationConfig = animationConfigs[event];
+
+      if (animationConfig) {
+        result[event] = (element, className, done) => {
+          if (className === 'ng-hide' && /(addClass|removeClass)/.test(event)) {
+            return buildAnimation(element, animationConfig);
+          } else {
+            done();
+          }
+        };
+      }
+      return result;
+    }, {});
+  };
 
   // expose all for testing purposes
   return {
@@ -148,7 +167,8 @@ const fxHelp = ($animateCss)=> {
     getEase,
     parseClassList,
     buildAnimation,
-    createAnimationsForSimilarEvents
+    createAnimationsForSimilarEvents,
+    createClassAnimations
   };
 };
 

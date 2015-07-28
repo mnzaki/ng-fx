@@ -1,3 +1,5 @@
+import merge from 'lodash/object/merge';
+
 const creator = ($fxMakeAnimation)=> {
 
   let enterAnimation = {
@@ -8,7 +10,18 @@ const creator = ($fxMakeAnimation)=> {
     keyframeStyle: '.1s fadeNormalOut'
   };
 
-  return $fxMakeAnimation.create(enterAnimation, leaveAnimation);
+  let addClassAnimation = merge({}, leaveAnimation);
+
+  let removeClassAnimation = merge({}, enterAnimation);
+
+  return $fxMakeAnimation.create(
+    enterAnimation,
+    leaveAnimation,
+    null,
+    addClassAnimation,
+    removeClassAnimation,
+    true
+  );
 };
 
 creator.$inject = ['$fxMakeAnimation'];

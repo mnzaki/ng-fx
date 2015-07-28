@@ -1,3 +1,5 @@
+import merge from 'lodash/object/merge';
+
 /**
  * factory function to help with the
  * basics of creating the events animaton
@@ -21,9 +23,14 @@ const fxMakeAnimation = ($animateCss, $$fx) => {
    * @param  {...[Object]} rest  rest of the objects for the other event type aniamtions
    * @return {[Object]}          the animation object for ngAnimate to consume
    */
-  const create = (enter, leave, move, ...rest) => {
+  const create = (enter, leave, move, addClass, removeClass, setClass) => {
     move = move || enter;
+
     let ngAnimateConsumable = $$fx.createAnimationsForSimilarEvents({enter, leave, move});
+
+    let classConsumables = $$fx.createClassAnimations({addClass, removeClass, setClass});
+
+    ngAnimateConsumable = merge(ngAnimateConsumable, classConsumables);
 
     return ngAnimateConsumable;
   };

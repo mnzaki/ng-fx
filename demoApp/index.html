@@ -3,6 +3,9 @@
 <head>
   <title>ngFx</title>
   <style type="text/css">
+    body * {
+      box-sizing: border-box;
+    }
 
     li {
       background-color: blue;
@@ -11,13 +14,22 @@
       margin-top: 10px;
       text-align: center;
     }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: gray;
+      border-radius: 100%;
+    }
   </style>
 </head>
 <body ng-app="app">
 <section ng-controller="App as vm">
-  <input type="" ng-model="vm.search">
+  <input type="" ng-model="vm.search"> <button ng-click="vm.show = !vm.show">toggle</button>
+  <div class="box fx-fade-normal" ng-show="vm.show"></div>
   <ul>
-    <li class="fx-zoom-right fx-stagger-150" ng-repeat="num in vm.nums | filter:vm.search">  num {{ ::num }}
+    <li class="fx-zoom-right fx-ease-expo fx-stagger-150" ng-repeat="num in vm.nums | filter:vm.search">
+      num {{ ::num }}
     </li>
   </ul>
 </section>
@@ -29,6 +41,7 @@
   angular.module('app', ['ngFx', 'ngAnimate'])
   .controller('App', function($timeout) {
     this.search = '';
+    this.show = true;
     $timeout(function() {
       this.nums = [1,2,3,4,5];
     }.bind(this), 0);
