@@ -23,12 +23,14 @@ const fxMakeAnimation = ($animateCss, $$fx) => {
    * @param  {...[Object]} rest  rest of the objects for the other event type aniamtions
    * @return {[Object]}          the animation object for ngAnimate to consume
    */
-  const create = (enter, leave, move, addClass, removeClass, setClass) => {
-    move = move || enter;
+  const create = (enter, leave, setClass) => {
+    let move =  merge({}, enter);
+    let addClass = merge({}, leave);
+    let removeClass = merge({}, enter);
 
     let ngAnimateConsumable = $$fx.createAnimationsForSimilarEvents({enter, leave, move});
 
-    let classConsumables = $$fx.createClassAnimations({addClass, removeClass, setClass});
+    let classConsumables = $$fx.createClassAnimations({addClass, removeClass});
 
     ngAnimateConsumable = merge(ngAnimateConsumable, classConsumables);
 

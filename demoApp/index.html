@@ -15,24 +15,112 @@
       text-align: center;
     }
 
+    .container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      padding: 5.477225575051661px;
+      border: solid black 1px;
+      border-radius: 50%;
+      margin: 1.7em auto 0;
+      animation: spinn 10s infinite linear;
+      --webkit-animation: spinn 10s infinite linear;
+    }
+
     .box {
+      display: block;
+      overflow: hidden;
+      position: absolute;
+      background-color: red;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      margin: -15px; /* 2em = 4em/2 */ /* half the width */
+    }
+
+    .square {
       width: 100px;
       height: 100px;
-      background-color: gray;
+      background-color: silver;
       border-radius: 100%;
+    }
+
+    @keyframes spinn {
+      from {
+        transform: rotateZ(0deg) translate3d(0,0,0)
+      }
+
+      to {
+        transform: rotateZ(360deg) translate3d(0,0,0)
+      }
+    }
+
+    @-webkit-keyframes spinn {
+      from {
+        transform: rotateZ(0deg) translate3d(0,0,0)
+      }
+
+      to {
+        transform: rotateZ(360deg) translate3d(0,0,0)
+      }
+    }
+
+    .deg0 {
+      -webkit-transform: translate(150px);
+      -moz-transform: translate(150px);
+      -ms-transform: translate(150px);
+      -o-transform: translate(150px);
+      transform: translate(150px);
+    }
+
+    .deg1 {
+      -webkit-transform: rotateZ(45deg) translate(150px) rotateZ(-45deg);
+      -moz-transform: rotateZ(45deg) translate(150px) rotateZ(-45deg);
+      -ms-transform: rotateZ(45deg) translate(150px) rotateZ(-45deg);
+      -o-transform: rotateZ(45deg) translate(150px) rotateZ(-45deg);
+      transform: rotateZ(45deg) translate(150px) rotateZ(-45deg);
+    }
+
+    .deg2 {
+      -webkit-transform: rotateZ(90deg) translate(150px) rotateZ(-90deg);
+      -moz-transform: rotateZ(90deg) translate(150px) rotateZ(-90deg);
+      -ms-transform: rotateZ(90deg) translate(150px) rotateZ(-90deg);
+      -o-transform: rotateZ(90deg) translate(150px) rotateZ(-90deg);
+      transform: rotateZ(90deg) translate(150px) rotateZ(-90deg);
+    }
+
+    .deg3 {
+      -webkit-transform: rotateZ(135deg) translate(150px) rotateZ(-135deg);
+      -moz-transform: rotateZ(135deg) translate(150px) rotateZ(-135deg);
+      -ms-transform: rotateZ(135deg) translate(150px) rotateZ(-135deg);
+      -o-transform: rotateZ(135deg) translate(150px) rotateZ(-135deg);
+      transform: rotateZ(135deg) translate(150px) rotateZ(-135deg);
+    }
+
+    .deg4 {
+      -webkit-transform: rotateZ(180deg) translate(150px) rotateZ(-180deg);
+      -moz-transform: rotateZ(180deg) translate(150px) rotateZ(-180deg);
+      -ms-transform: rotateZ(180deg) translate(150px) rotateZ(-180deg);
+      -o-transform: rotateZ(180deg) translate(150px) rotateZ(-180deg);
+      transform: rotateZ(180deg) translate(150px) rotateZ(-180deg);
     }
   </style>
 </head>
 <body ng-app="app">
-<section ng-controller="App as vm">
-  <input type="" ng-model="vm.search"> <button ng-click="vm.show = !vm.show">toggle</button>
-  <div class="box fx-fade-normal" ng-show="vm.show"></div>
-  <ul>
-    <li class="fx-zoom-right fx-ease-expo fx-stagger-150" ng-repeat="num in vm.nums | filter:vm.search">
-      num {{ ::num }}
-    </li>
-  </ul>
-</section>
+  <section ng-controller="App as vm">
+    <input type="" ng-model="vm.search"> <button ng-click="vm.show = !vm.show">toggle</button>
+    <div class="square fx-zoom-up" ng-show="vm.show"></div>
+    <ul>
+      <li class="fx-zoom-down fx-speed-745 fx-stagger-133 fx-ease-circ" ng-repeat="num in vm.nums | filter:vm.search">
+        num {{ ::num }}
+      </li>
+    </ul>
+
+    <!-- <div class="container">
+      <div class="box deg{{$index}}" ng-repeat="num in [1,2,3,4,5,6]" ></div>
+    </div> -->
+  </section>
 <script src="../node_modules/angular/angular.js"></script>
 <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
 <script src="../node_modules/lodash/index.js"></script>

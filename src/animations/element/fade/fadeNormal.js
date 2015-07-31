@@ -10,17 +10,9 @@ const creator = ($fxMakeAnimation)=> {
     keyframeStyle: '.1s fadeNormalOut'
   };
 
-  let addClassAnimation = merge({}, leaveAnimation);
-
-  let removeClassAnimation = merge({}, enterAnimation);
-
   return $fxMakeAnimation.create(
     enterAnimation,
-    leaveAnimation,
-    null,
-    addClassAnimation,
-    removeClassAnimation,
-    true
+    leaveAnimation
   );
 };
 

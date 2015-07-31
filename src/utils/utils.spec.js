@@ -25,7 +25,10 @@ describe('[ Utils ]', ()=> {
       'expo',
       'bounce',
       'quint',
-      'quart'
+      'quart',
+      'cubic',
+      'quad',
+      'sine'
     ].forEach(curve => {
       it(`should have ${curve} curve`, ()=> {
         testCurve(curve);

@@ -1,11 +1,13 @@
+import merge from 'lodash/object/merge';
+
 const creator = ($fxMakeAnimation)=> {
 
   let enterAnimation = {
-    keyframeStyle: '.1s bounceNormalIn'
+    keyframeStyle: '.1s fadeDownIn'
   };
 
   let leaveAnimation = {
-    keyframeStyle: '.1s bounceNormalOut'
+    keyframeStyle: '.1s fadeDownOut'
   };
 
   return $fxMakeAnimation.create(
@@ -16,7 +18,7 @@ const creator = ($fxMakeAnimation)=> {
 
 creator.$inject = ['$fxMakeAnimation'];
 
-const classname = '.fx-bounce-normal';
-const bounceNormal = {creator, classname}
+const classname = '.fx-fade-down';
+const fadeDown = {creator, classname}
 
-export {bounceNormal};
+export {fadeDown};

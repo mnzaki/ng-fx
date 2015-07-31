@@ -8,7 +8,10 @@ const creator = ($fxMakeAnimation)=> {
     keyframeStyle: '.1s zoomNormalOut'
   };
 
-  return $fxMakeAnimation.create(enterAnimation, leaveAnimation);
+  return $fxMakeAnimation.create(
+    enterAnimation,
+    leaveAnimation
+  );
 };
 
 creator.$inject = ['$fxMakeAnimation'];

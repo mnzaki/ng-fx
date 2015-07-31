@@ -1,11 +1,11 @@
 const creator = ($fxMakeAnimation)=> {
 
   let enterAnimation = {
-    keyframeStyle: '.1s bounceNormalIn'
+    keyframeStyle: '.1s zoomLeftIn'
   };
 
   let leaveAnimation = {
-    keyframeStyle: '.1s bounceNormalOut'
+    keyframeStyle: '.1s zoomLeftOut'
   };
 
   return $fxMakeAnimation.create(
@@ -16,7 +16,7 @@ const creator = ($fxMakeAnimation)=> {
 
 creator.$inject = ['$fxMakeAnimation'];
 
-const classname = '.fx-bounce-normal';
-const bounceNormal = {creator, classname}
+const classname = '.fx-zoom-left';
+const zoomLeft = {creator, classname}
 
-export {bounceNormal};
+export {zoomLeft};
