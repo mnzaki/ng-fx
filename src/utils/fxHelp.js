@@ -69,6 +69,12 @@ const fxHelp = ($animateCss)=> {
     }
   };
 
+  /**
+   * takes a class name and checks to see if it is trying
+   * to describe an ease type
+   * @param  {[type]} className css class name
+   * @return {[type]}           [description]
+   */
   const getEase = (className) => {
     let bezier = '';
 

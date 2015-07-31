@@ -20,8 +20,8 @@
     opacity 0
   }
 }
-//fade-down
 /***********************************/
+//fade-down
 
 @keyframes fadeDownIn {
   0% {
@@ -44,5 +44,191 @@
   100% {
     opacity 0
     transform translate3d(0, 100%, 0)
+  }
+}
+/***************************************/
+// fade-down-big
+
+@keyframes fadeDownBigIn {
+  0% {
+    opacity 0
+    transform translate3d(0, -2000px, 0)
+  }
+
+  100% {
+    opacity 1
+    transform none
+  }
+}
+
+@keyframes fadeDownBigOut {
+  0% {
+    opacity 1
+  }
+
+  100% {
+    opacity 0
+    transform translate3d(0, 2000px, 0)
+  }
+}
+/***********************************/
+//fade-down
+
+@keyframes fadeUpIn {
+  0% {
+    opacity 0
+    transform translate3d(0, 100%, 0)
+  }
+
+  100% {
+    opacity 1
+    transform none
+  }
+}
+
+
+@keyframes fadeUpOut {
+  0% {
+    opacity 1
+  }
+
+  100% {
+    opacity 0
+    transform translate3d(0, -100%, 0)
+  }
+}
+/***********************************/
+//fade-down
+
+@keyframes fadeUpBigIn {
+  0% {
+    opacity 0
+    transform translate3d(0, 2000px, 0)
+  }
+
+  100% {
+    opacity 1
+    transform none
+  }
+}
+
+
+@keyframes fadeUpBigOut {
+  0% {
+    opacity 1
+  }
+
+  100% {
+    opacity 0
+    transform translate3d(0, -2000px, 0)
+  }
+}
+
+/***************************************/
+// fade-left
+
+@keyframes fadeLeftIn {
+  0% {
+    opacity 0
+    transform translate3d(-100%, 0, 0)
+  }
+
+  100% {
+    opacity 1
+    transform none
+  }
+}
+
+@keyframes fadeLeftOut {
+  0% {
+    opacity 1
+
+  }
+
+  100% {
+    opacity 0
+    transform translate3d(100%, 0, 0)
+  }
+}
+
+/***************************************/
+// fade-left
+
+@keyframes fadeLeftBigIn {
+  0% {
+    opacity 0
+    transform translate3d(-2000px, 0, 0)
+  }
+
+  100% {
+    opacity 1
+    transform none
+  }
+}
+
+@keyframes fadeLeftBigOut {
+  0% {
+    opacity 1
+
+  }
+
+  100% {
+    opacity 0
+    transform translate3d(2000px, 0, 0)
+  }
+}
+
+
+/***************************************/
+// fade-right
+
+@keyframes fadeRightIn {
+  0% {
+    opacity 0
+    transform translate3d(100%, 0, 0)
+  }
+
+  100% {
+    opacity 1
+    transform none
+  }
+}
+
+@keyframes fadeRightOut {
+  0% {
+    opacity 1
+
+  }
+
+  100% {
+    opacity 0
+    transform translate3d(-100%, 0, 0)
+  }
+}
+
+/***************************************/
+// fade-right-big
+
+@keyframes fadeRightBigIn {
+  0% {
+    opacity 0
+    transform translate3d(2000px, 0, 0)
+  }
+
+  100% {
+    opacity 1
+    transform none
+  }
+}
+
+@keyframes fadeRightBigOut {
+  0% {
+    opacity 1
+
+  }
+
+  100% {
+    opacity 0
+    transform translate3d(-2000px, 0, 0)
   }
 }
