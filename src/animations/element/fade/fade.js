@@ -9,7 +9,6 @@ import {fadeRightBig} from './fadeRightBig';
 import {fadeUp} from './fadeUp';
 import {fadeUpBig} from './fadeUpBig';
 
-
 export const fades = [
   fadeNormal,
   fadeDown,

@@ -8,3 +8,6 @@ karma.conf.js
 bower_components/
 coverage/
 .travis.yml
+webpack.config.js
+webpack.configmin.js
+spec.bundle.js

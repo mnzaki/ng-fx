@@ -53,7 +53,7 @@
     <input type="" ng-model="vm.search"> <button ng-click="vm.show = !vm.show">toggle</button>
     <div class="square fx-fade-down fx-speed-1201 fx-ease-quint-in-out " ng-show="vm.show"></div>
     <ul>
-      <li class="fx-fade-up fx-speed-745 fx-stagger-133 fx-ease-back" ng-repeat="num in vm.nums | filter:vm.search">
+      <li class="fx-bounce-down fx-speed-745 fx-stagger-133" ng-repeat="num in vm.nums | filter:vm.search">
         num {{ ::num }}
       </li>
     </ul>
