@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "angular-mocks": "^1.4.3",
+    "angular-ui-router": "^0.2.15",
     "babel-loader": "^5.3.2",
     "chai": "^3.2.0",
     "conventional-changelog": "0.0.16",

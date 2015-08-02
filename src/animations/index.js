@@ -1,7 +1,9 @@
+import {view} from './view';
 import {element} from './element';
 
 const animations = angular.module('ngFx.animations', [
-  element
+  element,
+  view
 ])
 
 .name;
