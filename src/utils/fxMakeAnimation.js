@@ -38,7 +38,7 @@ const fxMakeAnimation = ($animateCss, $$fx) => {
   };
 
   return {create};
-}
+};
 
 fxMakeAnimation.$inject = ['$animateCss', '$$fx'];
 

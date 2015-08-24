@@ -10,5 +10,5 @@ export const zooms = [
   zoomDown,
   zoomUp,
   zoomRight,
-  zoomLeft
+  zoomLeft,
 ];

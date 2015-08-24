@@ -36,7 +36,9 @@ const fxHelp = ($animateCss)=> {
    */
   const getDuration = (className) => {
     // default to half a second duration
+
     let duration = 500;
+
     // allow usres to use fx-speed|dur|duration-{num in ms}
     if (makeFxOptionRegexp('(speed|dur|duration)').test(className)) {
       try {
@@ -44,6 +46,7 @@ const fxHelp = ($animateCss)=> {
       } catch (e) {
       }
     }
+
     // convert ms to seconds for $animateCss to consume
     return duration / 1000;
   };
@@ -84,6 +87,10 @@ const fxHelp = ($animateCss)=> {
       const easeOptions = className.slice(8);
       const [ease, dir, dir2=''] = easeOptions.split('-');
       const curve = curves[ease.trim()];
+
+      if (!curve) {
+        return;
+      }
 
       if (!dir) {
         return curve.inout;
@@ -148,7 +155,6 @@ const fxHelp = ($animateCss)=> {
     }, {});
   };
 
-
   const createClassAnimations = (animationConfigs) => {
     return classEvents.reduce((result, event) => {
       const animationConfig = animationConfigs[event];
@@ -162,6 +168,7 @@ const fxHelp = ($animateCss)=> {
           }
         };
       }
+
       return result;
     }, {});
   };
@@ -174,7 +181,7 @@ const fxHelp = ($animateCss)=> {
     parseClassList,
     buildAnimation,
     createAnimationsForSimilarEvents,
-    createClassAnimations
+    createClassAnimations,
   };
 };
 

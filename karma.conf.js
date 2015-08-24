@@ -34,6 +34,9 @@ module.exports = function(config) {
           { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'babel?stage=1' },
           { test: /\.styl$/, loader: 'style!css!stylus' },
           { test: /\.css$/, loader: 'style!css' }
+        ],
+        postLoaders: [
+          { test: /\.js$/, exclude: /node_modules/, loader: 'istanbul-instrumenter' }
         ]
       }
     },
@@ -41,12 +44,16 @@ module.exports = function(config) {
     webpackServer: {
       noInfo: true //please don't spam the console when running in karma!
     },
-
+    
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha'],
+    reporters: ['mocha', 'coverage'],
 
 
     // web server port
