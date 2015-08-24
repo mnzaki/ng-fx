@@ -17,6 +17,6 @@ const creator = ($fxMakeAnimation)=> {
 creator.$inject = ['$fxMakeAnimation'];
 
 const classname = '.fx-zoom-down';
-const zoomDown = {creator, classname}
+const zoomDown = {creator, classname};
 
 export {zoomDown};

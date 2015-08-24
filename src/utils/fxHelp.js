@@ -136,12 +136,26 @@ const fxHelp = ($animateCss)=> {
     return results;
   };
 
+  /**
+   * helper function to build ngAnimate animation object using $animateCss
+   * @param  {[DOM NODE]} element   the element that will be animated
+   * @param  {[Object]}   animation the object defining the animation, using
+   *                                $animateCss config
+   * @return {[Promise]}           whatver $animateCss returns
+   */
   const buildAnimation = (element, animation) => {
     const opts = parseClassList(element);
     let animateInstructions = merge(animation, opts);
     return $animateCss(element, animateInstructions);
   };
-
+  
+  /**
+   * helper function to buid the `enter`, `leave`, and `move` animation
+   * functions for ngAnimate to consume
+   * @param  {Object} animationConfigs all the animation objects for the
+   *                                     `enter`, `leave`, and `move` events
+   * @return {Object}                  animation object to feed ngAnimate
+   */
   const createAnimationsForSimilarEvents = (animationConfigs) => {
     return similarEvents.reduce((result, event) => {
       const animationConfig = animationConfigs[event];
