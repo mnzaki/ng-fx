@@ -18,6 +18,6 @@ const elementModule = angular.module('ngFx.animations.element', []);
   });
 });
 
-const elementModuleName = elementModule.name;
+const element = elementModule.name;
 
-export {elementModuleName};
+export {element};

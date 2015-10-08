@@ -5,7 +5,6 @@ const animations = angular.module('ngFx.animations', [
   element,
   view
 ])
-
 .name;
 
 export {animations};
