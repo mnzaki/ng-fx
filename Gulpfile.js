@@ -81,7 +81,7 @@ gulp.task('build', function(done) {
   sync(['js', 'js-min'], done);
 });
 
-gulp.task('watch', function(){
+gulp.task('watch', function() {
   gulp.watch(paths.source, ['js']);
 });
 

@@ -1,21 +1,23 @@
 import {bounces} from './bounce/bounce';
 import {fades} from './fade/fade';
 import {zooms} from './zoom/zoom';
+import {lightSpeeds} from './lightSpeed/lightSpeed';
 
 const elementModule = angular.module('ngFx.animations.element', []);
 
-bounces.forEach(bounce => {
-  elementModule.animation(bounce.classname, bounce.creator);
+/**
+ * register all animations to angular using
+ * the `module.animation()` method
+ */
+[bounces, fades, zooms, lightSpeeds].forEach(animation => {
+  animation.forEach(variant => {
+    elementModule.animation(
+      variant.classname,
+      variant.creator
+    );
+  });
 });
 
-fades.forEach(fade => {
-  elementModule.animation(fade.classname, fade.creator);
-});
+const elementModuleName = elementModule.name;
 
-zooms.forEach(zoom => {
-  elementModule.animation(zoom.classname, zoom.creator);
-});
-
-const element = elementModule.name;
-
-export {element};
+export {elementModuleName};
