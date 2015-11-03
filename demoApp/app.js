@@ -77,7 +77,7 @@ angular.module('app', [
     templateUrl: `nav-list.html`
   };
 })
-.directive('codeExample', function() {
+.directive('codeExample', function(Demo) {
   return {
     scope: {},
     restrict: 'E',
@@ -90,6 +90,10 @@ angular.module('app', [
       code.ready(function() {
         Prism.highlightElement(code[0]);
       });
+      
+      scope.$watch(function(){return Demo;}, function(fresh) {
+        console.log(fresh);
+      })
     }
   }
 });
