@@ -28,7 +28,6 @@ node_modules
 bower_components
 src/assets
 src/bootstrap-custom
-src/app.js
 src/index.html
 src/style.css
 coverage

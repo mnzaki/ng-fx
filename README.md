@@ -1,170 +1,111 @@
-ng-Fx    [![Build Status](https://travis-ci.org/Hendrixer/ngFx.svg?branch=master)](https://travis-ci.org/Hendrixer/ng-Fx)   <img src="http://img.shields.io/badge/Built%20with-Gulp-red.svg" />
-===============
+<p align="center">
+  <a href="https://angularclass.com" target="_blank">
+    <img src="https://cloud.githubusercontent.com/assets/1016365/10356922/151a0a3c-6d31-11e5-8bf0-64360320d908.png" alt="ngFx" width="500" height="320"/>
+  </a>
+</p>
+# ngFx
+> animation library for angular
 
-### A simple way to add beautiful animations to your angular apps. Animations based off [animate.css](http://daneden.github.io/animate.css/). All animations are built in JavaScript.
 
-#### ng-Fx does not rely on CSS for animations. This allows it to be dynamic and able to adjust on the fly. The only predefined CSS classes are the animations and the easings. ngAnimate allows ngFx to create JavaScript based animations, so the classes do not correspond to a style in a CSS file.
+# Overview
+ngFx is an angular implementation of the popular [Animate.css](https://daneden.github.io/animate.css/) using the new `$animateCss` service in angular. This is the core and foundation, but there is room for so much more. You can use these css animations dynamically with zero setup. So you get the best of both worlds (css vs js animations). Take a look and enjoy.
 
-## Interactive Demo
-Preview the goodness at [hendrixer.github.io](https://hendrixer.github.io/).
-
-## Dependencies
-+ Angular.js (1.3+)
-+ GSAP/tweenmax.js
-+ ngAnimate (1.3+)
-
-## Downloading
-1. The best way to install ng-Fx is to use bower or npm
-    + ```bower install ngFx --save```
-    + ```npm i ngFx --save```
-2. Or, from this repo
-  + you'll need the main file in ```dist/ngFx.js```
+# Getting started
 
 ## Installing
-2. Include  ```ngFx.js``` into your html. 
-  + __Note:__ ```ngFx``` depends on ```ngAnimate``` and ```GSAP - TweenMax.js```
-3. Include the dependencies into your angular app,  ```ngFx```
-```javascript
-angular.module('myApp', ['ngFx', 'ngAnimate'])
-```
-##Using
-###Animations
-There are two types of animations:
-* Dynamic
-  - Animations that will result in an element entering/leaving the page (fade-out)
-* Static
-  - Animations that will not result in an element entering/leaving the page (shake)
-+ All dynamic animations tie into ngAnimate hooks. So you can apply them to...
-  + ng-hide / ng-show
-  + ng-include
-  + ng-if
-  + ng-view
-  + ui-view (if you're using ui.router)
-  + ng-switch
-  + ng-class
-  + ng-repeat
-+ Static animations can be applied manually with `$animate`.
-+ Adding the animations are as simple as adding a css class. ngFx uses the ```'fx'``` name space. Here's an example using a fade animation. The list items will enter / leave / and move with the 'fade-down' animation. __Note that ngAnimate will not trigger animations upon page load, to prevent all animations firing at once.Can hack this with a delay__.
+**ngFx requires `ngAnimate >=1.4`.** Previous versions of ngFx `<2.0` support earlier versions of `ngAnimate`, but dev support is lacking there. If you would love to help maintain, let me know!
 
-```javascript
-angular.module('foodApp', ['ngFx'])
-.controller('FoodController', function($scope, $timeout){
-  $scope.foods = [];
-  $timeout(function(){
-    $scope.foods = ['apple', 'muffin', 'chips'];
-  },0);
-});
-```
+There are two ways to install ngFx
+* using `bower`
+  * `bower install --save ng-fx`
+  * ``` html
+    <script src="bower_components/ng-fx/ng-fx.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    ```
+    ``` javascript
+    angular.module('app', ['ngFx', 'ngAnimate'])
+    ```
+* using `npm`
+  * `npm i --save ng-fx`
+  * ``` javascript
+    angular.module('app', [
+      require('ng-fx'),
+      require('angular-animate')
+    ])
+    ```
+
+## Using animations
+ngFx makes it so simple to use animations by tying into `ngAnimate` and [all the hooks]('https://code.angularjs.org/1.4.7/docs/guide/animations') it provides.
+
+### First animation
+After installing ngFx, using the animations are as easy as declaring css classes on elements.
 ```html
-<ul ng-controller="FoodController">
-  <li class='fx-fade-down' ng-repeat="food in foods">
-    {{ food }}
-  </li>
-</ul>
+<div ng-if="show" class="fx-fade-normal"></div>
+```
+Few things happening here. First, we must tie into animations from `ngAnimate`, in this case we're attaching an animation to the `enter` and `leave` hooks of `ng-if`. Next we declare the animation type by using the `fx` namespace followed by the animation name (`fx-fade-normal`). Place this in the class of the element. That's it. ngFx has an api to adjust the animations' speed, ease, and to stagger or not. Here's a list of all the [animations ngFx supports](https://github.com/Hendrixer/ngFx/blob/master/animationList.txt)
+
+### Adjusting speed
+ngFx looks like innocent css animations. They are ran like css animations (performance!!!) but they are indeed dynamic like js animations as well. Here's how we can adjust the speed of an animation.
+```html
+<div ng-show="error" class="fx-fade-up fx-speed-342"></div>
 ```
 
-+ Here's and example of manually trigger a static animation with `$animate`
+Using the `fx-[speed | dur | duration]-{any num in ms}` we can control the speed of said animation. So the following are all equivalent.
+* `fx-speed-230`
+* `fx-dur-230`
+* `fx-duration-230`
 
-```javascript
-angular.module('foodApp', ['ngFx'])
-.directive('pulseOnClick', function($animate){
-  return function(scope, elem){
-    elem.on('click', function(){
-      $animate.animate(elem, 'someclass')
-        .then(function(){
-          console.log('Done pulsing');
-        })
-      scope.$apply();
-    });
-  };
-});
-```
+### Adjusting the ease
 ```html
-<button class="fx-pulse fx-speed-1232" pulse-on-click>pulsing</button>
-```
-
-###Easings
-+ You can also add a different easing to any animation you want. It is as easy as adding an animation, just use a CSS class. Building on the previous example, you can just add ```fx-easing-your easing here```
-```html
-<ul ng-controller="FoodController">
-  <li class='fx-fade-down fx-easing-bounce' ng-repeat="food in foods">
-    {{ food }}
-  </li>
-</ul>
-```
-###Speed
-+ Adjusting the speed in the ng-fx is a snap too! The speeds at which your animations enter and leave your app are totally up to you. You just have to add a CSS class. ```fx-speed-your speed in milliseconds```. All animations have their own default speed if not provided by you. There are __no predefined classes for speeds__. Any speed (in ms) can be accepted.
-```html
-<ul ng-controller="FoodController">
-  <li class='fx-fade-down fx-easing-bounce fx-speed-800' ng-repeat="food in foods">
-    {{ food }}
-  </li>
-</ul>
-```
-###Events
-+ Animations will emit events to your app when they have finished. You can listen to these events in your controllers and directives to perform other things. When an animation is complete the event will look like so ' [animation name] :[enter or leave]', for example 'fade-down:enter' or 'zoom-up:leave'. You just have to add the CSS class ```fx-trigger``` to an animated element.
-```javascript
-angular.module('myApp', ['ngFx'])
-.controller('FoodController', function($scope, $timeout){
-  $scope.foods = [];
-  $timeout(function(){
-    $scope.foods = ['apple', 'muffin', 'chips'];
-  }, 100);
-})
-.directive('goAway', function($animate){
-  function link(scope, element){
-    scope.$on('fade-down:enter', function(){
-      $animate.leave(element);
-    });
-  }
-  return {
-    restrict: 'A',
-    link: link
-  };
-});
-```
-```html
-<div ng-controller="FoodController">
-  <h1 go-away class='fx-zoom-up'> This will zoom out when the fade animation is done</h1>
-  <ul>
-    <li class='fx-fade-down fx-easing-bounce fx-speed-800 fx-trigger' ng-repeat="food in foods">
-      {{ food }}
-    </li>
-  </ul>
+<div
+  ng-repeat="card in cards"
+  class="fx-fade-up fx-ease-sine">
 </div>
 ```
-###List of animations and ease types
-+ [Animations](https://github.com/Hendrixer/ng-Fx/blob/master/animationList.txt)
-+ [Ease Types](https://github.com/Hendrixer/ng-Fx/blob/master/easingList.txt)
+Using `fx-ease-{curve name}` will apply the given curve to the animation. Here is a list of all the [curves ngFx supports](https://github.com/Hendrixer/ngFx/blob/master/easingList.txt)
 
-##What's next
-+ More animations
-+ More flexibility
-+ Easy api to create your own animations
-+ Events triggered are unique to element and not just animation type
+### Staggering
+With `ngAnimate` 1.4, we now have support for staggering outside of css animations.
 
-##Contributing
-1. Fork it
-2. Clone your fork
-3. Create new branch
-4. Make changes
-5. Make test and check test
-6. Build it, run ```gulp``` and the files will be concatenated, and minified
-7. Push to new branch on your forked repo
-8. Pull request from your branch to ngFx master
+```html
+<div
+  ng-repeat="card in cards"
+  class="fx-rotate-up-left fx-stagger-245">
+</div>
+```
 
-###Format for pull request
-+ Pretty standard
-  + in your commit message; ```(type) message [issue # closed]```
-    + ```(bug) killed that bug, closes #45```
-  + if you're submitting new animations:
-    + ```(new fx) added 3d rotation animation ```
-+ Submit issues as you see them. There are probably better, faster, easier ways to achieve what ngFx is designed to do so.
+Using `fx-stagger-{delay in ms}` on an animation in `ng-repeat` will stagger those elements with the given delay in between.
 
-###Testing
-+ ngFx uses Karma + Jasmine + Travis for unit and ci
-+ Make sure you didn't break anything
-  + run ```karma start``` to test in Chrome with karma
-+ Features will not be accepted without specs created for them
-+ Run ```gulp``` and all the source files will be watched and concatenated
-+ Open the ```index.html``` and use the test app as a playground
+### Contributing
+All help is welcome! ngFx is an ongoing and live project. If you'd like to add more animations or support new feature, open an issue and even submit it yourself. If you're new to open source, I'll help you get your first commit in, ping me. To get started make sure you have...
+
+* `node >=0.12`
+* `gulp`
+* `webpack`
+
+If you're good there, then...
+
+* `fork`
+* `clone` your fork
+* cut a new branch
+* `npm install`
+* `npm start`
+
+This will compile and build the project. ngFx uses `ES2015`, `webpack`, and `gulp`, nothing else too fancy here.
+
+There is a demo app to try out the animations.
+
+Most the commands you'll need are baked into `npm`
+* `npm run build`
+  * builds and outputs regular and min src code
+* `npm test`
+  * run test
+* `npm start`
+  * run build and watch for changes to rebuild, launches the demo app and refreshes that on change.
+
+Some helpful commands in gulp
+
+* `gulp animation --name animation-name`
+  * call this command with a new animation name and it will create all the boilerplate in the `src/animation/element/` that you need to get started with a new animation.
+  
+We use ,*cough*, try to use the [angular contributing guidelines]('https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit')
