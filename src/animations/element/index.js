@@ -16,6 +16,7 @@ const elementModule = angular.module('ngFx.animations.element', []);
   zooms,
   lightSpeeds,
   rotates
+
 ].forEach(animation => {
   animation.forEach(variant => {
     elementModule.animation(
