@@ -1,0 +1,63 @@
+<md-content layout="column">
+  <div class="controls" layout-column>
+    <div class="animation" layout="column" layout-padding>
+      <div style="width:100%;" class="nav-title">
+        <span class="md-body-1">Animation</span>
+      </div>
+      <md-input-container>
+       <md-select ng-model="vm.demo_config.animation">
+         <md-option ng-repeat="animation in vm.demo_config.animations" value="{{::animation}}">
+           {{::animation}}
+         </md-option>
+       </md-select>
+     </md-input-container>
+    </div>
+
+    <div class="ease" layout="column" layout-padding>
+      <div style="width:100%;" class="nav-title">
+        <span class="md-body-1">Ease Curve</span>
+      </div>
+      <md-input-container>
+       <md-select ng-model="vm.demo_config.ease">
+         <md-option ng-repeat="ease in ::vm.demo_config.curves" value="{{::ease}}">
+           {{::ease}}
+         </md-option>
+       </md-select>
+     </md-input-container>
+    </div>
+    
+    <div class="stagger" layout-padding layout="column">
+      <div style="width:100%;" class="nav-title">
+        <span class="md-body-1">Stagger speed {{ vm.demo_config.stagger / 1000}}s</span>
+      </div>
+      <md-slider flex="65" min="0"
+      max="3000"
+      ng-model="vm.demo_config.stagger"
+      aria-label="stagger">
+      </md-slider>
+    </div>
+    
+    <div class="speed" layout-padding layout="column">
+      <div style="width:100%;" class="nav-title">
+        <span class="md-body-1">Animation speed {{ vm.demo_config.speed / 1000}}s</span>
+      </div>
+      <md-slider flex="65" min="100"
+      max="3000"
+      ng-model="vm.demo_config.speed"
+      aria-label="speed">
+      </md-slider>
+    </div>
+  </div>
+  <md-divider></md-divider>
+  <md-list>
+    <md-list-item
+    md-ink-ripple class="md-clickable"
+    ui-sref="{{event.state}}"
+    ng-repeat="event in ::vm.events"
+    ui-sref-active="active">
+      <p class="link">
+        {{ ::event.name}}
+      </p>
+    </md-list-item>
+  </md-list>
+</md-content>

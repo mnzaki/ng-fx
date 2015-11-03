@@ -1,102 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>ngFx</title>
-  <style type="text/css">
-    body * {
-      box-sizing: border-box;
-    }
-
-    li {
-      background-color: blue;
-      color: white;
-      width: 80px;
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .container {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      padding: 5.477225575051661px;
-      border: solid black 1px;
-      border-radius: 50%;
-      margin: 1.7em auto 0;
-      animation: spinn 10s infinite linear;
-      --webkit-animation: spinn 10s infinite linear;
-    }
-
-    .box {
-      display: block;
-      overflow: hidden;
-      position: absolute;
-      background-color: red;
-      top: 50%;
-      left: 50%;
-      width: 30px;
-      height: 30px;
-      margin: -15px; /* 2em = 4em/2 */ /* half the width */
-    }
-
-    .square {
-      width: 100px;
-      height: 100px;
-      background-color: silver;
-      border-radius: 100%;
-    }
-
-  </style>
+  <link rel="stylesheet" href="angular-material/angular-material.min.css" media="screen">
+  <!-- <link rel="stylesheet" href="github.css"> -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="prism.css">
+  <script src="prism.js"></script>
+  <!-- <script src="highlight.pack.js"></script> -->
 </head>
 <body ng-app="app">
-
-  <section class="fx-view-container" ng-controller="App as vm">
-    <ul>
-      <li><a ui-sref="home">home</a></li>
-      <li><a ui-sref="other">other</a></li>
-    </ul>
-    <div ui-view class="fx-zoom-normal fx-dur-900 fx-view"></div>
-  </section>
-<script src="angular/angular.js"></script>
-<script src="angular-animate/angular-animate.min.js"></script>
-<script src="angular-ui-router/build/angular-ui-router.js"></script>
-<script src="lodash/index.js"></script>
-<script src="ngFx.js"></script>
-<script>
-  angular.module('app', ['ngFx', 'ngAnimate', 'ui.router'])
-  .controller('App', function($timeout) {
-    this.search = '';
-    this.show = true;
-    $timeout(function() {
-      this.nums = [1,2,3,4,5];
-    }.bind(this), 0);
-  })
-  .config(function($stateProvider, $urlRouterProvider){
-    $urlRouterProvider.otherwise('/');
-    $stateProvider
-      .state('home', {
-        url: '/',
-        templateUrl: 'home.html'
-      })
-      .state('other', {
-        url: '/other',
-        templateUrl: 'other.html'
-      });
-  });
-</script>
-
-<script type="text/ng-template" id="home.html">
-  <input type="" ng-model="vm.search"> <button ng-click="vm.show = !vm.show">toggle</button>
-    <div class="square fx-fade-right fx-speed-1201 fx-ease-quint-in-out " ng-show="vm.show"></div>
-    <ul>
-      <li class="fx-rotate-up-right fx-speed-1201 fx-stagger-200" ng-repeat="num in vm.nums | filter:vm.search">
-        num {{ ::num }}
-      </li>
-    </ul>
-</script>
-
-<script type="text/ng-template" id="other.html">
-  <h1>other</h1>
-</script>
+  
+  <main layout="row" layout-align="space-between start">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
+    md-is-locked-open="true">
+      <md-toolbar>
+        <h1 class="md-toolbar-tools">ngFx</h1>
+      </md-toolbar>
+      <nav-list></nav-list>
+    </md-sidenav>
+    <md-content ui-view class="main-content"></md-content>
+  </main>
+  
+  <script src="angular/angular.min.js"></script>
+  <script src="angular-animate/angular-animate.min.js"></script>
+  <script src="angular-aria/angular-aria.min.js"></script>
+  <script src="angular-material/angular-material.min.js"></script>
+  <script src="angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="ngFx.js"></script>
+  <script src="app.js"></script>
+  <script src="ng-show-hide/ng-show-hide.js"></script>
 </body>
 </html>
