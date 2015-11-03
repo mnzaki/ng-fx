@@ -3,7 +3,11 @@ angular.module('app', [
   'ngAnimate',
   'ngFx',
   'ui.router',
-  'app.ngShowHide'
+  'app.ngShowHide',
+  'app.ngIf',
+  'app.ngClass',
+  'app.ngRepeat'
+  
 ])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
@@ -63,12 +67,11 @@ angular.module('app', [
     controller: function(Demo) {
       this.events = [
         {name: 'ng-show / ng-hide', state: 'ngShowHide'},
-        {name: 'ng-if', state: 'ngIf'}
-        // 'ng-if',
-        // 'ng-class',
-        // 'ng-repeat',
-        // 'ng-switch',
-        // 'ng-messages'
+        {name: 'ng-if', state: 'ngIf'},
+        {name: 'ng-class', state: 'ngClass'},
+        {name: 'ng-repeat', state: 'ngRepeat'},
+        {name: 'ng-switch', state: 'ngSwitch'},
+        {name: 'ng-messages', state: 'ngMessages'}
       ];
       
       this.demo_config = Demo;
@@ -77,23 +80,19 @@ angular.module('app', [
     templateUrl: `nav-list.html`
   };
 })
-.directive('codeExample', function(Demo) {
+.directive('hljs', function(Demo, $interpolate) {
   return {
-    scope: {},
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<md-card class="example"><pre class="language-{{lang}}"><code ng-transclude></code></pre></md-card>',
-    link: function(scope, element, attr) {
-      scope.lang = attr.lang;
-      var code = element.find('code');
-      code.ready(function() {
-        Prism.highlightElement(code[0]);
-      });
-      
-      scope.$watch(function(){return Demo;}, function(fresh) {
-        console.log(fresh);
-      })
+    restrict: 'A',
+    scope: true,
+    compile: function(tElem, tAttr) {
+      var interpolateFn = $interpolate(tElem.html(), true);
+      tElem.html('');
+      return function(scope, elem, attrs){
+        
+        scope.$watch(interpolateFn, function (value) {
+          elem.html(hljs.highlight(attrs.lang, value).value);
+        });
+      }
     }
   }
 });

@@ -1,5 +1,7 @@
 md-sidenav {
   min-height: 100vh;
+  max-height: 100vh;
+  position: fixed;
 }
 
 .main-content {
@@ -7,7 +9,6 @@ md-sidenav {
   width: 100%;
   height: 100vh;
   max-height: 100vh;
-  overflow-y: auto;
 }
 
 
@@ -33,7 +34,21 @@ md-list-item .link {
 md-list-item.active .link {
   color: white;
 }
-
-.example {
+.page {
+  padding-left: 20px;
+}
+.code-example {
   height: 100%;
+  padding: 15px;
+  font-size: 1.2rem;
+  overflow-x: auto;
+}
+
+.scroll-box {
+  overflow-y: auto;
+}
+.box {
+  text-align: center;
+  padding: 15px;
+  height: 60px;
 }

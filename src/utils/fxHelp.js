@@ -66,7 +66,6 @@ const fxHelp = ($animateCss)=> {
       } catch (e) {
         return;
       }
-
       // convert ms to seconds for $animateCss to consume
       return stagger / 1000;
     }
@@ -75,8 +74,8 @@ const fxHelp = ($animateCss)=> {
   /**
    * takes a class name and checks to see if it is trying
    * to describe an ease type
-   * @param  {[type]} className css class name
-   * @return {[type]}           [description]
+   * @param  {String} className css class name
+   * @return {Array}           bezier curve coordinates
    */
   const getEase = (className) => {
     let bezier = '';
@@ -101,13 +100,17 @@ const fxHelp = ($animateCss)=> {
     }
   };
 
-  /*
-   *
+  /**
+   * takes an element, parses the className, and returns
+   * an object of defined fx options
+   * @param  {DOM node} element
+   * @return {Object}           the fx options object for the element
    */
   const parseClassList = (element)=> {
     const list = toArray(element[0].classList);
     const classList = list.join(' ');
-
+    
+    // will capture anything with `fx-thing-thing`
     const fxRegexp = /(fx\-\w+\-(.*?)(\s|$))/g;
 
     const options = classList.match(fxRegexp);
@@ -119,10 +122,9 @@ const fxHelp = ($animateCss)=> {
         _results.stagger = stagger ? stagger : undefined;
 
       } else if (/ease/.test(option)) {
-        let ease = getEase(option);
+        const ease = getEase(option);
 
         if (ease) {
-
           _results.easing = `cubic-bezier(${ease.join()})`;
         }
 
@@ -131,6 +133,7 @@ const fxHelp = ($animateCss)=> {
       }
 
       return _results;
+      // default to half a second animations
     }, {duration: .5});
 
     return results;
@@ -168,14 +171,21 @@ const fxHelp = ($animateCss)=> {
       return result;
     }, {});
   };
-
+  
+  /**
+   * helper function to build `addClass` and `removeClass` animation
+   * functions for ngAnimate to consume
+   * @param  {Object} animationConfigs all the animations for the
+   *                                   `addClass` and `removeClass` events
+   * @return {Object}                  animation object to feed ngAnimate
+   */
   const createClassAnimations = (animationConfigs) => {
     return classEvents.reduce((result, event) => {
       const animationConfig = animationConfigs[event];
 
       if (animationConfig) {
         result[event] = (element, className, done) => {
-          if (className === 'ng-hide' && /(addClass|removeClass)/.test(event)) {
+          if (/(addClass|removeClass)/.test(event)) {
             return buildAnimation(element, animationConfig);
           } else {
             done();

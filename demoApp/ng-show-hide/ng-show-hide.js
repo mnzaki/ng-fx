@@ -16,6 +16,6 @@ angular.module('app.ngShowHide', [])
       this.demo_config = Demo;
       this.show = true;
     },
-    templateUrl: '/ng-show-hide/template.html'
+    templateUrl: '/ng-show-hide/ng-show-hide-template.html'
   }
 })

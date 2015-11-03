@@ -1,5 +1,5 @@
 <md-content layout="column">
-  <div class="controls" layout-column>
+  <div class="controls" layout-column flex="50">
     <div class="animation" layout="column" layout-padding>
       <div style="width:100%;" class="nav-title">
         <span class="md-body-1">Animation</span>
@@ -28,10 +28,10 @@
     
     <div class="stagger" layout-padding layout="column">
       <div style="width:100%;" class="nav-title">
-        <span class="md-body-1">Stagger speed {{ vm.demo_config.stagger / 1000}}s</span>
+        <span class="md-body-1">Stagger delay {{ vm.demo_config.stagger / 1000}}s</span>
       </div>
       <md-slider flex="65" min="0"
-      max="3000"
+      max="400"
       ng-model="vm.demo_config.stagger"
       aria-label="stagger">
       </md-slider>
@@ -49,15 +49,16 @@
     </div>
   </div>
   <md-divider></md-divider>
-  <md-list>
+  <md-list flex="50">
     <md-list-item
     md-ink-ripple class="md-clickable"
-    ui-sref="{{event.state}}"
     ng-repeat="event in ::vm.events"
     ui-sref-active="active">
-      <p class="link">
-        {{ ::event.name}}
-      </p>
+      <div class="" ui-sref="{{event.state}}" style="width:100%;">
+        <p class="link">
+          {{ ::event.name}}
+        </p>
+      </div>
     </md-list-item>
   </md-list>
 </md-content>
