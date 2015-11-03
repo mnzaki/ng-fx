@@ -1,0 +1,33 @@
+<section class="page" layout="column">
+  <div class="page-title">
+    <h3 class="page-title md-display-1">
+      ng-repeat
+    </h3>
+  </div>
+  <div layout="row">
+    <div flex="20">
+      <md-input-container>
+        <label>filter</label>
+        <input ng-model="filter">
+      </md-input-container>
+    </div>
+    <md-card flex="60" class="code-example">
+      <pre>
+        <code lang="html" hljs>
+<input ng-model="search">
+<ul>
+  <li ng-repeat="num in nums"
+  class="{{vm.demo_config.animation}} fx-dur-{{vm.demo_config.speed}} fx-ease-{{vm.demo_config.ease}} fx-stagger-{{vm.demo_config.stagger}}">
+  </li>
+</ul>
+        </code>
+      </pre>
+    </md-card>
+  </div>
+  <div layout="row" layout-wrap >
+    <md-card class="flex-25 box {{vm.demo_config.animation}} fx-dur-{{vm.demo_config.speed}} fx-ease-{{vm.demo_config.ease}} fx-stagger-{{vm.demo_config.stagger}}"
+    ng-repeat="item in vm.items | filter:filter">
+    {{item.num}}
+    </md-card>
+  </div>
+</section>

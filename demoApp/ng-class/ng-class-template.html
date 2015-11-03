@@ -1,0 +1,23 @@
+<section class="page" layout="column">
+  <div class="page-title">
+    <h3 class="page-title md-display-1">
+      ng-class
+    </h3>
+  </div>
+  <div layout="row">
+    <md-card flex="60" class="code-example">
+      <pre>
+        <code lang="html" hljs>
+<div ng-class="'{{vm.demo_config.animation}}'" class="fx-dur-{{vm.demo_config.speed}} fx-ease-{{vm.demo_config.ease}}">
+  <img src="" alt="kermit" />
+</div>
+        </code>
+      </pre>
+    </md-card>
+    <md-card flex="30"
+    ng-class="vm.demo_config.animation"
+    class="fx-dur-{{vm.demo_config.speed}} fx-ease-{{vm.demo_config.ease}}">
+      <img src="imgs/kermit-3.jpg" alt="kermit" />
+    </md-card>
+  </div>
+</section>

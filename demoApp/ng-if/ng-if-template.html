@@ -1,0 +1,28 @@
+<section class="page" layout="column">
+  <div class="page-title">
+    <h3 class="page-title md-display-1">
+      ng-if
+    </h3>
+  </div>
+  <div layout="row">
+    <div flex="10">
+      <md-button class="md-raised md-accent" ng-click="vm.show = !vm.show">
+        toggle
+      </md-button>
+    </div>
+    <md-card flex="60" class="code-example">
+      <pre>
+        <code lang="html" hljs>
+<button ng-click="showPic = !showPic">toggle</button>
+<div ng-if="showPic" class="{{vm.demo_config.animation}} fx-dur-{{vm.demo_config.speed}} fx-ease-{{vm.demo_config.ease}}">
+  <img src="" alt="kermit" />
+</div>
+        </code>
+      </pre>
+    </md-card>
+    <md-card flex="30" ng-if="vm.show"
+    class="{{vm.demo_config.animation}} fx-dur-{{vm.demo_config.speed}} fx-ease-{{vm.demo_config.ease}}">
+      <img src="imgs/kermit-2.jpg" alt="kermit" />
+    </md-card>
+  </div>
+</section>
