@@ -6,6 +6,7 @@
   "dependencies": {
     "angular": "^1.4.3",
     "angular-animate": "^1.4.3",
+    "browser-sync": "^2.9.11",
     "lodash": "^3.10.0",
     "webpack": "^1.12.2"
   },
@@ -45,7 +46,7 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --browsers=PhantomJS",
     "build": "gulp build",
-    "start": "gulp"
+    "start": "gulp dev"
   },
   "repository": {
     "type": "git",

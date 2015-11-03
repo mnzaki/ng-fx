@@ -1,11 +1,8 @@
-quad
-cubic
-quart
-quint
-strong
 back
-bounce
-circ
-elastic
 expo
+circ
+quint
+quart
+cubic
+quad
 sine

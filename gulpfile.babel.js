@@ -10,6 +10,7 @@ import yargs     from 'yargs';
 import template  from 'gulp-template';
 import rename    from 'gulp-rename';
 import camelcase from 'camelcase';
+import browser, {reload}  from 'browser-sync';
 
 const argv = yargs.argv;
 
@@ -99,12 +100,29 @@ gulp.task('animation', () => {
     .pipe(gulp.dest(destPath));
 });
 
+
+gulp.task('serve-demo', ()=> {
+  browser({
+    open: false,
+    port: process.env.PORT || 9000,
+    server: {
+      baseDir: ['./demoApp', 'node_modules', 'dist']
+    }
+  });
+  const files = [paths.output + '/ngFx.js', 'demoApp/**/*.{js,html,css}'];
+  gulp.watch(files).on('change', reload);
+});
+
 gulp.task('build', done => {
   sync(['js', 'js-min'], done);
 });
 
 gulp.task('watch', () => {
   gulp.watch(paths.source, ['js']);
+});
+
+gulp.task('dev', done => {
+  sync('js', 'serve-demo', 'watch', done);
 });
 
 gulp.task('default', done => {
