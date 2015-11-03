@@ -43,7 +43,7 @@
     "yargs": "^3.6.0"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=PhantomJS",
+    "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --browsers=PhantomJS",
     "build": "gulp build",
     "start": "gulp"
   },
