@@ -1,21 +1,21 @@
 <p align="center">
   <a href="https://angularclass.com" target="_blank">
-    <img src="https://cloud.githubusercontent.com/assets/1016365/10356922/151a0a3c-6d31-11e5-8bf0-64360320d908.png" alt="ngFx" width="500" height="320"/>
+    <img src="https://cloud.githubusercontent.com/assets/1016365/10356922/151a0a3c-6d31-11e5-8bf0-64360320d908.png" alt="ng-fx" width="500" height="320"/>
   </a>
 </p>
-# ngFx
+# ng-fx
 > animation library for angular
 
 
 # Overview [![Build Status](https://travis-ci.org/Hendrixer/ngFx.svg?branch=master)](https://travis-ci.org/Hendrixer/ngFx)
-ngFx is an angular implementation of the popular [Animate.css](https://daneden.github.io/animate.css/) using the new `$animateCss` service in angular. This is the core and foundation, but there is room for so much more. You can use these css animations dynamically with zero setup. So you get the best of both worlds (css vs js animations). Take a look and enjoy.
+ng-fx is an angular implementation of the popular [Animate.css](https://daneden.github.io/animate.css/) using the new `$animateCss` service in angular. This is the core and foundation, but there is room for so much more. You can use these css animations dynamically with zero setup. So you get the best of both worlds (css vs js animations). Take a look and enjoy.
 
 # Getting started
 
 ## Installing
-**ngFx requires `ngAnimate >=1.4`.** Previous versions of ngFx `<2.0` support earlier versions of `ngAnimate`, but dev support is lacking there. If you would love to help maintain, let me know!
+**ng-fx requires `ngAnimate >=1.4`.** Previous versions of ng-fx `<2.0` support earlier versions of `ngAnimate`, but dev support is lacking there. If you would love to help maintain, let me know!
 
-There are two ways to install ngFx
+There are two ways to install ng-fx
 using `bower`
   * `bower install --save ng-fx`
 ``` html
@@ -23,7 +23,7 @@ using `bower`
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
 ```
 ``` javascript
-  angular.module('app', ['ngFx', 'ngAnimate'])
+  angular.module('app', ['ng-fx', 'ngAnimate'])
 ```
 using `npm`
   * `npm i --save ng-fx`
@@ -35,17 +35,17 @@ using `npm`
 ```
 
 ## Using animations
-ngFx makes it so simple to use animations by tying into `ngAnimate` and [all the hooks]('https://code.angularjs.org/1.4.7/docs/guide/animations') it provides.
+ng-fx makes it so simple to use animations by tying into `ngAnimate` and [all the hooks]('https://code.angularjs.org/1.4.7/docs/guide/animations') it provides.
 
 ### First animation
-After installing ngFx, using the animations are as easy as declaring css classes on elements.
+After installing ng-fx, using the animations are as easy as declaring css classes on elements.
 ```html
 <div ng-if="show" class="fx-fade-normal"></div>
 ```
-Few things happening here. First, we must tie into animations from `ngAnimate`, in this case we're attaching an animation to the `enter` and `leave` hooks of `ng-if`. Next we declare the animation type by using the `fx` namespace followed by the animation name (`fx-fade-normal`). Place this in the class of the element. That's it. ngFx has an api to adjust the animations' speed, ease, and to stagger or not. Here's a list of all the [animations ngFx supports](https://github.com/Hendrixer/ngFx/blob/master/animationList.txt)
+Few things happening here. First, we must tie into animations from `ngAnimate`, in this case we're attaching an animation to the `enter` and `leave` hooks of `ng-if`. Next we declare the animation type by using the `fx` namespace followed by the animation name (`fx-fade-normal`). Place this in the class of the element. That's it. ng-fx has an api to adjust the animations' speed, ease, and to stagger or not. Here's a list of all the [animations ng-fx supports](https://github.com/Hendrixer/ngFx/blob/master/animationList.txt)
 
 ### Adjusting speed
-ngFx looks like innocent css animations. They are ran like css animations (performance!!!) but they are indeed dynamic like js animations as well. Here's how we can adjust the speed of an animation.
+ng-fx looks like innocent css animations. They are ran like css animations (performance!!!) but they are indeed dynamic like js animations as well. Here's how we can adjust the speed of an animation.
 ```html
 <div ng-show="error" class="fx-fade-up fx-speed-342"></div>
 ```
@@ -62,7 +62,7 @@ Using the `fx-[speed | dur | duration]-{any num in ms}` we can control the speed
   class="fx-fade-up fx-ease-sine">
 </div>
 ```
-Using `fx-ease-{curve name}` will apply the given curve to the animation. Here is a list of all the [curves ngFx supports](https://github.com/Hendrixer/ngFx/blob/master/easingList.txt)
+Using `fx-ease-{curve name}` will apply the given curve to the animation. Here is a list of all the [curves ng-fx supports](https://github.com/Hendrixer/ngFx/blob/master/easingList.txt)
 
 ### Staggering
 With `ngAnimate` 1.4, we now have support for staggering outside of css animations.
@@ -77,7 +77,7 @@ With `ngAnimate` 1.4, we now have support for staggering outside of css animatio
 Using `fx-stagger-{delay in ms}` on an animation in `ng-repeat` will stagger those elements with the given delay in between.
 
 ### Contributing
-All help is welcome! ngFx is an ongoing and live project. If you'd like to add more animations or support new feature, open an issue and even submit it yourself. If you're new to open source, I'll help you get your first commit in, ping me. To get started make sure you have...
+All help is welcome! ng-fx is an ongoing and live project. If you'd like to add more animations or support new feature, open an issue and even submit it yourself. If you're new to open source, I'll help you get your first commit in, ping me. To get started make sure you have...
 
 * `node >=0.12`
 * `gulp`
@@ -91,7 +91,7 @@ If you're good there, then...
 * `npm install`
 * `npm start`
 
-This will compile and build the project. ngFx uses `ES2015`, `webpack`, and `gulp`, nothing else too fancy here.
+This will compile and build the project. ng-fx uses `ES2015`, `webpack`, and `gulp`, nothing else too fancy here.
 
 There is a demo app to try out the animations.
 

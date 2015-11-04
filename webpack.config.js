@@ -1,7 +1,7 @@
 var config = {
 
   output: {
-    filename: 'ngFx.js',
+    filename: 'ng-fx.js',
     libraryTarget: 'umd',
     library: 'ngFx'
   },

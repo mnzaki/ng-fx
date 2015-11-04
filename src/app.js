@@ -1,6 +1,6 @@
 import {animations} from './animations';
 import {utils} from './utils';
 
-angular.module('ngFx', [animations, utils]);
+angular.module('ng-fx', [animations, utils]);
 
-export default 'ngFx';
+export default 'ng-fx';

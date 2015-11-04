@@ -9,7 +9,7 @@ var minifyPlugin = new webpack.optimize.UglifyJsPlugin({
 var config = {
 
   output: {
-    filename: 'ngFx.min.js',
+    filename: 'ng-fx.min.js',
     libraryTarget: 'umd',
     library: 'ngFx'
   },
