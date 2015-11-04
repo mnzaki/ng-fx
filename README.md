@@ -16,23 +16,23 @@ ngFx is an angular implementation of the popular [Animate.css](https://daneden.g
 **ngFx requires `ngAnimate >=1.4`.** Previous versions of ngFx `<2.0` support earlier versions of `ngAnimate`, but dev support is lacking there. If you would love to help maintain, let me know!
 
 There are two ways to install ngFx
-* using `bower`
+using `bower`
   * `bower install --save ng-fx`
-  * ``` html
-    <script src="bower_components/ng-fx/ng-fx.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    ```
-    ``` javascript
-    angular.module('app', ['ngFx', 'ngAnimate'])
-    ```
-* using `npm`
+``` html
+  <script src="bower_components/ng-fx/ng-fx.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+```
+``` javascript
+  angular.module('app', ['ngFx', 'ngAnimate'])
+```
+using `npm`
   * `npm i --save ng-fx`
-  * ``` javascript
-    angular.module('app', [
-      require('ng-fx'),
-      require('angular-animate')
-    ])
-    ```
+``` javascript
+  angular.module('app', [
+    require('ng-fx'),
+    require('angular-animate')
+  ])
+```
 
 ## Using animations
 ngFx makes it so simple to use animations by tying into `ngAnimate` and [all the hooks]('https://code.angularjs.org/1.4.7/docs/guide/animations') it provides.
