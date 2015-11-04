@@ -13,7 +13,7 @@ angular.module('app.ngRepeat', [])
     controllerAs: 'vm',
     controller: function(Demo) {
       this.demo_config = Demo;
-      this.items = '12345678'.split('').map(function(v, i) {
+      this.items = '000000000000'.split('').map(function(v, i) {
         return {num: i};
       });
       console.log(this.items)

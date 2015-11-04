@@ -9,15 +9,19 @@ angular.module('app', [
   'app.ngRepeat'
   
 ])
-.config(function($mdThemingProvider) {
+.config(function($mdThemingProvider, $sceDelegateProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('blue-grey')
     .accentPalette('cyan');
+  $sceDelegateProvider.resourceUrlWhitelist([
+    'https://ghbtns.com/**',
+    'self'
+  ]);
 })
 .factory('Demo', function() {
   return {
     stagger: 0,
-    speed: 300,
+    speed: 600,
     ease: 'none',
     curves: [
       'none',
@@ -69,9 +73,9 @@ angular.module('app', [
         {name: 'ng-show / ng-hide', state: 'ngShowHide'},
         {name: 'ng-if', state: 'ngIf'},
         {name: 'ng-class', state: 'ngClass'},
-        {name: 'ng-repeat', state: 'ngRepeat'},
-        {name: 'ng-switch', state: 'ngSwitch'},
-        {name: 'ng-messages', state: 'ngMessages'}
+        {name: 'ng-repeat', state: 'ngRepeat'}
+        // {name: 'ng-switch', state: 'ngSwitch'},
+        // {name: 'ng-messages', state: 'ngMessages'}
       ];
       
       this.demo_config = Demo;
@@ -93,6 +97,21 @@ angular.module('app', [
           elem.html(hljs.highlight(attrs.lang, value).value);
         });
       }
+    }
+  }
+})
+.directive('promotionFooter', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      github: '@',
+      home: '@'
+    },
+    bindToController: true,
+    templateUrl: 'promotion-footer.html',
+    controllerAs: 'vm',
+    controller: function() {
+      this.githubStarsUrl = `https://ghbtns.com/github-btn.html?user=${this.github}&repo=ngFx&type=star&count=true&size=large`
     }
   }
 });

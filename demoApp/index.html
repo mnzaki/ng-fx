@@ -18,7 +18,12 @@
       </md-toolbar>
       <nav-list></nav-list>
     </md-sidenav>
-    <md-content ui-view class="main-content"></md-content>
+    <md-content class="main-content" layout="column">
+      <div ui-view></div>
+      
+      <promotion-footer github="hendrixer" home="https://angularclass.com">
+      </promotion-footer>
+    </md-content>
   </main>
   
   <script src="angular/angular.min.js"></script>
