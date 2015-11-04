@@ -7,7 +7,7 @@
 > animation library for angular
 
 
-# Overview
+# Overview [![Build Status](https://travis-ci.org/Hendrixer/ngFx.svg?branch=master)](https://travis-ci.org/Hendrixer/ngFx)
 ngFx is an angular implementation of the popular [Animate.css](https://daneden.github.io/animate.css/) using the new `$animateCss` service in angular. This is the core and foundation, but there is room for so much more. You can use these css animations dynamically with zero setup. So you get the best of both worlds (css vs js animations). Take a look and enjoy.
 
 # Getting started
