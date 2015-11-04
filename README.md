@@ -7,7 +7,7 @@
 > animation library for angular
 
 
-# Overview [![Build Status](https://travis-ci.org/Hendrixer/ngFx.svg?branch=master)](https://travis-ci.org/Hendrixer/ngFx)
+# Overview [![Build Status](https://travis-ci.org/Hendrixer/ngFx.svg?branch=master)](https://travis-ci.org/angularclass/ngFx)
 ng-fx is an angular implementation of the popular [Animate.css](https://daneden.github.io/animate.css/) using the new `$animateCss` service in angular. This is the core and foundation, but there is room for so much more. You can use these css animations dynamically with zero setup. So you get the best of both worlds (css vs js animations). Take a look and enjoy.
 
 # Getting started
@@ -42,7 +42,7 @@ After installing ng-fx, using the animations are as easy as declaring css classe
 ```html
 <div ng-if="show" class="fx-fade-normal"></div>
 ```
-Few things happening here. First, we must tie into animations from `ngAnimate`, in this case we're attaching an animation to the `enter` and `leave` hooks of `ng-if`. Next we declare the animation type by using the `fx` namespace followed by the animation name (`fx-fade-normal`). Place this in the class of the element. That's it. ng-fx has an api to adjust the animations' speed, ease, and to stagger or not. Here's a list of all the [animations ng-fx supports](https://github.com/Hendrixer/ngFx/blob/master/animationList.txt)
+Few things happening here. First, we must tie into animations from `ngAnimate`, in this case we're attaching an animation to the `enter` and `leave` hooks of `ng-if`. Next we declare the animation type by using the `fx` namespace followed by the animation name (`fx-fade-normal`). Place this in the class of the element. That's it. ng-fx has an api to adjust the animations' speed, ease, and to stagger or not. Here's a list of all the [animations ng-fx supports](https://github.com/angularclass/ngFx/blob/master/animationList.txt)
 
 ### Adjusting speed
 ng-fx looks like innocent css animations. They are ran like css animations (performance!!!) but they are indeed dynamic like js animations as well. Here's how we can adjust the speed of an animation.
@@ -62,7 +62,7 @@ Using the `fx-[speed | dur | duration]-{any num in ms}` we can control the speed
   class="fx-fade-up fx-ease-sine">
 </div>
 ```
-Using `fx-ease-{curve name}` will apply the given curve to the animation. Here is a list of all the [curves ng-fx supports](https://github.com/Hendrixer/ngFx/blob/master/easingList.txt)
+Using `fx-ease-{curve name}` will apply the given curve to the animation. Here is a list of all the [curves ng-fx supports](https://github.com/angularclass/ngFx/blob/master/easingList.txt)
 
 ### Staggering
 With `ngAnimate` 1.4, we now have support for staggering outside of css animations.

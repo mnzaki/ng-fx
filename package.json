@@ -52,12 +52,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Hendrixer/ng-Fx.git"
+    "url": "https://github.com/angularclass/ng-fx.git"
   },
   "author": "Scott Moss <willscottmoss@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Hendrixer/ng-Fx/issues"
+    "url": "https://github.com/angularclass/ng-fx/issues"
   },
-  "homepage": "https://github.com/Hendrixer/ng-Fx"
+  "homepage": "https://github.com/angularclass/ng-fx"
 }
