@@ -36,6 +36,7 @@
     "karma-sourcemap-loader": "^0.3.5",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.2.5",
+    "phantomjs-polyfill": "0.0.1",
     "run-sequence": "^1.1.2",
     "style-loader": "^0.12.3",
     "stylus-loader": "^1.2.1",
