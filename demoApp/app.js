@@ -1,7 +1,7 @@
 angular.module('app', [
   'ngMaterial',
   'ngAnimate',
-  'ngFx',
+  'ng-fx',
   'ui.router',
   'app.ngShowHide',
   'app.ngIf',
