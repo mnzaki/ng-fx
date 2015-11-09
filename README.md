@@ -20,7 +20,7 @@ using `npm`
 ``` javascript
   angular.module('app', [
     require('ng-fx'),
-    require('angular-animate')
+    require('ngAnimate')
   ])
 ```
 
