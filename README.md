@@ -52,7 +52,21 @@ Using the `fx-[speed | dur | duration]-{any num in ms}` we can control the speed
   class="fx-fade-up fx-ease-sine">
 </div>
 ```
-Using `fx-ease-{curve name}` will apply the given curve to the animation. Here is a list of all the [curves ng-fx supports](https://github.com/angularclass/ngFx/blob/master/easingList.txt)
+Using `fx-ease-{curve name}` will apply the given curve to the animation. Here is a list of all the [curves ng-fx supports](https://github.com/angularclass/ngFx/blob/master/easingList.txt). If you don't declare a direction, the ease will default to `ease-in-out`. You can override that...
+
+```html
+<div
+  ng-repeat="card in cards"
+  class="fx-fade-up fx-ease-in-quad">
+</div>
+```
+``html
+<div
+  ng-repeat="card in cards"
+  class="fx-fade-up fx-ease-out-expo">
+</div>
+```
+Using `fx-ease-{direction}-{curve name}` will apply the ease direction to the curve
 
 ### Staggering
 With `ngAnimate` 1.4, we now have support for staggering outside of css animations.
