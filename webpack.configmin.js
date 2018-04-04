@@ -7,6 +7,10 @@ var minifyPlugin = new webpack.optimize.UglifyJsPlugin({
 });
 
 var config = {
+  stats: {
+    errorDetails: true,
+    errors: true
+  },
 
   output: {
     filename: 'ng-fx.min.js',
@@ -26,7 +30,7 @@ var config = {
 
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel?stage=1', exclude: [/node_modules/] },
+      { test: /\.js$/, loader: 'babel', exclude: [/node_modules/] },
       { test: /\.styl$/, loader: 'style!css!stylus' }
     ]
   },

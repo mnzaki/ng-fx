@@ -1,0 +1,19 @@
+{ "presets": [
+    ["env", {
+      "loose": true,
+      "targets": {
+        "browsers": ["> 1%", "IE >= 8"],
+        "uglify": true
+      }
+    }]
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "transform-runtime"
+  ],
+  "env": {
+    "production": {
+      "compact": true
+    }
+  }
+}
