@@ -3,11 +3,11 @@
     <img src="https://cloud.githubusercontent.com/assets/1016365/10356922/151a0a3c-6d31-11e5-8bf0-64360320d908.png" alt="ng-fx" width="500" height="320"/>
   </a>
 </p>
+
 # ng-fx
-> animation library for angular
+An animation library for angular
 
-
-# Overview [![Build Status](https://travis-ci.org/AngularClass/ng-fx.svg?branch=master)](https://travis-ci.org/angularclass/ngFx)
+# Overview
 ng-fx is an angular implementation of the popular [Animate.css](https://daneden.github.io/animate.css/) using the new `$animateCss` service in angular. This is the core and foundation, but there is room for so much more. You can use these css animations dynamically with zero setup. So you get the best of both worlds (css vs js animations). Take a look and enjoy.
 
 # Getting started
@@ -16,7 +16,7 @@ ng-fx is an angular implementation of the popular [Animate.css](https://daneden.
 **ng-fx requires `ngAnimate >=1.4`.** Previous versions of ng-fx `<2.0` support earlier versions of `ngAnimate`, but dev support is lacking there. If you would love to help maintain, let me know!
 
 using `npm`
-  * `npm i --save ng-fx`
+  * `npm i --save git+https://git@github.com/mnzaki/ng-fx.git`
 ``` javascript
   angular.module('app', [
     require('ng-fx'),
